@@ -4,9 +4,9 @@ author: "Contribution City Contributors"
 
 inputs:
   username:
-    description: "GitHub username whose contributions to visualize (defaults to repository owner)"
+    description: "GitHub username whose contributions to visualize (defaults to repository owner if neither input nor config is specified)"
     required: false
-    default: "${{ github.repository_owner }}"
+    default: ""
   token:
     description: "GitHub personal access token or GITHUB_TOKEN for GraphQL API access"
     required: false
@@ -47,7 +47,7 @@ inputs:
 outputs:
   svg-path:
     description: "Path to the generated SVG city visualization"
-    value: "${{ inputs.output }}"
+    value: "${{ steps.generate.outputs.svg-path }}"
 
 runs:
   using: "composite"
@@ -56,45 +56,46 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
-        cache: "pip"
 
     - name: "Install Contribution City"
       shell: bash
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install "${{ github.action_path }}"
+        python -m pip install --no-cache-dir "${{ github.action_path }}"
 
     - name: "Generate Contribution City SVG"
+      id: generate
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       run: |
-        CMD="contribution-city generate --output \"${{ inputs.output }}\" --theme \"${{ inputs.theme }}\" --layout \"${{ inputs.layout }}\""
+        ARGS=(generate --output "${{ inputs.output }}" --theme "${{ inputs.theme }}" --layout "${{ inputs.layout }}")
 
         if [ -n "${{ inputs.config }}" ]; then
-          CMD="$CMD --config \"${{ inputs.config }}\""
+          ARGS+=(--config "${{ inputs.config }}")
         fi
 
         if [ -n "${{ inputs.input }}" ]; then
-          CMD="$CMD --input \"${{ inputs.input }}\""
+          ARGS+=(--input "${{ inputs.input }}")
         elif [ -n "${{ inputs.username }}" ]; then
-          CMD="$CMD --username \"${{ inputs.username }}\""
+          ARGS+=(--username "${{ inputs.username }}")
+        elif [ -z "${{ inputs.config }}" ]; then
+          ARGS+=(--username "${{ github.repository_owner }}")
         fi
 
         if [ -n "${{ inputs.width }}" ]; then
-          CMD="$CMD --width \"${{ inputs.width }}\""
+          ARGS+=(--width "${{ inputs.width }}")
         fi
 
         if [ -n "${{ inputs.height }}" ]; then
-          CMD="$CMD --height \"${{ inputs.height }}\""
+          ARGS+=(--height "${{ inputs.height }}")
         fi
 
         if [ -n "${{ inputs.scale }}" ]; then
-          CMD="$CMD --scale \"${{ inputs.scale }}\""
+          ARGS+=(--scale "${{ inputs.scale }}")
         fi
 
-        echo "Executing: $CMD"
-        eval "$CMD"
+        python -m contribution_city.cli "${ARGS[@]}"
+        echo "svg-path=${{ inputs.output }}" >> "$GITHUB_OUTPUT"
 
 branding:
   icon: "map"

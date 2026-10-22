@@ -23,7 +23,7 @@ jobs:
       - name: Install Ruff
         run: |
           python -m pip install --upgrade pip
-          pip install ruff
+          pip install ".[dev]"
 
       - name: Check code formatting and linting
         run: |
@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies and package
         run: |
           python -m pip install --upgrade pip
-          pip install .[dev]
+          pip install ".[dev]"
 
       - name: Run test suite with pytest
         run: |
@@ -63,4 +63,19 @@ jobs:
         run: |
           contribution-city generate --input examples/sample-contributions.json --theme navy-cyan --output dist/ci-test.svg
           test -f dist/ci-test.svg || exit 1
+        shell: bash
+
+      - name: Test composite action directly
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        uses: ./
+        with:
+          input: examples/sample-contributions.json
+          theme: matrix-green
+          layout: compact
+          output: dist/composite-action-test.svg
+
+      - name: Verify composite action output was generated
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: |
+          test -f dist/composite-action-test.svg || exit 1
         shell: bash
