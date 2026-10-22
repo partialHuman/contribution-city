@@ -41,3 +41,23 @@ Contribution City generates an illuminated voxel metropolis from your daily GitH
 
 ---
 
+## Installation
+
+### From Source (Editable Mode)
+
+Requirements: Python 3.10 or later.
+
+```bash
+git clone https://github.com/contribution-city/contribution-city.git
+cd contribution-city
+pip install -e .
+```
+
+To install with development dependencies (pytest, ruff):
+
+```bash
+pip install -e ".[dev]"
+```
+
+---
+
