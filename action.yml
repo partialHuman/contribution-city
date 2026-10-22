@@ -1,0 +1,101 @@
+name: "Contribution City"
+description: "Transform GitHub contribution activity into beautiful isometric pixel-art cities rendered as SVG."
+author: "Contribution City Contributors"
+
+inputs:
+  username:
+    description: "GitHub username whose contributions to visualize (defaults to repository owner)"
+    required: false
+    default: "${{ github.repository_owner }}"
+  token:
+    description: "GitHub personal access token or GITHUB_TOKEN for GraphQL API access"
+    required: false
+    default: "${{ github.token }}"
+  theme:
+    description: "Visual theme (navy-cyan, matrix-green, sunset-neon, monochrome-slate, solar-amber)"
+    required: false
+    default: "navy-cyan"
+  layout:
+    description: "City grid layout (calendar, compact, isometric)"
+    required: false
+    default: "calendar"
+  config:
+    description: "Path to optional YAML configuration file"
+    required: false
+    default: ""
+  input:
+    description: "Path to local JSON contributions file (for offline/fixture mode)"
+    required: false
+    default: ""
+  output:
+    description: "Destination file path for the generated SVG"
+    required: false
+    default: "dist/city.svg"
+  width:
+    description: "SVG canvas width in pixels"
+    required: false
+    default: ""
+  height:
+    description: "SVG canvas height in pixels"
+    required: false
+    default: ""
+  scale:
+    description: "Building height scaling multiplier"
+    required: false
+    default: ""
+
+outputs:
+  svg-path:
+    description: "Path to the generated SVG city visualization"
+    value: "${{ inputs.output }}"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Set up Python runtime"
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: "pip"
+
+    - name: "Install Contribution City"
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install "${{ github.action_path }}"
+
+    - name: "Generate Contribution City SVG"
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        CMD="contribution-city generate --output \"${{ inputs.output }}\" --theme \"${{ inputs.theme }}\" --layout \"${{ inputs.layout }}\""
+
+        if [ -n "${{ inputs.config }}" ]; then
+          CMD="$CMD --config \"${{ inputs.config }}\""
+        fi
+
+        if [ -n "${{ inputs.input }}" ]; then
+          CMD="$CMD --input \"${{ inputs.input }}\""
+        elif [ -n "${{ inputs.username }}" ]; then
+          CMD="$CMD --username \"${{ inputs.username }}\""
+        fi
+
+        if [ -n "${{ inputs.width }}" ]; then
+          CMD="$CMD --width \"${{ inputs.width }}\""
+        fi
+
+        if [ -n "${{ inputs.height }}" ]; then
+          CMD="$CMD --height \"${{ inputs.height }}\""
+        fi
+
+        if [ -n "${{ inputs.scale }}" ]; then
+          CMD="$CMD --scale \"${{ inputs.scale }}\""
+        fi
+
+        echo "Executing: $CMD"
+        eval "$CMD"
+
+branding:
+  icon: "map"
+  color: "blue"

@@ -1,0 +1,44 @@
+name: Generate Contribution City for Profile
+
+on:
+  schedule:
+    # Run once daily at midnight UTC
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/generate-profile-city.yml"
+
+# Required permissions for GITHUB_TOKEN to commit generated city
+permissions:
+  contents: write
+
+jobs:
+  build-city:
+    name: Generate City Visualization
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout profile repository
+        uses: actions/checkout@v4
+
+      - name: Generate Contribution City SVG
+        uses: contribution-city/contribution-city@v0.1.0
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: "navy-cyan"
+          layout: "calendar"
+          output: "dist/contribution-city.svg"
+
+      - name: Commit and push SVG if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/contribution-city.svg
+          if git diff --staged --quiet; then
+            echo "No changes in contribution city SVG. Skipping commit."
+          else
+            git commit -m "Update Contribution City visualization [skip ci]"
+            git push
+          fi
