@@ -22,7 +22,6 @@ Contribution City generates an illuminated voxel metropolis from your daily GitH
 
 ---
 
-
 ## Feature Status
 
 | Feature | Status | Notes |
@@ -61,3 +60,26 @@ pip install -e ".[dev]"
 
 ---
 
+## Command-Line Interface (CLI)
+
+The `contribution-city` command-line tool provides full control over data input, theme selection, layout style, and canvas geometry.
+
+### 1. Generate from Local / Sample Data (Offline)
+
+Use the included fixture to generate a city without needing an internet connection or GitHub credentials:
+
+```bash
+contribution-city generate \
+  --input examples/sample-contributions.json \
+  --theme navy-cyan \
+  --output dist/city.svg
+```
+
+Or run directly with Python:
+
+```bash
+python -m contribution_city.cli generate \
+  --input examples/sample-contributions.json \
+  --theme matrix-green \
+  --output dist/city-matrix.svg
+```
