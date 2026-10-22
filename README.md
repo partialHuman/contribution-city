@@ -83,3 +83,4 @@ python -m contribution_city.cli generate \
   --theme matrix-green \
   --output dist/city-matrix.svg
 ```
+The `contribution-city` command-line tool provides full control over data input, theme selection, layout style, and canvas geometry.
