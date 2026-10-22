@@ -61,3 +61,6 @@ pip install -e ".[dev]"
 
 ---
 
+## Command-Line Interface (CLI)
+
+The `contribution-city` command-line tool provides full control over data input, theme selection, layout style, and canvas geometry.
