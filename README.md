@@ -63,4 +63,30 @@ pip install -e ".[dev]"
 
 ## Command-Line Interface (CLI)
 
+<<<<<<< Updated upstream
 The `contribution-city` command-line tool provides full control over data input, theme selection, layout style, and canvas geometry.
+=======
+The `contribution-city` command-line tool provides full control over data input, theme selection, layout style, and canvas geometry.
+
+### 2. Generate Live City from GitHub Profile
+
+To fetch real-time contributions from GitHub, provide your username. GitHub's GraphQL API requires an authentication token:
+
+```bash
+export GITHUB_TOKEN="ghp_yourPersonalAccessToken"
+
+contribution-city generate \
+  --username octocat \
+  --theme navy-cyan \
+  --output dist/octocat-city.svg
+```
+
+You can also pass the token explicitly via `--token`:
+
+```bash
+contribution-city generate \
+  --username octocat \
+  --token "$GITHUB_TOKEN" \
+  --output dist/octocat-city.svg
+```
+>>>>>>> Stashed changes
