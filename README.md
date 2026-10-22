@@ -21,3 +21,23 @@ Contribution City generates an illuminated voxel metropolis from your daily GitH
 - **Zero Heavy Dependencies**: Pure Python geometry engine with `pyyaml` for configuration and standard library networking.
 
 ---
+
+
+## Feature Status
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Isometric SVG Renderer | **Implemented (v0.1.0)** | Deterministic 2:1 dimetric projection with depth sorting |
+| Normalized Contribution Data Models | **Implemented (v0.1.0)** | Canonical JSON, flat list, and GitHub GraphQL parser |
+| Built-in Visual Themes | **Implemented (v0.1.0)** | `navy-cyan`, `matrix-green`, `sunset-neon`, `monochrome-slate`, `solar-amber` |
+| Grid Layouts | **Implemented (v0.1.0)** | `calendar` (52-week calendar) and `compact` (square downtown block) |
+| Python CLI (`contribution-city`) | **Implemented (v0.2.0)** | Subcommands, options, actionable validation errors |
+| YAML Configuration System | **Implemented (v0.2.0)** | Documented schema with validation |
+| GitHub GraphQL API Client | **Implemented (v0.3.0)** | Authenticated GraphQL retrieval with rate-limit and error handling |
+| Reusable GitHub Action | **Implemented (v0.4.0)** | Composite action (`action.yml`) with automated profile commit workflow |
+| Animated SVG / Keyframe Lighting | *Planned (v0.6.0)* | Optional CSS keyframe window and beacon pulses |
+| Raster Exports (PNG / WebP) | *Planned (v0.6.0)* | Headless rasterization without heavy system dependencies |
+| Interactive 3D Web Viewer | *Planned (v0.9.0)* | WebGL / Three.js interactive city explorer |
+
+---
+
