@@ -92,3 +92,68 @@ layout: compact
         assert ret == 1
         captured = capsys.readouterr()
         assert "Configuration Error" in captured.err
+
+
+class TestNewCliOptions:
+    def test_auto_appearance_with_light_pair(self, tmp_path: Path) -> None:
+        out = tmp_path / "c.svg"
+        code = main(
+            [
+                "generate",
+                "--input",
+                "examples/sample-contributions.json",
+                "--theme",
+                "profile",
+                "--appearance",
+                "auto",
+                "--height-mode",
+                "linear",
+                "--transparent",
+                "--no-tooltips",
+                "--output",
+                str(out),
+            ]
+        )
+        assert code == 0
+        svg = out.read_text(encoding="utf-8")
+        assert "prefers-color-scheme:light" in svg and "<title>2025" not in svg
+
+    def test_auto_appearance_without_light_pair_fails_cleanly(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        code = main(
+            [
+                "generate",
+                "--input",
+                "examples/sample-contributions.json",
+                "--theme",
+                "solar-amber",
+                "--appearance",
+                "auto",
+                "--output",
+                str(tmp_path / "x.svg"),
+            ]
+        )
+        assert code == 1
+        assert "no light variant" in capsys.readouterr().err
+
+    def test_years_need_a_username(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        code = main(
+            [
+                "generate",
+                "--input",
+                "examples/sample-contributions.json",
+                "--year",
+                "2024",
+                "--output",
+                str(tmp_path / "x.svg"),
+            ]
+        )
+        assert code == 1
+        assert "--username" in capsys.readouterr().err
+
+    def test_isometric_layout_is_no_longer_accepted(self) -> None:
+        with pytest.raises(SystemExit):
+            main(["generate", "--input", "x.json", "--layout", "isometric"])
