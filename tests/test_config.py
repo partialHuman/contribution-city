@@ -105,3 +105,45 @@ city:
         assert render_cfg.theme == "solar-amber"
         assert render_cfg.layout == "compact"
         assert render_cfg.width == 1200
+
+
+class TestNewOptions:
+    def test_isometric_layout_gives_helpful_error(self) -> None:
+        from contribution_city.config import AppConfig, ConfigError
+
+        with pytest.raises(ConfigError, match="'calendar'"):
+            AppConfig.from_dict({"layout": "isometric"})
+
+    def test_new_fields_are_parsed(self) -> None:
+        from contribution_city.config import AppConfig
+
+        cfg = AppConfig.from_dict(
+            {
+                "theme": "profile",
+                "appearance": "auto",
+                "years": [2024, 2025],
+                "retries": 4,
+                "city": {"height_mode": "linear", "transparent": True, "show_tooltips": False},
+            }
+        )
+        rc = cfg.to_render_config()
+        assert rc.appearance == "auto" and rc.height_mode == "linear"
+        assert rc.transparent is True and rc.show_tooltips is False
+        assert cfg.years == [2024, 2025] and cfg.retries == 4
+
+    @pytest.mark.parametrize(
+        "bad",
+        [
+            {"appearance": "sepia"},
+            {"years": [1999]},
+            {"from": "yesterday"},
+            {"years": [2024], "from": "2024-01-01"},
+            {"retries": 99},
+            {"city": {"height_mode": "cubic"}},
+        ],
+    )
+    def test_invalid_values_rejected(self, bad: dict) -> None:
+        from contribution_city.config import AppConfig, ConfigError
+
+        with pytest.raises(ConfigError):
+            AppConfig.from_dict(bad)
