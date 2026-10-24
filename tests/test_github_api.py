@@ -141,3 +141,125 @@ class TestGitHubClient:
         client = GitHubClient(token="mock-token")
         with pytest.raises(GitHubAPIError, match="Network error connecting to GitHub"):
             client.fetch_contributions("octocat")
+
+
+def _response(payload: dict) -> MagicMock:
+    fp = io.BytesIO(json.dumps(payload).encode("utf-8"))
+    resp = MagicMock()
+    resp.read.side_effect = fp.read
+    resp.__enter__.return_value = resp
+    return resp
+
+
+_OK = {
+    "data": {
+        "user": {
+            "login": "octocat",
+            "contributionsCollection": {
+                "restrictedContributionsCount": 0,
+                "contributionCalendar": {
+                    "weeks": [
+                        {
+                            "contributionDays": [
+                                {
+                                    "date": "2025-01-01",
+                                    "contributionCount": 2,
+                                    "contributionLevel": "FIRST_QUARTILE",
+                                    "weekday": 3,
+                                }
+                            ]
+                        }
+                    ]
+                },
+            },
+        }
+    }
+}
+
+
+class TestRetriesAndRanges:
+    @patch("urllib.request.urlopen")
+    def test_retries_temporary_server_error_then_succeeds(self, mock_urlopen: MagicMock) -> None:
+        err = urllib.error.HTTPError(
+            "https://api.github.com/graphql",
+            503,
+            "Service Unavailable",
+            {},
+            io.BytesIO(b"{}"),  # type: ignore[arg-type]
+        )
+        mock_urlopen.side_effect = [err, _response(_OK)]
+        ds = GitHubClient(token="t", max_retries=2).fetch_contributions("octocat")
+        assert ds.total_contributions == 2
+        assert mock_urlopen.call_count == 2
+
+    @patch("urllib.request.urlopen")
+    def test_retries_network_error_then_succeeds(self, mock_urlopen: MagicMock) -> None:
+        mock_urlopen.side_effect = [urllib.error.URLError("reset"), _response(_OK)]
+        ds = GitHubClient(token="t", max_retries=1).fetch_contributions("octocat")
+        assert ds.total_contributions == 2
+
+    @patch("urllib.request.urlopen")
+    def test_gives_up_after_max_retries(self, mock_urlopen: MagicMock) -> None:
+        mock_urlopen.side_effect = urllib.error.URLError("down")
+        client = GitHubClient(token="t", max_retries=2)
+        with pytest.raises(GitHubAPIError, match="Network error"):
+            client.fetch_contributions("octocat")
+        assert mock_urlopen.call_count == 3
+
+    @patch("urllib.request.urlopen")
+    def test_secondary_rate_limit_is_retried(self, mock_urlopen: MagicMock) -> None:
+        err = urllib.error.HTTPError(
+            "https://api.github.com/graphql",
+            403,
+            "Forbidden",
+            {"Retry-After": "3"},
+            io.BytesIO(b"{}"),  # type: ignore[arg-type]
+        )
+        mock_urlopen.side_effect = [err, _response(_OK)]
+        assert GitHubClient(token="t").fetch_contributions("octocat").total_contributions == 2
+
+    @patch("urllib.request.urlopen")
+    def test_auth_errors_are_never_retried(self, mock_urlopen: MagicMock) -> None:
+        err = urllib.error.HTTPError(
+            "https://api.github.com/graphql",
+            401,
+            "Unauthorized",
+            {},
+            io.BytesIO(b"{}"),  # type: ignore[arg-type]
+        )
+        mock_urlopen.side_effect = err
+        with pytest.raises(GitHubAuthError):
+            GitHubClient(token="bad", max_retries=3).fetch_contributions("octocat")
+        assert mock_urlopen.call_count == 1
+
+    @patch("urllib.request.urlopen")
+    def test_date_range_is_sent_to_graphql(self, mock_urlopen: MagicMock) -> None:
+        mock_urlopen.return_value = _response(_OK)
+        GitHubClient(token="t").fetch_contributions("octocat", "2024-03-01", "2024-09-30")
+        body = json.loads(mock_urlopen.call_args[0][0].data.decode("utf-8"))
+        assert body["variables"]["from"] == "2024-03-01T00:00:00Z"
+        assert body["variables"]["to"] == "2024-09-30T23:59:59Z"
+
+    def test_range_longer_than_a_year_is_rejected(self) -> None:
+        with pytest.raises(ValueError, match="at most one year"):
+            GitHubClient(token="t").fetch_contributions("octocat", "2023-01-01", "2025-01-01")
+
+    def test_bad_date_is_rejected(self) -> None:
+        with pytest.raises(ValueError, match="YYYY-MM-DD"):
+            GitHubClient(token="t").fetch_contributions("octocat", "01/02/2025", None)
+
+    @patch("urllib.request.urlopen")
+    def test_fetch_years_merges_requests(self, mock_urlopen: MagicMock) -> None:
+        mock_urlopen.side_effect = [_response(_OK), _response(_OK)]
+        ds = GitHubClient(token="t").fetch_years("octocat", [2023, 2024])
+        assert mock_urlopen.call_count == 2
+        assert len(ds.days) == 1  # same date in both fake responses collapses to one day
+
+    def test_user_agent_uses_package_version(self) -> None:
+        from contribution_city import __version__
+
+        with patch("urllib.request.urlopen") as mock_urlopen:
+            mock_urlopen.return_value = _response(_OK)
+            GitHubClient(token="t").fetch_contributions("octocat")
+            req = mock_urlopen.call_args[0][0]
+            assert req.get_header("User-agent") == f"Contribution-City/{__version__}"
