@@ -324,17 +324,134 @@ THEME_SOLAR_AMBER = Theme(
     },
 )
 
+
+# 6. Profile (matches the partialHuman banner: navy walls, amber windows, gold peaks)
+THEME_PROFILE = Theme(
+    name="profile",
+    description="Deep navy night city with warm amber windows and gold peak roofs",
+    bg_top="#070D24",
+    bg_bottom="#0A1230",
+    platform_top="#101B3D",
+    platform_left="#0B1330",
+    platform_right="#080E24",
+    platform_grid="#1F2D5A",
+    ground_tile_fill="#16213F",
+    ground_tile_stroke="#1C2A52",
+    text_primary="#E6EDF3",
+    text_secondary="#8B9BC2",
+    text_accent="#FFD27A",
+    star_color="#FFD27A",
+    levels={
+        1: LevelPalette(
+            "#1F4A8F", "#122A5C", "#0E2048", "#FFB454", "#3A4C7A", "#5CC8FF", "#0A1A40"
+        ),
+        2: LevelPalette(
+            "#2F7FD8", "#15336F", "#10285A", "#FFB454", "#3A5A98", "#5CC8FF", "#0C2250"
+        ),
+        3: LevelPalette(
+            "#5CC8FF", "#173A82", "#12306A", "#FFC971", "#3F6BB0", "#8FF0FF", "#10306E"
+        ),
+        4: LevelPalette(
+            "#FFD27A", "#1A4294", "#143878", "#FFF3D1", "#5A7CC0", "#FFFFFF", "#1A3A80"
+        ),
+    },
+)
+
+# 7. Light variants (used by appearance="auto" for light-mode viewers)
+THEME_PROFILE_LIGHT = Theme(
+    name="profile-light",
+    description="Light companion of 'profile': soft blue ground, navy towers, gold peaks",
+    bg_top="#F6F8FC",
+    bg_bottom="#E6EDF6",
+    platform_top="#DFE7F3",
+    platform_left="#B9C4D6",
+    platform_right="#A1AEC3",
+    platform_grid="#C3CEDD",
+    ground_tile_fill="#E6EDF6",
+    ground_tile_stroke="#CBD5E3",
+    text_primary="#24292F",
+    text_secondary="#57606A",
+    text_accent="#9A6700",
+    star_color="#9A6700",
+    levels={
+        1: LevelPalette(
+            "#A5C8F2", "#8AA7CA", "#738CA9", "#FFF3CF", "#6B86AB", "#1F6FEB", "#5B7595"
+        ),
+        2: LevelPalette(
+            "#5A9BE6", "#4B81C0", "#3F6CA1", "#FFE6A3", "#5C7BA6", "#1F6FEB", "#35567F"
+        ),
+        3: LevelPalette(
+            "#1F6FEB", "#1A5DC4", "#164EA4", "#FFDC82", "#4F72B0", "#0A3D91", "#103C80"
+        ),
+        4: LevelPalette(
+            "#D29922", "#083379", "#072B66", "#FFE9B0", "#4A6CAA", "#9A6700", "#06245A"
+        ),
+    },
+)
+
+THEME_NAVY_CYAN_LIGHT = Theme(
+    name="navy-cyan-light",
+    description="Light companion of 'navy-cyan': pale sky ground with cobalt and cyan towers",
+    bg_top="#F4FAFF",
+    bg_bottom="#E3F1FA",
+    platform_top="#D6E9F5",
+    platform_left="#A9C6DA",
+    platform_right="#8FB1C9",
+    platform_grid="#B9D3E4",
+    ground_tile_fill="#E3F1FA",
+    ground_tile_stroke="#C5DDEC",
+    text_primary="#0B2A3B",
+    text_secondary="#46677C",
+    text_accent="#0077B6",
+    star_color="#0077B6",
+    levels={
+        1: LevelPalette(
+            "#7DD3FC", "#4FB4E6", "#2F93C9", "#FFFFFF", "#2F93C9", "#0096C7", "#1D6C9B"
+        ),
+        2: LevelPalette(
+            "#38BDF8", "#1AA0DC", "#0F86BD", "#FFFFFF", "#2A8FC4", "#0077B6", "#0B628F"
+        ),
+        3: LevelPalette(
+            "#0EA5E9", "#0A86BE", "#066E9F", "#FFFFFF", "#2278A6", "#023E8A", "#075579"
+        ),
+        4: LevelPalette(
+            "#0369A1", "#034F7C", "#023F63", "#E0FBFC", "#2F6F96", "#023E8A", "#02304C"
+        ),
+    },
+)
+
 THEMES: dict[str, Theme] = {
     "navy-cyan": THEME_NAVY_CYAN,
     "matrix-green": THEME_MATRIX_GREEN,
     "sunset-neon": THEME_SUNSET_NEON,
     "monochrome-slate": THEME_MONOCHROME_SLATE,
     "solar-amber": THEME_SOLAR_AMBER,
+    "profile": THEME_PROFILE,
+    "profile-light": THEME_PROFILE_LIGHT,
+    "navy-cyan-light": THEME_NAVY_CYAN_LIGHT,
+}
+
+# Dark theme -> its light companion, used by appearance="auto"
+LIGHT_PAIRS: dict[str, str] = {
+    "navy-cyan": "navy-cyan-light",
+    "profile": "profile-light",
 }
 
 
+def get_light_pair(name: str) -> Theme:
+    """Return the light companion of a dark theme (for appearance="auto")."""
+    normalized = name.strip().lower()
+    if normalized not in LIGHT_PAIRS:
+        have = ", ".join(LIGHT_PAIRS)
+        raise ValueError(
+            f"Theme '{name}' has no light variant, so appearance='auto' is unavailable. "
+            f"Themes with a light variant: {have}."
+        )
+    return THEMES[LIGHT_PAIRS[normalized]]
+
+
 def get_theme(name: str) -> Theme:
-    """Retrieve theme by name, defaulting to navy-cyan if not found."""
+    """Retrieve a theme by name; raises ValueError listing valid names if unknown."""
     normalized = name.strip().lower()
     if normalized not in THEMES:
         valid_keys = ", ".join(THEMES.keys())
