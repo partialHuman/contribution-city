@@ -1,102 +1,159 @@
 name: "Contribution City"
-description: "Transform GitHub contribution activity into beautiful isometric pixel-art cities rendered as SVG."
-author: "Contribution City Contributors"
+description: "Turn your GitHub contribution activity into an isometric pixel-art city (SVG)."
+author: "partialHuman"
+branding:
+  icon: "map"
+  color: "blue"
 
 inputs:
   username:
-    description: "GitHub username whose contributions to visualize (defaults to repository owner if neither input nor config is specified)"
+    description: "GitHub username to visualise (defaults to the repository owner when empty and no input file is given)"
     required: false
     default: ""
   token:
-    description: "GitHub personal access token or GITHUB_TOKEN for GraphQL API access"
+    description: "GitHub token used to read contributions. Use a personal access token with read:user to include private activity."
     required: false
-    default: "${{ github.token }}"
+    default: ${{ github.token }}
   theme:
-    description: "Visual theme (navy-cyan, matrix-green, sunset-neon, monochrome-slate, solar-amber)"
+    description: "Visual theme: navy-cyan, matrix-green, sunset-neon, monochrome-slate, solar-amber, profile, profile-light, navy-cyan-light"
     required: false
     default: "navy-cyan"
   layout:
-    description: "City grid layout (calendar, compact, isometric)"
+    description: "Grid layout: calendar (default) or compact"
     required: false
     default: "calendar"
+  appearance:
+    description: "fixed (default) or auto. 'auto' adds the theme's light palette (themes: navy-cyan, profile) and follows prefers-color-scheme."
+    required: false
+    default: "fixed"
+  height-mode:
+    description: "How building height grows: power (default), linear (proportional), sqrt or log"
+    required: false
+    default: "power"
+  years:
+    description: "Comma-separated calendar years, for example '2024,2025'. Leave empty for the last 12 months."
+    required: false
+    default: ""
+  from:
+    description: "First day to include, YYYY-MM-DD (at most one year long)"
+    required: false
+    default: ""
+  to:
+    description: "Last day to include, YYYY-MM-DD"
+    required: false
+    default: ""
+  transparent:
+    description: "true removes the background rectangle and sky stars"
+    required: false
+    default: "false"
+  tooltips:
+    description: "false leaves out hover tooltips for a smaller file"
+    required: false
+    default: "true"
+  auto-fit:
+    description: "false keeps the configured tile size instead of scaling the city to fill the canvas"
+    required: false
+    default: "true"
+  retries:
+    description: "Retries for temporary GitHub API failures"
+    required: false
+    default: "2"
   config:
-    description: "Path to optional YAML configuration file"
+    description: "Path to a YAML configuration file (command-line style inputs override it)"
     required: false
     default: ""
   input:
-    description: "Path to local JSON contributions file (for offline/fixture mode)"
+    description: "Path to a local contributions JSON file (offline mode)"
     required: false
     default: ""
   output:
-    description: "Destination file path for the generated SVG"
+    description: "Where to write the SVG"
     required: false
     default: "dist/city.svg"
   width:
-    description: "SVG canvas width in pixels"
+    description: "Canvas width in pixels"
     required: false
     default: ""
   height:
-    description: "SVG canvas height in pixels"
+    description: "Canvas height in pixels"
     required: false
     default: ""
   scale:
-    description: "Building height scaling multiplier"
+    description: "Building height multiplier"
     required: false
     default: ""
 
 outputs:
   svg-path:
-    description: "Path to the generated SVG city visualization"
-    value: "${{ steps.generate.outputs.svg-path }}"
+    description: "Path of the generated SVG file"
+    value: ${{ steps.generate.outputs.svg-path }}
 
 runs:
   using: "composite"
   steps:
-    - name: "Set up Python runtime"
-      uses: actions/setup-python@v5
+    - name: Set up Python
+      uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
       with:
         python-version: "3.12"
 
-    - name: "Install Contribution City"
-      shell: bash
-      run: |
-        python -m pip install --no-cache-dir "${{ github.action_path }}"
-
-    - name: "Generate Contribution City SVG"
-      id: generate
+    - name: Install Contribution City
       shell: bash
       env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: python -m pip install --disable-pip-version-check --quiet "$ACTION_PATH"
+
+    - name: Generate city
+      id: generate
+      shell: bash
+      # Every input goes through an environment variable. Inputs are never pasted into the
+      # script text, so a hostile value cannot run commands.
+      env:
         GITHUB_TOKEN: ${{ inputs.token }}
+        IN_USERNAME: ${{ inputs.username }}
+        IN_THEME: ${{ inputs.theme }}
+        IN_LAYOUT: ${{ inputs.layout }}
+        IN_APPEARANCE: ${{ inputs.appearance }}
+        IN_HEIGHT_MODE: ${{ inputs.height-mode }}
+        IN_YEARS: ${{ inputs.years }}
+        IN_FROM: ${{ inputs.from }}
+        IN_TO: ${{ inputs.to }}
+        IN_TRANSPARENT: ${{ inputs.transparent }}
+        IN_TOOLTIPS: ${{ inputs.tooltips }}
+        IN_AUTO_FIT: ${{ inputs.auto-fit }}
+        IN_RETRIES: ${{ inputs.retries }}
+        IN_CONFIG: ${{ inputs.config }}
+        IN_INPUT: ${{ inputs.input }}
+        IN_OUTPUT: ${{ inputs.output }}
+        IN_WIDTH: ${{ inputs.width }}
+        IN_HEIGHT: ${{ inputs.height }}
+        IN_SCALE: ${{ inputs.scale }}
+        DEFAULT_USER: ${{ github.repository_owner }}
       run: |
-        ARGS=(generate --output "${{ inputs.output }}" --theme "${{ inputs.theme }}" --layout "${{ inputs.layout }}")
+        set -euo pipefail
+        args=(generate --theme "$IN_THEME" --layout "$IN_LAYOUT" --appearance "$IN_APPEARANCE"
+              --height-mode "$IN_HEIGHT_MODE" --output "$IN_OUTPUT" --retries "$IN_RETRIES")
 
-        if [ -n "${{ inputs.config }}" ]; then
-          ARGS+=(--config "${{ inputs.config }}")
+        if [ -n "$IN_INPUT" ]; then
+          args+=(--input "$IN_INPUT")
+        else
+          args+=(--username "${IN_USERNAME:-$DEFAULT_USER}")
+        fi
+        [ -n "$IN_CONFIG" ] && args+=(--config "$IN_CONFIG")
+        [ -n "$IN_FROM" ] && args+=(--from "$IN_FROM")
+        [ -n "$IN_TO" ] && args+=(--to "$IN_TO")
+        [ -n "$IN_WIDTH" ] && args+=(--width "$IN_WIDTH")
+        [ -n "$IN_HEIGHT" ] && args+=(--height "$IN_HEIGHT")
+        [ -n "$IN_SCALE" ] && args+=(--scale "$IN_SCALE")
+        [ "$IN_TRANSPARENT" = "true" ] && args+=(--transparent)
+        [ "$IN_TOOLTIPS" = "false" ] && args+=(--no-tooltips)
+        [ "$IN_AUTO_FIT" = "false" ] && args+=(--no-fit)
+
+        if [ -n "$IN_YEARS" ]; then
+          IFS=',' read -ra year_list <<< "$IN_YEARS"
+          for y in "${year_list[@]}"; do
+            args+=(--year "$(echo "$y" | tr -d '[:space:]')")
+          done
         fi
 
-        if [ -n "${{ inputs.input }}" ]; then
-          ARGS+=(--input "${{ inputs.input }}")
-        elif [ -n "${{ inputs.username }}" ]; then
-          ARGS+=(--username "${{ inputs.username }}")
-        elif [ -z "${{ inputs.config }}" ]; then
-          ARGS+=(--username "${{ github.repository_owner }}")
-        fi
-
-        if [ -n "${{ inputs.width }}" ]; then
-          ARGS+=(--width "${{ inputs.width }}")
-        fi
-
-        if [ -n "${{ inputs.height }}" ]; then
-          ARGS+=(--height "${{ inputs.height }}")
-        fi
-
-        if [ -n "${{ inputs.scale }}" ]; then
-          ARGS+=(--scale "${{ inputs.scale }}")
-        fi
-
-        python -m contribution_city.cli "${ARGS[@]}"
-        echo "svg-path=${{ inputs.output }}" >> "$GITHUB_OUTPUT"
-
-branding:
-  icon: "map"
-  color: "blue"
+        python -m contribution_city.cli "${args[@]}"
+        echo "svg-path=$IN_OUTPUT" >> "$GITHUB_OUTPUT"

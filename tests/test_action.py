@@ -89,6 +89,15 @@ class TestActionMetadata:
             "width": "--width",
             "height": "--height",
             "scale": "--scale",
+            "appearance": "--appearance",
+            "height-mode": "--height-mode",
+            "years": "--year",
+            "from": "--from",
+            "to": "--to",
+            "transparent": "--transparent",
+            "tooltips": "--no-tooltips",
+            "auto-fit": "--no-fit",
+            "retries": "--retries",
         }
 
         # Collect all flags recognized by CLI parser
@@ -249,3 +258,50 @@ class TestConsumerWorkflow:
         assert "[skip ci]" in content, (
             "Commit message should include [skip ci] to avoid recursive runs"
         )
+
+
+class TestActionSecurity:
+    """The action must be safe against hostile input values and supply-chain surprises."""
+
+    def test_inputs_are_never_pasted_into_scripts(self, action_data: dict) -> None:
+        for step in action_data["runs"]["steps"]:
+            script = step.get("run", "")
+            assert "${{ inputs." not in script, (
+                f"Step '{step.get('name')}' interpolates an input into shell code"
+            )
+            assert "${{ github." not in script
+
+    def test_inputs_reach_the_script_through_env(self, action_data: dict) -> None:
+        generate = next(s for s in action_data["runs"]["steps"] if s.get("id") == "generate")
+        env = generate["env"]
+        assert env["IN_USERNAME"] == "${{ inputs.username }}"
+        assert env["GITHUB_TOKEN"] == "${{ inputs.token }}"
+
+    def test_token_is_not_passed_on_the_command_line(self, action_data: dict) -> None:
+        generate = next(s for s in action_data["runs"]["steps"] if s.get("id") == "generate")
+        assert "--token" not in generate["run"]
+
+    def test_third_party_actions_are_pinned_to_a_commit(self) -> None:
+        import re
+
+        root = Path(__file__).parent.parent
+        files = [root / "action.yml", *root.glob(".github/workflows/*.yml")]
+        files += list(root.glob("examples/workflows/*.yml"))
+        for f in files:
+            for line in f.read_text(encoding="utf-8").splitlines():
+                m = re.match(r"\s*(?:-\s*)?uses:\s*([^\s#]+)", line)
+                if not m:
+                    continue
+                ref = m.group(1)
+                if ref.startswith("./") or ref.startswith("partialHuman/"):
+                    continue
+                assert re.search(r"@[0-9a-f]{40}$", ref), (
+                    f"{f.name}: '{ref}' is not pinned to a SHA"
+                )
+
+    def test_example_publishes_to_output_branch(self) -> None:
+        wf = Path(__file__).parent.parent / "examples/workflows/generate-profile-city.yml"
+        text = wf.read_text(encoding="utf-8")
+        assert "concurrency:" in text
+        assert "origin HEAD:output" in text
+        assert "partialHuman/contribution-city@v1" in text
