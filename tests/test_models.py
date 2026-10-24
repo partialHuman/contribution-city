@@ -163,3 +163,79 @@ class TestContributionDataSet:
     def test_malformed_json_raises(self) -> None:
         with pytest.raises(ValueError, match="Malformed JSON"):
             ContributionDataSet.from_json("{invalid json")
+
+
+class TestStreaksAndMerge:
+    def test_gap_in_dates_breaks_streak(self) -> None:
+        from contribution_city.models import ContributionDataSet
+
+        ds = ContributionDataSet.from_dict(
+            {
+                "days": [
+                    {"date": "2025-01-01", "count": 2},
+                    {"date": "2025-01-02", "count": 2},
+                    {"date": "2025-01-05", "count": 2},  # 3 and 4 are missing
+                    {"date": "2025-01-06", "count": 2},
+                ]
+            }
+        )
+        assert ds.max_streak == 2
+
+    def test_consecutive_days_form_one_streak(self) -> None:
+        from contribution_city.models import ContributionDataSet
+
+        ds = ContributionDataSet.from_dict(
+            {"days": [{"date": f"2025-01-0{d}", "count": 1} for d in range(1, 6)]}
+        )
+        assert ds.max_streak == 5
+
+    def test_merge_keeps_highest_count_and_sums_private(self) -> None:
+        from contribution_city.models import ContributionDataSet
+
+        a = ContributionDataSet.from_dict(
+            {
+                "username": "u",
+                "private_contributions": 5,
+                "days": [{"date": "2024-12-31", "count": 1}, {"date": "2025-01-01", "count": 2}],
+            }
+        )
+        b = ContributionDataSet.from_dict(
+            {
+                "private_contributions": 7,
+                "days": [{"date": "2025-01-01", "count": 9}, {"date": "2025-01-02", "count": 1}],
+            }
+        )
+        merged = ContributionDataSet.merge(a, b)
+        assert [d.date for d in merged.days] == ["2024-12-31", "2025-01-01", "2025-01-02"]
+        assert merged.days[1].count == 9
+        assert merged.private_contributions == 12
+        assert merged.username == "u"
+
+    def test_github_response_keeps_private_count(self) -> None:
+        from contribution_city.models import ContributionDataSet
+
+        payload = {
+            "data": {
+                "user": {
+                    "login": "u",
+                    "contributionsCollection": {
+                        "restrictedContributionsCount": 42,
+                        "contributionCalendar": {
+                            "weeks": [
+                                {
+                                    "contributionDays": [
+                                        {
+                                            "date": "2025-01-01",
+                                            "contributionCount": 1,
+                                            "contributionLevel": "FIRST_QUARTILE",
+                                            "weekday": 3,
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                    },
+                }
+            }
+        }
+        assert ContributionDataSet.from_dict(payload).private_contributions == 42

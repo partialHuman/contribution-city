@@ -88,6 +88,7 @@ class ContributionDataSet:
 
     username: str | None = None
     days: list[ContributionDay] = field(default_factory=list)
+    private_contributions: int = 0
 
     def __post_init__(self) -> None:
         # Sort days chronologically
@@ -120,23 +121,52 @@ class ContributionDataSet:
 
     @property
     def max_streak(self) -> int:
-        """Calculate longest consecutive active days streak."""
+        """Calculate longest run of consecutive calendar days with activity.
+
+        Days missing from the dataset break a streak, so sparse custom data
+        is never counted as one long streak.
+        """
         longest = 0
         current = 0
+        previous: date | None = None
         for day in self.days:
             if day.count > 0:
-                current += 1
-                if current > longest:
-                    longest = current
+                today = day.date_obj
+                if previous is not None and (today - previous).days == 1:
+                    current += 1
+                else:
+                    current = 1
+                previous = today
+                longest = max(longest, current)
             else:
                 current = 0
+                previous = None
         return longest
+
+    @classmethod
+    def merge(cls, *datasets: ContributionDataSet) -> ContributionDataSet:
+        """Combine several datasets (for example one per year) into one.
+
+        Duplicate dates keep the entry with the highest count.
+        """
+        by_date: dict[str, ContributionDay] = {}
+        username = None
+        private = 0
+        for ds in datasets:
+            username = username or ds.username
+            private += ds.private_contributions
+            for day in ds.days:
+                known = by_date.get(day.date)
+                if known is None or day.count > known.count:
+                    by_date[day.date] = day
+        return cls(username=username, days=list(by_date.values()), private_contributions=private)
 
     def to_dict(self) -> dict[str, Any]:
         """Convert entire dataset to dictionary."""
         return {
             "username": self.username,
             "total_contributions": self.total_contributions,
+            "private_contributions": self.private_contributions,
             "start_date": self.start_date,
             "end_date": self.end_date,
             "days": [d.to_dict() for d in self.days],
@@ -170,23 +200,33 @@ class ContributionDataSet:
             user_login = user_data.get("login") or username
             col = user_data.get("contributionsCollection") or {}
             calendar = col.get("contributionCalendar") or {}
-            return cls._from_github_calendar(calendar, username=user_login)
+            return cls._from_github_calendar(
+                calendar,
+                username=user_login,
+                private=int(col.get("restrictedContributionsCount") or 0),
+            )
 
         if "contributionsCollection" in data:
-            calendar = data["contributionsCollection"].get("contributionCalendar") or {}
-            return cls._from_github_calendar(calendar, username=username)
+            col = data["contributionsCollection"]
+            calendar = col.get("contributionCalendar") or {}
+            return cls._from_github_calendar(
+                calendar,
+                username=username,
+                private=int(col.get("restrictedContributionsCount") or 0),
+            )
 
         if "contributionCalendar" in data:
             return cls._from_github_calendar(data["contributionCalendar"], username=username)
 
         # Standard canonical format: {"username": "...", "days": [...]}
         extracted_username = data.get("username", username)
+        private = int(data.get("private_contributions") or 0)
         raw_days = data.get("days", [])
         if not isinstance(raw_days, list):
             raise ValueError(f"Field 'days' must be a list, got {type(raw_days).__name__}")
 
         days = [cls._parse_day_dict(item) for item in raw_days]
-        return cls(username=extracted_username, days=days)
+        return cls(username=extracted_username, days=days, private_contributions=private)
 
     @classmethod
     def _parse_day_dict(cls, item: dict[str, Any]) -> ContributionDay:
@@ -222,7 +262,7 @@ class ContributionDataSet:
 
     @classmethod
     def _from_github_calendar(
-        cls, calendar: dict[str, Any], username: str | None = None
+        cls, calendar: dict[str, Any], username: str | None = None, private: int = 0
     ) -> ContributionDataSet:
         """Extract days from a GitHub contributionCalendar structure."""
         weeks = calendar.get("weeks", [])
@@ -230,7 +270,7 @@ class ContributionDataSet:
         for week in weeks:
             for day_dict in week.get("contributionDays", []):
                 days.append(cls._parse_day_dict(day_dict))
-        return cls(username=username, days=days)
+        return cls(username=username, days=days, private_contributions=private)
 
     @classmethod
     def from_json(cls, json_str: str, username: str | None = None) -> ContributionDataSet:
