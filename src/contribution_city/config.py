@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
+from datetime import date
 from pathlib import Path
 from typing import Any
 
 import yaml
 
-from contribution_city.renderer.svg import RenderConfig
+from contribution_city.renderer.svg import APPEARANCES, HEIGHT_MODES, LAYOUTS, RenderConfig
 from contribution_city.renderer.themes import THEMES
 
 
@@ -33,9 +35,18 @@ class CitySettings:
     show_platform: bool = True
     show_zero_tiles: bool = True
     custom_title: str | None = None
+    height_mode: str = "power"
+    transparent: bool = False
+    show_tooltips: bool = True
+    auto_fit: bool = True
+    pixel_art: bool = True
 
     def validate(self) -> None:
         """Validate city dimensions and scaling factors."""
+        if self.height_mode not in HEIGHT_MODES:
+            raise ConfigError(
+                f"city.height_mode must be one of {', '.join(HEIGHT_MODES)}, got '{self.height_mode}'"
+            )
         if not isinstance(self.width, int) or self.width < 300:
             raise ConfigError(f"city.width must be an integer >= 300, got {self.width}")
         if not isinstance(self.height, int) or self.height < 200:
@@ -59,7 +70,12 @@ class AppConfig:
     output_file: str = "dist/city.svg"
     theme: str = "navy-cyan"
     layout: str = "calendar"
+    appearance: str = "fixed"
     token: str | None = None
+    years: list[int] = field(default_factory=list)
+    date_from: str | None = None
+    date_to: str | None = None
+    retries: int = 2
     city: CitySettings = field(default_factory=CitySettings)
 
     def validate(self) -> None:
@@ -70,23 +86,43 @@ class AppConfig:
                 f"Invalid theme '{self.theme}'. Choose from: {', '.join(valid_themes)}"
             )
 
-        valid_layouts = ("calendar", "compact", "isometric")
-        if self.layout.lower() not in valid_layouts:
+        if self.layout.lower() == "isometric":
             raise ConfigError(
-                f"Invalid layout '{self.layout}'. Choose from: {', '.join(valid_layouts)}"
+                "Layout 'isometric' was removed: the 'calendar' layout already is the isometric "
+                "city. Use 'calendar' or 'compact'."
             )
+        if self.layout.lower() not in LAYOUTS:
+            raise ConfigError(f"Invalid layout '{self.layout}'. Choose from: {', '.join(LAYOUTS)}")
+
+        if self.appearance not in APPEARANCES:
+            raise ConfigError(
+                f"Invalid appearance '{self.appearance}'. Choose from: {', '.join(APPEARANCES)}"
+            )
+
+        this_year = date.today().year
+        for year in self.years:
+            if not 2008 <= year <= this_year:
+                raise ConfigError(
+                    f"Invalid year {year}. GitHub started in 2008; max is {this_year}."
+                )
+        for label, value in (("from", self.date_from), ("to", self.date_to)):
+            if value is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(value)):
+                raise ConfigError(f"'{label}' must be a date like 2025-01-31, got '{value}'")
+        if self.years and (self.date_from or self.date_to):
+            raise ConfigError("Use either 'years' or 'from'/'to', not both.")
+        if not 0 <= self.retries <= 10:
+            raise ConfigError(f"retries must be between 0 and 10, got {self.retries}")
 
         self.city.validate()
 
     def to_render_config(self) -> RenderConfig:
         """Convert to renderer configuration dataclass."""
-        # 'isometric' is alias for 'calendar'
-        effective_layout = "calendar" if self.layout == "isometric" else self.layout
         return RenderConfig(
             width=self.city.width,
             height=self.city.height,
             theme=self.theme,
-            layout=effective_layout,
+            layout=self.layout.lower(),
+            appearance=self.appearance,
             tile_width=self.city.tile_width,
             tile_height=self.city.tile_height,
             building_scale=self.city.building_scale,
@@ -98,6 +134,11 @@ class AppConfig:
             show_platform=self.city.show_platform,
             show_zero_tiles=self.city.show_zero_tiles,
             custom_title=self.city.custom_title,
+            height_mode=self.city.height_mode,
+            transparent=self.city.transparent,
+            show_tooltips=self.city.show_tooltips,
+            auto_fit=self.city.auto_fit,
+            pixel_art=self.city.pixel_art,
         )
 
     @classmethod
@@ -124,7 +165,22 @@ class AppConfig:
             show_platform=bool(city_data.get("show_platform", True)),
             show_zero_tiles=bool(city_data.get("show_zero_tiles", True)),
             custom_title=city_data.get("custom_title"),
+            height_mode=str(city_data.get("height_mode", "power")),
+            transparent=bool(city_data.get("transparent", False)),
+            show_tooltips=bool(city_data.get("show_tooltips", True)),
+            auto_fit=bool(city_data.get("auto_fit", True)),
+            pixel_art=bool(city_data.get("pixel_art", True)),
         )
+
+        raw_years = data.get("years") or []
+        if isinstance(raw_years, int):
+            raw_years = [raw_years]
+        try:
+            years = [int(y) for y in raw_years]
+        except (TypeError, ValueError) as err:
+            raise ConfigError(f"'years' must be a list of integers, got {raw_years!r}") from err
+        date_from = data.get("from")
+        date_to = data.get("to")
 
         app_cfg = cls(
             username=data.get("username"),
@@ -132,7 +188,12 @@ class AppConfig:
             output_file=data.get("output") or data.get("output_file", "dist/city.svg"),
             theme=str(data.get("theme", "navy-cyan")),
             layout=str(data.get("layout", "calendar")),
+            appearance=str(data.get("appearance", "fixed")),
             token=data.get("token"),
+            years=years,
+            date_from=str(date_from) if date_from is not None else None,
+            date_to=str(date_to) if date_to is not None else None,
+            retries=int(data.get("retries", 2)),
             city=city_settings,
         )
         app_cfg.validate()

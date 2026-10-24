@@ -7,7 +7,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from contribution_city import __version__
+from contribution_city._version import __version__
 from contribution_city.config import AppConfig, ConfigError
 from contribution_city.github_api import (
     GitHubAPIError,
@@ -18,6 +18,7 @@ from contribution_city.github_api import (
 )
 from contribution_city.models import ContributionDataSet
 from contribution_city.renderer import CityRenderer
+from contribution_city.renderer.svg import APPEARANCES, HEIGHT_MODES, LAYOUTS
 from contribution_city.renderer.themes import THEMES
 
 
@@ -47,6 +48,12 @@ Available Themes:
   sunset-neon       80s synthwave neon magenta, purple & sunset orange
   monochrome-slate  Minimalist obsidian, slate gray & ice white
   solar-amber       Warm industrial bronze & solar amber
+  profile           Navy night city, amber windows and gold peaks (matches a pixel-art banner)
+  profile-light     Light companion of 'profile'
+  navy-cyan-light   Light companion of 'navy-cyan'
+
+Light/dark: use --appearance auto with 'navy-cyan' or 'profile' to embed both palettes in one
+SVG, or generate a dark and a light file and switch them with an HTML <picture> element.
 """,
     )
 
@@ -94,7 +101,7 @@ Available Themes:
         )
         p.add_argument(
             "--layout",
-            choices=["calendar", "compact", "isometric"],
+            choices=list(LAYOUTS),
             help="Grid layout style (default: calendar)",
         )
         p.add_argument("--width", type=int, help="Canvas width in pixels (min 300)")
@@ -138,6 +145,69 @@ Available Themes:
             dest="custom_title",
             help="Custom title in HUD header",
         )
+        p.add_argument(
+            "--appearance",
+            choices=list(APPEARANCES),
+            help="'fixed' (default) or 'auto' (adds the theme's light palette; needs a theme with one)",
+        )
+        p.add_argument(
+            "--height-mode",
+            dest="height_mode",
+            choices=list(HEIGHT_MODES),
+            help="How building height grows with commits (default: power; 'linear' is proportional)",
+        )
+        p.add_argument(
+            "--year",
+            dest="years",
+            type=int,
+            action="append",
+            help="Calendar year to include; repeat for several years (live GitHub data only)",
+        )
+        p.add_argument(
+            "--from",
+            dest="date_from",
+            metavar="YYYY-MM-DD",
+            help="First day to include (live GitHub data, at most one year long)",
+        )
+        p.add_argument(
+            "--to",
+            dest="date_to",
+            metavar="YYYY-MM-DD",
+            help="Last day to include (live GitHub data)",
+        )
+        p.add_argument(
+            "--retries",
+            type=int,
+            help="How many times to retry temporary GitHub API failures (default: 2)",
+        )
+        p.add_argument(
+            "--transparent",
+            dest="transparent",
+            action="store_true",
+            default=None,
+            help="No background rectangle or stars, so the page behind the image shows through",
+        )
+        p.add_argument(
+            "--no-tooltips",
+            dest="show_tooltips",
+            action="store_false",
+            default=None,
+            help="Omit hover tooltips (smaller file)",
+        )
+        p.add_argument(
+            "--no-fit",
+            dest="auto_fit",
+            action="store_false",
+            default=None,
+            help="Do not scale the city to fill the canvas",
+        )
+        p.add_argument(
+            "--smooth",
+            dest="pixel_art",
+            action="store_false",
+            default=None,
+            help="Use anti-aliased edges instead of hard pixel-art edges",
+        )
 
     return parser
 
@@ -163,6 +233,26 @@ def build_config(args: argparse.Namespace) -> AppConfig:
         config.layout = args.layout
     if args.token is not None:
         config.token = args.token
+    if args.appearance is not None:
+        config.appearance = args.appearance
+    if args.years:
+        config.years = list(args.years)
+    if args.date_from is not None:
+        config.date_from = args.date_from
+    if args.date_to is not None:
+        config.date_to = args.date_to
+    if args.retries is not None:
+        config.retries = args.retries
+    if args.height_mode is not None:
+        config.city.height_mode = args.height_mode
+    if args.transparent is not None:
+        config.city.transparent = args.transparent
+    if args.show_tooltips is not None:
+        config.city.show_tooltips = args.show_tooltips
+    if args.auto_fit is not None:
+        config.city.auto_fit = args.auto_fit
+    if args.pixel_art is not None:
+        config.city.pixel_art = args.pixel_art
 
     if args.width is not None:
         config.city.width = args.width
@@ -188,14 +278,18 @@ def build_config(args: argparse.Namespace) -> AppConfig:
 def load_dataset(config: AppConfig) -> ContributionDataSet:
     """Load contribution dataset from either input file or GitHub API."""
     if config.input_file:
+        if config.years or config.date_from or config.date_to:
+            raise ValueError("--year/--from/--to only work with --username (live GitHub data).")
         path = Path(config.input_file)
         if not path.is_file():
             raise FileNotFoundError(f"Input file not found: {path}")
         return ContributionDataSet.from_file(path)
 
     if config.username:
-        client = GitHubClient(token=config.token)
-        return client.fetch_contributions(config.username)
+        client = GitHubClient(token=config.token, max_retries=config.retries)
+        if config.years:
+            return client.fetch_years(config.username, config.years)
+        return client.fetch_contributions(config.username, config.date_from, config.date_to)
 
     raise ValueError(
         "No data source specified. Please provide either --input <file.json> "

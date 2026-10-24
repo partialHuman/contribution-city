@@ -1,17 +1,31 @@
-# Contribution City Configuration Example
-username: octocat-architect
-theme: navy-cyan
-layout: calendar
+# Contribution City configuration example (every key is optional)
+username: octocat-architect       # live GitHub data (needs a token); or set `input:` for a JSON file
+theme: profile                    # see "Themes" in the README
+appearance: fixed                 # fixed | auto  (auto needs a theme with a light variant)
+layout: calendar                  # calendar | compact
 output: dist/city.svg
+
+# Pick one: a list of calendar years, or a date range of at most one year.
+# years: [2024, 2025]
+# from: 2025-01-01
+# to: 2025-12-31
+
+retries: 2                        # retries for temporary GitHub API failures (0-10)
 
 city:
   width: 1200
   height: 680
+  auto_fit: true                  # scale the city to fill the canvas
+  height_mode: linear             # power | linear | sqrt | log
   building_scale: 1.0
   min_building_height: 6.0
   max_building_height: 125.0
+  transparent: false              # true = no background rectangle or stars
+  show_tooltips: true             # false = smaller file
+  pixel_art: true                 # crisp pixel edges (false = smooth)
   show_windows: true
   show_stars: true
   show_header: true
   show_platform: true
   show_zero_tiles: true
+  # custom_title: "My City"
