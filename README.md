@@ -1,342 +1,213 @@
 # Contribution City
 
-[![Tests and Quality Checks](https://github.com/contribution-city/contribution-city/actions/workflows/tests.yml/badge.svg)](https://github.com/contribution-city/contribution-city/actions)
+[![Tests](https://github.com/partialHuman/contribution-city/actions/workflows/tests.yml/badge.svg)](https://github.com/partialHuman/contribution-city/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python: >=3.10](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue)](pyproject.toml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
 
-Transform your GitHub contribution activity into beautiful isometric pixel-art cities rendered as standalone, lightweight SVGs for GitHub profile READMEs and developer dashboards.
+Turn your GitHub contribution activity into an isometric pixel-art city, rendered as one small,
+deterministic SVG for profile READMEs and dashboards.
 
----
+<p align="center">
+  <img src="docs/preview-profile-dark.png" alt="Dark city: navy towers with amber windows" width="48%">
+  <img src="docs/preview-profile-light.png" alt="Light city: the same data in light colours" width="48%">
+</p>
 
-## Overview
+Each day is a building. Busy days grow into towers with lit windows and rooftop beacons.
+The same input and options always produce the same file.
 
-Contribution City generates an illuminated voxel metropolis from your daily GitHub commit and contribution counts. High-activity periods rise into towering skyscrapers with glowing windows and rooftop spires, while quieter days form sleek tech plinths and foundation slabs across a floating isometric circuit board.
-
-### Key Visual Identity
-
-- **Dark Navy Sky & Plinth**: Midnight indigo and deep navy gradients (`#050813` &rarr; `#0A1128`).
-- **Illuminated Cyan Towers**: Bright cyan, cobalt, and electric blue voxel buildings with sub-linear height scaling.
-- **Isometric Pixel-Art Details**: Shaded left/right depth faces, illuminated window slivers, and rooftop beacons for top tiers.
-- **Deterministic SVG**: Identical inputs and configurations generate byte-for-byte identical SVGs without random jitter.
-- **Zero Heavy Dependencies**: Pure Python geometry engine with `pyyaml` for configuration and standard library networking.
-
----
-
-## Feature Status
-
-| Feature | Status | Notes |
-|---------|--------|-------|
-| Isometric SVG Renderer | **Implemented (v0.1.0)** | Deterministic 2:1 dimetric projection with depth sorting |
-| Normalized Contribution Data Models | **Implemented (v0.1.0)** | Canonical JSON, flat list, and GitHub GraphQL parser |
-| Built-in Visual Themes | **Implemented (v0.1.0)** | `navy-cyan`, `matrix-green`, `sunset-neon`, `monochrome-slate`, `solar-amber` |
-| Grid Layouts | **Implemented (v0.1.0)** | `calendar` (52-week calendar) and `compact` (square downtown block) |
-| Python CLI (`contribution-city`) | **Implemented (v0.2.0)** | Subcommands, options, actionable validation errors |
-| YAML Configuration System | **Implemented (v0.2.0)** | Documented schema with validation |
-| GitHub GraphQL API Client | **Implemented (v0.3.0)** | Authenticated GraphQL retrieval with rate-limit and error handling |
-| Reusable GitHub Action | **Implemented (v0.4.0)** | Composite action (`action.yml`) with automated profile commit workflow |
-| Animated SVG / Keyframe Lighting | *Planned (v0.6.0)* | Optional CSS keyframe window and beacon pulses |
-| Raster Exports (PNG / WebP) | *Planned (v0.6.0)* | Headless rasterization without heavy system dependencies |
-| Interactive 3D Web Viewer | *Planned (v0.9.0)* | WebGL / Three.js interactive city explorer |
-
----
-
-## Installation
-
-### From Source (Editable Mode)
-
-Requirements: Python 3.10 or later.
+## Install
 
 ```bash
-git clone https://github.com/contribution-city/contribution-city.git
+git clone https://github.com/partialHuman/contribution-city
 cd contribution-city
-pip install -e .
+python -m pip install -e ".[dev]"
 ```
 
-To install with development dependencies (pytest, ruff):
+Python 3.10 or newer. The only runtime dependency is `pyyaml`.
+
+## Quick start
 
 ```bash
-pip install -e ".[dev]"
+# Offline, from the bundled sample data
+contribution-city generate --input examples/sample-contributions.json --output dist/city.svg
+
+# Live data from GitHub (needs a token with read access)
+export GITHUB_TOKEN=ghp_xxx
+contribution-city generate --username octocat --theme profile --height-mode linear
 ```
 
----
+## Command-line options
 
-## Command-Line Interface (CLI)
+| Option | Meaning |
+|---|---|
+| `-i, --input FILE` | Contributions JSON file (offline mode) |
+| `-u, --username NAME` | Fetch live data from GitHub |
+| `-t, --token TOKEN` | Token; defaults to `GITHUB_TOKEN` / `GH_TOKEN` |
+| `-c, --config FILE` | YAML configuration file; command-line options override it |
+| `-o, --output FILE` | Output SVG (default `dist/city.svg`) |
+| `--theme NAME` | Colour theme, see [Themes](#themes) |
+| `--appearance fixed\|auto` | `auto` adds a light palette that follows `prefers-color-scheme` |
+| `--layout calendar\|compact` | `calendar` = 53 weeks x 7 days; `compact` = spaced grid |
+| `--height-mode power\|linear\|sqrt\|log` | How building height grows with the count |
+| `--year YYYY` (repeatable) | Calendar years to include (live data) |
+| `--from DATE`, `--to DATE` | Date range, at most one year (live data) |
+| `--retries N` | Retries for temporary GitHub failures (default 2) |
+| `--width`, `--height`, `--scale` | Canvas size and building height multiplier |
+| `--transparent` | No background rectangle or stars |
+| `--no-tooltips` | Leave out hover tooltips (smaller file) |
+| `--no-fit` | Keep the configured tile size instead of filling the canvas |
+| `--smooth` | Anti-aliased edges instead of hard pixel edges |
+| `--no-windows`, `--no-stars`, `--no-header`, `--no-platform` | Hide those parts |
+| `--title TEXT` | Custom header title |
 
-The `contribution-city` command-line tool provides full control over data input, theme selection, layout style, and canvas geometry.
+### Height modes
 
-### 1. Generate from Local / Sample Data (Offline)
+| Mode | Height above the minimum |
+|---|---|
+| `power` (default) | grows with `count ** 0.78`, so huge days do not dwarf the rest |
+| `linear` | exactly proportional to the day's count (busiest day = maximum height) |
+| `sqrt` | proportional to the square root of the count |
+| `log` | proportional to `log(1 + count)` |
 
-Use the included fixture to generate a city without needing an internet connection or GitHub credentials:
+### Layouts
 
-```bash
-contribution-city generate \
-  --input examples/sample-contributions.json \
-  --theme navy-cyan \
-  --output dist/city.svg
-```
+`calendar` places each day on a GitHub-style grid (columns are weeks, rows are weekdays).
+`compact` packs days into a near-square block with one empty tile between buildings.
 
-Or run directly with Python:
+### Canvas size
 
-```bash
-python -m contribution_city.cli generate \
-  --input examples/sample-contributions.json \
-  --theme matrix-green \
-  --output dist/city-matrix.svg
-```
+By default the city is scaled to fill the canvas, so a bigger `--width` / `--height` gives a
+bigger city. Use `--no-fit` for the old fixed tile size.
 
-### 2. Generate Live City from GitHub Profile
+## Light and dark
 
-To fetch real-time contributions from GitHub, provide your username. GitHub's GraphQL API requires an authentication token:
+GitHub README images need a light and a dark version. There are two ways:
 
-```bash
-export GITHUB_TOKEN="ghp_yourPersonalAccessToken"
+1. **Two files and `<picture>` (works with GitHub's own theme).** Generate `profile` and
+   `profile-light` (or `navy-cyan` and `navy-cyan-light`) and switch with HTML:
 
-contribution-city generate \
-  --username octocat \
-  --theme navy-cyan \
-  --output dist/octocat-city.svg
-```
+   ```html
+   <picture>
+     <source media="(prefers-color-scheme: dark)"  srcset="city-dark.svg">
+     <source media="(prefers-color-scheme: light)" srcset="city-light.svg">
+     <img alt="My contribution city" src="city-dark.svg">
+   </picture>
+   ```
 
-You can also pass the token explicitly via `--token`:
+2. **One file with `--appearance auto`.** The SVG contains both palettes and switches with the
+   viewer's system setting. This is handy for documentation sites, but inside an `<img>` on
+   GitHub it follows your operating system, not GitHub's theme choice, so prefer option 1 there.
 
-```bash
-contribution-city generate \
-  --username octocat \
-  --token "$GITHUB_TOKEN" \
-  --output dist/octocat-city.svg
-```
+Themes with a light variant: `navy-cyan` and `profile`.
 
-### 3. Compact Metropolis Layout
+## Configuration file
 
-For a dense downtown square instead of the elongated 52-week calendar strip, use `--layout compact`:
-
-```bash
-contribution-city generate \
-  --input examples/sample-contributions.json \
-  --layout compact \
-  --width 1000 \
-  --height 620 \
-  --theme sunset-neon \
-  --output dist/city-compact.svg
-```
-
-### 4. CLI Options Reference
-
-| Flag | Short | Default | Description |
-|------|-------|---------|-------------|
-| `--input` | `-i` | `None` | Path to local JSON contribution dataset (offline mode) |
-| `--username` | `-u` | `None` | GitHub username to fetch live contributions from |
-| `--token` | `-t` | `$GITHUB_TOKEN` | GitHub Personal Access Token or Action token |
-| `--config` | `-c` | `None` | Path to YAML configuration file |
-| `--output` | `-o` | `dist/city.svg` | Destination path for output SVG |
-| `--theme` | | `navy-cyan` | Color palette (`navy-cyan`, `matrix-green`, `sunset-neon`, `monochrome-slate`, `solar-amber`) |
-| `--layout` | | `calendar` | Layout style (`calendar`, `compact`, `isometric`) |
-| `--width` | | `1200` | Canvas width in pixels (min 300) |
-| `--height` | | `680` | Canvas height in pixels (min 200) |
-| `--scale` | | `1.0` | Building height scaling factor (0.1 to 5.0) |
-| `--no-windows` | | `False` | Disable illuminated pixel windows on building sides |
-| `--no-stars` | | `False` | Disable sky constellation stars |
-| `--no-header` | | `False` | Disable HUD stats header overlay |
-| `--no-platform` | | `False` | Disable ground plinth platform beneath the city |
-| `--title` | | `None` | Custom title string in HUD header |
-| `--help` | `-h` | | Show help message and examples |
-| `--version` | `-v` | | Show program version |
-
----
-
-## Configuration Reference
-
-You can configure Contribution City using a YAML file. CLI flags always take precedence over configuration file values.
-
-### Example Configuration (`config.yaml`)
+See [`examples/config.example.yaml`](examples/config.example.yaml) for every option. Example:
 
 ```yaml
-# GitHub profile or local input
-username: octocat-architect
-theme: navy-cyan
-layout: calendar
-output: dist/city.svg
-
+username: octocat
+theme: profile
+appearance: fixed
+years: [2024, 2025]
 city:
-  width: 1200
-  height: 680
-  tile_width: 18.0
-  tile_height: 9.0
-  building_scale: 1.0
-  min_building_height: 6.0
-  max_building_height: 125.0
-  show_windows: true
-  show_stars: true
-  show_header: true
-  show_platform: true
-  show_zero_tiles: true
+  height_mode: linear
+  transparent: true
 ```
 
-Run with:
+`years` and `from`/`to` cannot be combined. GitHub allows one year per request, so several
+years are fetched one by one and merged.
 
-```bash
-contribution-city generate --config examples/config.example.yaml
-```
+## GitHub Action
 
----
-
-## Reusable GitHub Action
-
-Contribution City includes a GitHub Action (`action.yml`) that can automatically generate and commit your city visualization to your GitHub profile repository on a daily schedule.
-
-### Consumer Workflow Example (`.github/workflows/profile-city.yml`)
-
-Create this file in your personal profile repository (`<username>/<username>`):
+Use it from any repository:
 
 ```yaml
-name: Update Contribution City
-
-on:
-  schedule:
-    # Run every day at 00:00 UTC
-    - cron: "0 0 * * *"
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Generate Contribution City
-        uses: contribution-city/contribution-city@v0.1.0
-        with:
-          username: ${{ github.repository_owner }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          theme: "navy-cyan"
-          layout: "calendar"
-          output: "dist/contribution-city.svg"
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/contribution-city.svg
-          if git diff --staged --quiet; then
-            echo "No changes in city SVG"
-          else
-            git commit -m "Update Contribution City [skip ci]"
-            git push
-          fi
+- uses: partialHuman/contribution-city@v1
+  with:
+    username: ${{ github.repository_owner }}
+    token: ${{ secrets.GITHUB_TOKEN }}
+    theme: profile
+    height-mode: linear
+    transparent: "true"
+    output: dist/city.svg
 ```
 
-### Action Inputs
+A complete daily workflow that publishes to a separate `output` branch (a single commit, so your
+history never grows) is in
+[`examples/workflows/generate-profile-city.yml`](examples/workflows/generate-profile-city.yml).
+Your profile README then points at
+`https://raw.githubusercontent.com/OWNER/OWNER/output/city-dark.svg`.
 
-| Input | Required | Default | Description |
-|-------|----------|---------|-------------|
-| `username` | No | `${{ github.repository_owner }}` | GitHub username to visualize |
-| `token` | No | `${{ github.token }}` | Token with read permission for contributions |
-| `theme` | No | `navy-cyan` | Visual theme name |
-| `layout` | No | `calendar` | Grid layout (`calendar`, `compact`) |
-| `output` | No | `dist/city.svg` | Destination path for SVG |
-| `config` | No | `""` | Path to optional YAML config file |
-| `input` | No | `""` | Path to local JSON fixture (offline testing) |
+### Inputs
 
-### Security & Token Permissions
+| Input | Default | Notes |
+|---|---|---|
+| `username` | repository owner | GitHub user |
+| `token` | `github.token` | A personal access token with `read:user` also counts private activity |
+| `theme` | `navy-cyan` | |
+| `layout` | `calendar` | `calendar` or `compact` |
+| `appearance` | `fixed` | `fixed` or `auto` |
+| `height-mode` | `power` | `power`, `linear`, `sqrt`, `log` |
+| `years` | | Comma-separated, for example `2024,2025` |
+| `from`, `to` | | `YYYY-MM-DD`, at most one year |
+| `transparent` | `false` | |
+| `tooltips` | `true` | |
+| `auto-fit` | `true` | |
+| `retries` | `2` | |
+| `config` | | YAML file |
+| `input` | | Local JSON file (offline) |
+| `output` | `dist/city.svg` | |
+| `width`, `height`, `scale` | | Canvas size, height multiplier |
 
-- **Permissions**: The automated commit step requires `contents: write` permission for `GITHUB_TOKEN`.
-- **Public vs. Private Contributions**: By default, standard GitHub tokens access public contribution activity. Private contributions are only included if the token has the necessary private user scope and the user's GitHub profile is configured to include private contributions in their activity graph.
-- **Credential Hygiene**: Tokens are transmitted via secure HTTPS headers and are never printed to console logs or embedded in generated SVG files.
+Output: `svg-path`, the path of the generated file.
 
----
+### Security
 
-## Supported Color Themes
+- Inputs reach the script only as environment variables, never as pasted shell text.
+- The token is read from the environment and is never placed on a command line.
+- Pin the action to a tag or commit SHA in your workflow, and pin third-party actions to commit
+  SHAs as this repository does.
+- Give the workflow only `contents: write`, and only if it pushes.
 
-| Theme Name | Description | Dominant Colors |
-|------------|-------------|-----------------|
-| `navy-cyan` | Signature cyberpunk developer theme | Deep navy, electric cyan, cobalt |
-| `matrix-green` | Phosphor green terminal matrix | Obsidian, emerald, phosphor lime |
-| `sunset-neon` | 80s synthwave vaporwave aesthetic | Midnight purple, neon pink, sunset orange |
-| `monochrome-slate` | Clean architectural minimalist | Obsidian, slate gray, ice white |
-| `solar-amber` | Warm industrial golden glow | Dark bronze, solar amber, sunburst gold |
+## Themes
 
----
+| Theme | Look | Light variant |
+|---|---|---|
+| `navy-cyan` (default) | Deep navy sky, electric cyan towers | `navy-cyan-light` |
+| `profile` | Navy night city, amber windows, gold peaks | `profile-light` |
+| `matrix-green` | Phosphor green on black | |
+| `sunset-neon` | Synthwave magenta, purple and orange | |
+| `monochrome-slate` | Slate and ice white | |
+| `solar-amber` | Warm bronze and amber | |
 
-## Development and Testing
+## Data format
 
-Contribution City follows high standards for code quality, typing, and test coverage.
+`examples/sample-contributions.json` shows the format. The loader also accepts the raw
+GitHub GraphQL response and a flat list of `{ "date", "count" }` objects. Private activity is
+read from `restrictedContributionsCount` and shown in the header.
 
-### Running Tests
+## Output notes
 
-Run the complete test suite with `pytest`:
+- **Size:** the sample year is about 140 KB (about 130 KB without tooltips).
+- **Accessibility:** the root element has `role="img"`, a `<title>` and a `<desc>` with your totals.
+- **Safety:** every piece of text is escaped, and the output never contains scripts.
+- **Deterministic:** no randomness, so unchanged data gives an identical file and no new commit.
+
+## Development
 
 ```bash
+python -m pip install -e ".[dev]"
 pytest
+ruff check . && ruff format --check .
 ```
 
-Run with verbose output:
-
-```bash
-python -m pytest -v
-```
-
-### Code Formatting & Linting
-
-We use [Ruff](https://github.com/astral-sh/ruff) for fast, consistent linting and formatting:
-
-```bash
-# Check code style and common errors
-python -m ruff check .
-
-# Check code formatting
-python -m ruff format --check .
-
-# Auto-format codebase
-python -m ruff format .
-```
-
----
-
-## Versioned Roadmap
-
-- **v0.1.0** *(Current)*:
-  - Normalized contribution data models & JSON fixture parser.
-  - Deterministic isometric 2:1 dimetric SVG rendering engine.
-  - Signature `navy-cyan` visual identity with illuminated building faces, windows, and rooftop spires.
-- **v0.2.0** *(Current)*:
-  - Command-line interface (`contribution-city generate`).
-  - YAML configuration schema with strict validation.
-- **v0.3.0** *(Current)*:
-  - GitHub GraphQL API client with token authentication and rate-limit handling.
-- **v0.4.0** *(Current)*:
-  - Reusable composite GitHub Action (`action.yml`) with automated commit workflow example.
-- **v0.5.0**:
-  - Expanded architectural styles (e.g., neo-brutalist, art-deco spires, floating bridges).
-  - Custom palette definitions via user YAML files.
-- **v0.6.0**:
-  - Optional CSS keyframe animations (twinkling window patterns, beacon pulse).
-  - Additional raster exports (PNG / WebP).
-- **v0.8.0**:
-  - Public Python API and extensible pluggable renderer backends.
-- **v0.9.0**:
-  - Interactive 3D WebGL browser visualizer prototype.
-- **v1.0.0**:
-  - Stable CLI and GitHub Action API contracts, GitHub Marketplace publication, and verified releases.
-
----
+The tests include a snapshot of a tiny city. After an intended rendering change, refresh it with
+`UPDATE_SNAPSHOTS=1 pytest`.
 
 ## Contributing
 
-Contributions, bug reports, and feature suggestions are welcome!
-
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/amazing-feature`.
-3. Ensure all tests pass (`pytest`) and code is formatted (`ruff check .`, `ruff format .`).
-4. Commit your changes: `git commit -m "Add amazing feature"`.
-5. Push to the branch: `git push origin feature/amazing-feature`.
-6. Open a Pull Request.
-
----
+Issues and pull requests are welcome. Please run the tests and Ruff first.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+MIT, see [LICENSE](LICENSE).
