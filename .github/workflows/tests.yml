@@ -1,5 +1,12 @@
 name: Tests and Quality Checks
 
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [main]
@@ -13,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.12"
 
@@ -42,10 +49,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
@@ -70,9 +77,17 @@ jobs:
         uses: ./
         with:
           input: examples/sample-contributions.json
-          theme: matrix-green
+          theme: profile
+          appearance: auto
           layout: compact
+          height-mode: linear
+          transparent: "true"
           output: dist/composite-action-test.svg
+
+      - name: Check generated SVG is well-formed XML
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: python -c "import xml.dom.minidom as m; m.parse('dist/composite-action-test.svg'); print('well-formed')"
+        shell: bash
 
       - name: Verify composite action output was generated
         if: runner.os == 'Linux' && matrix.python-version == '3.12'

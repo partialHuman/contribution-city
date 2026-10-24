@@ -1,44 +1,87 @@
-name: Generate Contribution City for Profile
+# Generates your Contribution City every day and publishes it to a separate "output" branch,
+# so your main branch history stays clean. Put this file in .github/workflows/ of your profile
+# repository (the one named exactly like your GitHub username).
+#
+# Your README then shows the images with a <picture> element, which follows GitHub's theme:
+#
+#   <picture>
+#     <source media="(prefers-color-scheme: dark)"  srcset="https://raw.githubusercontent.com/OWNER/OWNER/output/city-dark.svg">
+#     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/OWNER/OWNER/output/city-light.svg">
+#     <img alt="My contribution city" src="https://raw.githubusercontent.com/OWNER/OWNER/output/city-dark.svg">
+#   </picture>
+name: Generate Contribution City
 
 on:
   schedule:
-    # Run once daily at midnight UTC
-    - cron: "0 0 * * *"
+    - cron: "17 4 * * *"
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/generate-profile-city.yml"
 
-# Required permissions for GITHUB_TOKEN to commit generated city
 permissions:
   contents: write
 
+concurrency:
+  group: contribution-city
+  cancel-in-progress: true
+
 jobs:
-  build-city:
-    name: Generate City Visualization
+  generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout profile repository
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Generate Contribution City SVG
-        uses: contribution-city/contribution-city@v0.1.0
+      - name: Generate dark city
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          # GITHUB_TOKEN sees public activity. To include private contributions, create a
+          # personal access token with the read:user scope and store it as a secret.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: profile
+          height-mode: linear
+          transparent: "true"
+          output: dist/city-dark.svg
+
+      - name: Generate light city
+        uses: partialHuman/contribution-city@v1
         with:
           username: ${{ github.repository_owner }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          theme: "navy-cyan"
-          layout: "calendar"
-          output: "dist/contribution-city.svg"
+          theme: profile-light
+          height-mode: linear
+          transparent: "true"
+          output: dist/city-light.svg
 
-      - name: Commit and push SVG if changed
+      - name: Publish to the output branch
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/contribution-city.svg
-          if git diff --staged --quiet; then
-            echo "No changes in contribution city SVG. Skipping commit."
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Work in a separate checkout of the output branch (created on first run)
+          if git ls-remote --exit-code --heads origin output > /dev/null 2>&1; then
+            git fetch --depth=1 origin output
+            git worktree add ../output-branch origin/output
+            git -C ../output-branch checkout -B output
           else
-            git commit -m "Update Contribution City visualization [skip ci]"
-            git push
+            git worktree add --detach ../output-branch
+            git -C ../output-branch checkout --orphan output
+            git -C ../output-branch rm -rf --quiet . || true
           fi
+
+          cp dist/city-dark.svg dist/city-light.svg ../output-branch/
+          cd ../output-branch
+          git add city-dark.svg city-light.svg
+
+          if git diff --staged --quiet; then
+            echo "City unchanged, nothing to publish."
+            exit 0
+          fi
+
+          # Keep exactly one commit on the output branch so the repository never grows
+          if git rev-parse --verify --quiet HEAD > /dev/null; then
+            git commit --amend --quiet -m "chore: update contribution city [skip ci]"
+          else
+            git commit --quiet -m "chore: update contribution city [skip ci]"
+          fi
+          git push --force origin HEAD:output
