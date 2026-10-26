@@ -62,9 +62,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install ".[dev]"
 
+      # Pixel comparisons against the approved baselines run once, in the "visual" job below,
+      # so a font or renderer difference on one operating system cannot fail the whole matrix.
       - name: Run test suite with pytest
         run: |
-          pytest --tb=short
+          pytest --tb=short -m "not baseline"
 
       - name: Verify CLI executable works
         run: |
@@ -94,3 +96,72 @@ jobs:
         run: |
           test -f dist/composite-action-test.svg || exit 1
         shell: bash
+
+  visual:
+    name: Visual regression and gallery
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies and package
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[dev]"
+
+      - name: Compare renders with the approved baselines
+        run: |
+          contribution-city visual check --baseline-dir tests/visual/baselines --artifacts-dir visual-artifacts
+          pytest --tb=short -m baseline
+
+      - name: Upload comparison artifacts (only when the comparison fails)
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: visual-regression-failures
+          path: visual-artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Generate the preview gallery
+        if: always()
+        run: |
+          contribution-city gallery --output-dir gallery --fail-on-error
+          contribution-city check-svg gallery/svg/*.svg
+
+      - name: Upload the gallery (contact sheet, manifest, SVGs, thumbnails)
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: contribution-city-gallery
+          path: gallery/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  build:
+    name: Build package
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Build wheel and check the reported version
+        run: |
+          python -m pip install --upgrade pip
+          pip wheel . --no-deps -w wheelhouse
+          pip install wheelhouse/*.whl
+          contribution-city --version
+          python -c "import contribution_city; print(contribution_city.__version__)"
