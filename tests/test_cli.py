@@ -137,22 +137,39 @@ class TestNewCliOptions:
         assert code == 1
         assert "no light variant" in capsys.readouterr().err
 
-    def test_years_need_a_username(
-        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
-    ) -> None:
+    def test_years_filter_works_on_offline_files_too(self, tmp_path: Path) -> None:
+        out = tmp_path / "x.svg"
         code = main(
             [
                 "generate",
                 "--input",
                 "examples/sample-contributions.json",
                 "--year",
-                "2024",
+                "2025",
                 "--output",
-                str(tmp_path / "x.svg"),
+                str(out),
             ]
         )
-        assert code == 1
-        assert "--username" in capsys.readouterr().err
+        assert code == 0 and "1,116" in out.read_text(encoding="utf-8")
+
+    def test_year_without_matching_days_gives_a_note_and_an_empty_city(
+        self, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        out = tmp_path / "x.svg"
+        code = main(
+            [
+                "generate",
+                "--input",
+                "examples/sample-contributions.json",
+                "--year",
+                "2019",
+                "--output",
+                str(out),
+            ]
+        )
+        assert code == 0
+        assert "no days" in capsys.readouterr().err
+        assert "No contribution data" in out.read_text(encoding="utf-8")
 
     def test_isometric_layout_is_no_longer_accepted(self) -> None:
         with pytest.raises(SystemExit):

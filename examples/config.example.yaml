@@ -1,8 +1,8 @@
 # Contribution City configuration example (every key is optional)
 username: octocat-architect       # live GitHub data (needs a token); or set `input:` for a JSON file
-theme: profile                    # see "Themes" in the README
+theme: neon-harbor                # navy-cyan, profile, cyberpunk, ... (see "Themes" in the README)
 appearance: fixed                 # fixed | auto  (auto needs a theme with a light variant)
-layout: calendar                  # calendar | compact
+layout: calendar                  # calendar | compact | dense-grid | downtown | floating-island | wireframe
 output: dist/city.svg
 
 # Pick one: a list of calendar years, or a date range of at most one year.
@@ -20,7 +20,9 @@ city:
   building_scale: 1.0
   min_building_height: 6.0
   max_building_height: 125.0
-  transparent: false              # true = no background rectangle or stars
+  background: solid               # solid | transparent | transparent-sky | auto (wins over `transparent`)
+  transparent: false              # legacy: true = same as background: transparent
+  # id_prefix: city                # only when inlining several SVGs into one HTML page
   show_tooltips: true             # false = smaller file
   pixel_art: true                 # crisp pixel edges (false = smooth)
   show_windows: true

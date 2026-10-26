@@ -3,27 +3,42 @@
 from __future__ import annotations
 
 import math
+import re
+import warnings
 from dataclasses import dataclass
-from datetime import timedelta
 from html import escape
 
 from contribution_city.models import ContributionDataSet, ContributionDay
 from contribution_city.renderer.geometry import IsoProjection, Point2D, polygon_svg_points
+from contribution_city.renderer.layouts import LAYOUT_NAMES, LAYOUT_SPECS, GridItem
 from contribution_city.renderer.themes import LevelPalette, Theme, get_light_pair, get_theme
 
 HEIGHT_MODES = ("power", "linear", "sqrt", "log")
 APPEARANCES = ("fixed", "auto")
-LAYOUTS = ("calendar", "compact")
+LAYOUTS = LAYOUT_NAMES
+BACKGROUND_MODES = ("solid", "transparent", "transparent-sky", "auto")
+_ID_PREFIX = re.compile(r"[A-Za-z][A-Za-z0-9_-]{0,30}")
+# Element ids used when no id_prefix is configured (kept for backward compatibility)
+_LEGACY_IDS = {
+    "title": "cc-title",
+    "desc": "cc-desc",
+    "bg": "bg",
+    "glow": "glow",
+    "stars": "sky-stars",
+    "platform": "city-platform",
+    "blocks": "city-blocks",
+    "hud": "city-hud",
+    "empty": "empty-state",
+}
 
 # Layout constants (in "base" pixels, scaled together with the city when auto-fit is on)
 PLINTH_DEPTH = 16.0
 FLOOR_SPACING = 7.0
 SIDE_MARGIN = 40.0
 BOTTOM_MARGIN = 30.0
-COMPACT_STRIDE = 2  # compact layout leaves one empty tile between buildings
 MIN_SCALE, MAX_SCALE = 0.5, 3.0
-
-GridItem = tuple[int, int, ContributionDay | None]
+ISLAND_SLAB = 26.0  # thickness of the floating island's top slab
+ISLAND_SHADOW = 30.0  # space reserved for the island's shadow
 
 
 @dataclass
@@ -33,7 +48,7 @@ class RenderConfig:
     width: int = 1200
     height: int = 680
     theme: str | Theme = "navy-cyan"
-    layout: str = "calendar"  # 'calendar' or 'compact'
+    layout: str = "calendar"  # see LAYOUTS: calendar, compact, dense-grid, downtown, ...
     tile_width: float = 18.0
     tile_height: float = 9.0
     building_scale: float = 1.0
@@ -50,8 +65,14 @@ class RenderConfig:
     # 'fixed' uses the theme as-is; 'auto' also embeds the light companion of the theme and
     # switches with the viewer's prefers-color-scheme (needs a theme with a light variant)
     appearance: str = "fixed"
-    # Skip the background rectangle (and sky stars) so the page shows through
+    # Legacy switch: skip the background rectangle and sky stars. Superseded by ``background``.
     transparent: bool = False
+    # Background mode: 'solid', 'transparent', 'transparent-sky' (stars only) or 'auto'. When set it
+    # takes precedence over ``transparent``; None keeps the v1.1 behaviour (see ``transparent``).
+    background: str | None = None
+    # Prefix for every element id and CSS rule. Set it when several SVGs are inlined into one HTML
+    # page so their ids and styles cannot collide. None keeps the original ids.
+    id_prefix: str | None = None
     # Add hover tooltips to buildings (empty tiles never get tooltips, to keep files small)
     show_tooltips: bool = True
     # Scale the whole city so it fills the canvas
@@ -67,16 +88,53 @@ def _luminance(hex_color: str) -> float:
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
-def _css_rules(th: Theme) -> list[str]:
-    """CSS rules (class -> colors) for one theme."""
+def _shade(hex_color: str, factor: float) -> str:
+    """Darken a #RRGGBB colour by multiplying each channel with ``factor``."""
+    h = hex_color.lstrip("#")
+    r, g, b = (min(255, int(int(h[i : i + 2], 16) * factor)) for i in (0, 2, 4))
+    return f"#{r:02X}{g:02X}{b:02X}"
+
+
+def _mix(base: str, other: str, amount: float) -> str:
+    """Blend ``base`` towards ``other`` (amount 0 = base, 1 = other)."""
+    a, b = base.lstrip("#"), other.lstrip("#")
+    ch = [
+        round(int(a[i : i + 2], 16) * (1 - amount) + int(b[i : i + 2], 16) * amount)
+        for i in (0, 2, 4)
+    ]
+    return "#{:02X}{:02X}{:02X}".format(*ch)
+
+
+def _css_rules(
+    th: Theme, wireframe: bool = False, island: bool = False, scope: str | None = None
+) -> list[str]:
+    """CSS rules (class -> colors) for one theme.
+
+    ``wireframe`` draws outlines over an opaque "paper" colour (the theme's lower background
+    colour) so hidden lines stay hidden. ``island`` adds the underside shades. ``scope`` prefixes
+    every selector so several SVGs can share one HTML page.
+    """
     star_white = th.text_secondary if _luminance(th.bg_top) > 0.5 else "#FFFFFF"
+    paper = th.bg_bottom
     rules = [
         f".bt{{stop-color:{th.bg_top}}}",
         f".bb{{stop-color:{th.bg_bottom}}}",
-        f".gt{{fill:{th.ground_tile_fill};stroke:{th.ground_tile_stroke};stroke-width:.5}}",
-        f".pt{{fill:{th.platform_top};stroke:{th.platform_grid};stroke-width:1}}",
-        f".pl{{fill:{th.platform_left};stroke:{th.platform_grid};stroke-width:.75}}",
-        f".pr{{fill:{th.platform_right};stroke:{th.platform_grid};stroke-width:.75}}",
+    ]
+    if wireframe:
+        rules += [
+            f".gt{{fill:none;stroke:{th.ground_tile_stroke};stroke-width:.6}}",
+            f".pt{{fill:none;stroke:{th.platform_grid};stroke-width:1}}",
+            f".pl{{fill:{paper};stroke:{th.platform_grid};stroke-width:1}}",
+            f".pr{{fill:{paper};stroke:{th.platform_grid};stroke-width:1}}",
+        ]
+    else:
+        rules += [
+            f".gt{{fill:{th.ground_tile_fill};stroke:{th.ground_tile_stroke};stroke-width:.5}}",
+            f".pt{{fill:{th.platform_top};stroke:{th.platform_grid};stroke-width:1}}",
+            f".pl{{fill:{th.platform_left};stroke:{th.platform_grid};stroke-width:.75}}",
+            f".pr{{fill:{th.platform_right};stroke:{th.platform_grid};stroke-width:.75}}",
+        ]
+    rules += [
         f".tp{{fill:{th.text_primary}}}",
         f".ts{{fill:{th.text_secondary}}}",
         f".ta{{fill:{th.text_accent}}}",
@@ -86,17 +144,41 @@ def _css_rules(th: Theme) -> list[str]:
         f".kc{{stroke:{th.star_color}}}",
     ]
     for lvl, p in th.levels.items():
+        if wireframe:
+            rules += [
+                f".R{lvl}{{fill:{paper};stroke:{p.roof};stroke-width:1.4}}",
+                f".A{lvl}{{fill:{paper};stroke:{p.roof};stroke-width:1.4;stroke-opacity:.8}}",
+                f".Z{lvl}{{fill:{paper};stroke:{p.roof};stroke-width:1.4;stroke-opacity:.6}}",
+            ]
+        else:
+            rules += [
+                f".R{lvl}{{fill:{p.roof};stroke:{p.stroke};stroke-width:.6}}",
+                f".A{lvl}{{fill:{p.left_face};stroke:{p.stroke};stroke-width:.6}}",
+                f".Z{lvl}{{fill:{p.right_face};stroke:{p.stroke};stroke-width:.6}}",
+            ]
         rules += [
-            f".R{lvl}{{fill:{p.roof};stroke:{p.stroke};stroke-width:.6}}",
-            f".A{lvl}{{fill:{p.left_face};stroke:{p.stroke};stroke-width:.6}}",
-            f".Z{lvl}{{fill:{p.right_face};stroke:{p.stroke};stroke-width:.6}}",
             f".WL{lvl}{{stroke:{p.window_lit};opacity:.9}}",
             f".WD{lvl}{{stroke:{p.window_dim};opacity:.4}}",
             f".XL{lvl}{{stroke:{p.window_lit};opacity:.75}}",
             f".XD{lvl}{{stroke:{p.window_dim};opacity:.3}}",
-            f".N{lvl}{{stroke:{p.stroke};stroke-width:1}}",
+            f".N{lvl}{{stroke:{p.roof if wireframe else p.stroke};stroke-width:1}}",
             f".G{lvl}{{fill:{p.antenna_glow}}}",
         ]
+    if island:
+        # Rock underside: the platform colours pulled towards the grid colour so it stays visible,
+        # getting darker with each step down
+        for tier, mix in enumerate((0.38, 0.28, 0.18), start=1):
+            left = _mix(th.platform_left, th.platform_grid, mix)
+            right = _mix(th.platform_right, th.platform_grid, mix * 0.7)
+            stroke = th.platform_grid
+            rules += [
+                f".ul{tier}{{fill:{left};stroke:{stroke};stroke-width:.5}}",
+                f".ur{tier}{{fill:{right};stroke:{stroke};stroke-width:.5}}",
+            ]
+        shadow = 0.12 if _luminance(th.bg_top) > 0.5 else 0.3
+        rules.append(f".sh{{fill:#000;opacity:{shadow}}}")
+    if scope:
+        rules = [f".{scope} {rule}" for rule in rules]
     return rules
 
 
@@ -115,8 +197,19 @@ class CityRenderer:
             raise ValueError(
                 f"Unknown appearance '{cfg.appearance}'. Choose from: {', '.join(APPEARANCES)}"
             )
-        if cfg.layout.lower() not in LAYOUTS:
+        if cfg.layout.lower() not in LAYOUT_SPECS:
             raise ValueError(f"Unknown layout '{cfg.layout}'. Choose from: {', '.join(LAYOUTS)}")
+        if cfg.background is not None and cfg.background not in BACKGROUND_MODES:
+            raise ValueError(
+                f"Unknown background '{cfg.background}'. Choose from: {', '.join(BACKGROUND_MODES)}"
+            )
+        if cfg.id_prefix is not None and not _ID_PREFIX.fullmatch(cfg.id_prefix):
+            raise ValueError(
+                f"Invalid id_prefix '{cfg.id_prefix}'. Use letters, digits, '-' or '_' "
+                "(start with a letter, at most 31 characters)."
+            )
+        self.layout_spec = LAYOUT_SPECS[cfg.layout.lower()]
+        self.background_mode = self._resolve_background()
 
         self.theme = get_theme(cfg.theme) if isinstance(cfg.theme, str) else cfg.theme
         self.light_theme: Theme | None = None
@@ -125,6 +218,31 @@ class CityRenderer:
 
         self._max_count = 0
         self._scale = 1.0
+
+    def _resolve_background(self) -> str:
+        """Effective background mode: solid, transparent or transparent-sky.
+
+        ``background`` (when set) wins over the legacy ``transparent`` flag. ``auto`` keeps a
+        solid backdrop for fixed palettes and lets the page show through (stars stay) when the
+        SVG carries both a dark and a light palette (appearance="auto").
+        """
+        cfg = self.config
+        if cfg.background is None:
+            return "transparent" if cfg.transparent else "solid"
+        if cfg.transparent and cfg.background == "solid":
+            warnings.warn(
+                "background='solid' overrides transparent=True; remove one of the two settings.",
+                UserWarning,
+                stacklevel=3,
+            )
+        if cfg.background == "auto":
+            return "transparent-sky" if cfg.appearance == "auto" else "solid"
+        return cfg.background
+
+    def _id(self, name: str) -> str:
+        """Element id, namespaced when ``id_prefix`` is set."""
+        prefix = self.config.id_prefix
+        return _LEGACY_IDS[name] if prefix is None else f"{prefix}-{name}"
 
     # ------------------------------------------------------------------ public
 
@@ -136,25 +254,32 @@ class CityRenderer:
         iso = self._calculate_projection(grid_items)
 
         title, desc = self._accessible_text(dataset)
+        scope_attr = f' class="{cfg.id_prefix}"' if cfg.id_prefix else ""
         shape = "crispEdges" if cfg.pixel_art else "geometricPrecision"
 
         parts: list[str] = [
             '<?xml version="1.0" encoding="UTF-8"?>',
             f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {cfg.width} {cfg.height}" '
-            f'width="{cfg.width}" height="{cfg.height}" shape-rendering="{shape}" '
-            f'role="img" aria-labelledby="cc-title cc-desc">',
-            f'  <title id="cc-title">{escape(title)}</title>',
-            f'  <desc id="cc-desc">{escape(desc)}</desc>',
+            f'width="{cfg.width}" height="{cfg.height}" shape-rendering="{shape}"'
+            f"{scope_attr} "
+            f'role="img" aria-labelledby="{self._id("title")} {self._id("desc")}">',
+            f'  <title id="{self._id("title")}">{escape(title)}</title>',
+            f'  <desc id="{self._id("desc")}">{escape(desc)}</desc>',
             self._render_style_and_defs(),
         ]
 
-        if not cfg.transparent:
-            parts.append(f'  <rect width="{cfg.width}" height="{cfg.height}" fill="url(#bg)" />')
-            if cfg.show_stars:
-                parts.append(self._render_stars())
+        if self.background_mode == "solid":
+            parts.append(
+                f'  <rect width="{cfg.width}" height="{cfg.height}" fill="url(#{self._id("bg")})" />'
+            )
+        if self.background_mode in ("solid", "transparent-sky") and cfg.show_stars:
+            parts.append(self._render_stars())
 
         if cfg.show_platform and grid_items:
-            parts.append(self._render_platform(iso, grid_items))
+            if self.layout_spec.island:
+                parts.append(self._render_island(iso, grid_items))
+            else:
+                parts.append(self._render_platform(iso, grid_items))
 
         if grid_items:
             parts.append(self._render_city_blocks(iso, grid_items))
@@ -170,29 +295,10 @@ class CityRenderer:
     # ------------------------------------------------------------------ layout
 
     def _build_grid(self, dataset: ContributionDataSet) -> list[GridItem]:
-        """Map days to (col, row, day) grid coordinates."""
+        """Map days to (col, row, day) grid coordinates using the selected layout."""
         if not dataset.days:
             return []
-
-        days = dataset.days
-        layout = self.config.layout.lower()
-
-        if layout == "compact":
-            total = len(days)
-            cols = math.isqrt(total)
-            if cols * cols < total:
-                cols += 1
-            cols = max(7, int(cols * 1.3))
-            return [
-                ((idx % cols) * COMPACT_STRIDE, (idx // cols) * COMPACT_STRIDE, day)
-                for idx, day in enumerate(days)
-            ]
-
-        # 'calendar': GitHub 52-53 weeks x 7 weekdays (0 = Sunday)
-        first_date = days[0].date_obj
-        first_gh_weekday = (first_date.weekday() + 1) % 7
-        anchor_sunday = first_date - timedelta(days=first_gh_weekday)
-        return [((day.date_obj - anchor_sunday).days // 7, day.weekday, day) for day in days]
+        return self.layout_spec.place(dataset.days)
 
     def _max_base_height(self, grid_items: list[GridItem]) -> float:
         """Tallest building (in unscaled pixels), including its rooftop spire."""
@@ -227,6 +333,10 @@ class CityRenderer:
         # Extent of the city at scale 1
         ex = (c1 - r0) * (tw0 / 2.0) - (c0 - r1) * (tw0 / 2.0) + tw0
         ey = (c1 + r1) * (th0 / 2.0) - (c0 + r0) * (th0 / 2.0) + th0 + max_h + PLINTH_DEPTH
+        ey += self.layout_spec.extra_depth
+        if self.layout_spec.island:
+            # slab + tapering rock + shadow below the city, in unscaled pixels
+            ey += ISLAND_SLAB + 1.14 * ((c1 + r1) - (c0 + r0)) * th0 / 4.0 + ISLAND_SHADOW
 
         header_space = 100.0 if cfg.show_header else 40.0
         avail_w = cfg.width - 2 * SIDE_MARGIN
@@ -266,21 +376,24 @@ class CityRenderer:
         return title, desc
 
     def _render_style_and_defs(self) -> str:
-        rules = _css_rules(self.theme)
-        css = "".join(rules)
+        cfg = self.config
+        spec = self.layout_spec
+        opts = {"wireframe": spec.wireframe, "island": spec.island, "scope": cfg.id_prefix}
+        css = "".join(_css_rules(self.theme, **opts))
         if self.light_theme is not None:
-            light = "".join(_css_rules(self.light_theme))
+            light = "".join(_css_rules(self.light_theme, **opts))
             css += f"@media (prefers-color-scheme:light){{{light}}}"
+        window_rule = "path.w{fill:none;stroke-width:1.2}"
+        css += f".{cfg.id_prefix} {window_rule}" if cfg.id_prefix else window_rule
+        bg_id, glow_id = self._id("bg"), self._id("glow")
         return (
-            f"  <style>{css}"
-            "path.w{fill:none;stroke-width:1.2}"
-            "</style>\n"
+            f"  <style>{css}</style>\n"
             "  <defs>\n"
-            '    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">\n'
+            f'    <linearGradient id="{bg_id}" x1="0%" y1="0%" x2="0%" y2="100%">\n'
             '      <stop offset="0%" class="bt" />\n'
             '      <stop offset="100%" class="bb" />\n'
             "    </linearGradient>\n"
-            '    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">\n'
+            f'    <filter id="{glow_id}" x="-20%" y="-20%" width="140%" height="140%">\n'
             '      <feGaussianBlur stdDeviation="3" result="blur" />\n'
             '      <feComposite in="SourceGraphic" in2="blur" operator="over" />\n'
             "    </filter>\n"
@@ -289,7 +402,7 @@ class CityRenderer:
 
     def _render_stars(self) -> str:
         """Render deterministic sky constellation of pixel stars."""
-        stars: list[str] = ['  <g id="sky-stars" opacity="0.6">']
+        stars: list[str] = [f'  <g id="{self._id("stars")}" opacity="0.6">']
         w = self.config.width
         h = max(100, int(self.config.height * 0.45))
 
@@ -347,16 +460,83 @@ class CityRenderer:
             bottom_corner.offset(0, depth),
         ]
         return (
-            '  <g id="city-platform">\n'
+            f'  <g id="{self._id("platform")}">\n'
             f'    <polygon class="pl" points="{polygon_svg_points(pts_left)}" />\n'
             f'    <polygon class="pr" points="{polygon_svg_points(pts_right)}" />\n'
             f'    <polygon class="pt" points="{polygon_svg_points(pts_top)}" />\n'
             "  </g>"
         )
 
+    def _render_island(self, iso: IsoProjection, grid_items: list[GridItem]) -> str:
+        """Floating island: thick slab, stepped rocky underside and a soft ground shadow."""
+        cols = [item[0] for item in grid_items]
+        rows = [item[1] for item in grid_items]
+        min_c, max_c = min(cols) - 1, max(cols) + 1
+        min_r, max_r = min(rows) - 1, max(rows) + 1
+
+        top = iso.get_tile_top(min_c, min_r)
+        right_t = iso.get_tile_top(max_c, min_r)
+        bottom_t = iso.get_tile_top(max_c, max_r)
+        left_t = iso.get_tile_top(min_c, max_r)
+        north = Point2D(top.x, top.y)
+        east = Point2D(right_t.x + iso.half_w, right_t.y + iso.half_h)
+        south = Point2D(bottom_t.x, bottom_t.y + iso.tile_height)
+        west = Point2D(left_t.x - iso.half_w, left_t.y + iso.half_h)
+
+        s = self._scale
+        slab = ISLAND_SLAB * s
+        half_diag = (south.y - north.y) / 2.0
+        tier_h = 0.38 * half_diag  # deep enough that the tapering rock shows below the slab
+        parts = [f'  <g id="{self._id("platform")}">']
+
+        # Centre of the slab's bottom plane; the rock tapers towards it
+        cx = (west.x + east.x) / 2.0
+        cy = (north.y + south.y) / 2.0 + slab
+
+        # Shadow below the lowest tip (decorative, never over buildings)
+        shadow_y = cy + 3 * tier_h + (ISLAND_SHADOW - 8.0) * s
+        rx = (east.x - west.x) * 0.3
+        parts.append(
+            f'    <ellipse class="sh" cx="{cx:.1f}" cy="{shadow_y:.1f}" '
+            f'rx="{rx:.1f}" ry="{rx * 0.16:.1f}" />'
+        )
+
+        # Underside: an inverted stepped pyramid. Diamond k sits k * tier_h below the slab and is
+        # scaled towards the centre; each tier is the sloped band between diamond k and k + 1.
+        scales = (1.0, 0.72, 0.46, 0.2)
+
+        def corner(pt: Point2D, k: int) -> Point2D:
+            f = scales[k]
+            return Point2D(cx + (pt.x - cx) * f, cy + (pt.y + slab - cy) * f + k * tier_h)
+
+        for k in reversed(range(3)):
+            w0, s0, e0 = corner(west, k), corner(south, k), corner(east, k)
+            w1, s1, e1 = corner(west, k + 1), corner(south, k + 1), corner(east, k + 1)
+            parts.append(
+                f'    <polygon class="ul{k + 1}" points="{polygon_svg_points([w0, s0, s1, w1])}" />'
+            )
+            parts.append(
+                f'    <polygon class="ur{k + 1}" points="{polygon_svg_points([s0, e0, e1, s1])}" />'
+            )
+
+        # The slab itself
+        parts.append(
+            f'    <polygon class="pl" points="'
+            f'{polygon_svg_points([west, south, south.offset(0, slab), west.offset(0, slab)])}" />'
+        )
+        parts.append(
+            f'    <polygon class="pr" points="'
+            f'{polygon_svg_points([south, east, east.offset(0, slab), south.offset(0, slab)])}" />'
+        )
+        parts.append(
+            f'    <polygon class="pt" points="{polygon_svg_points([north, east, south, west])}" />'
+        )
+        parts.append("  </g>")
+        return "\n".join(parts)
+
     def _render_city_blocks(self, iso: IsoProjection, grid_items: list[GridItem]) -> str:
         """Render ground tiles (one path) and then buildings sorted back to front."""
-        lines: list[str] = ['  <g id="city-blocks">']
+        lines: list[str] = [f'  <g id="{self._id("blocks")}">']
 
         # All empty tiles are flat, so they can be drawn first as a single path
         if self.config.show_zero_tiles:
@@ -420,7 +600,7 @@ class CityRenderer:
         out.append(f'      <polygon class="A{level}" points="{polygon_svg_points(left_pts)}" />')
         out.append(f'      <polygon class="Z{level}" points="{polygon_svg_points(right_pts)}" />')
 
-        if self.config.show_windows and base_h >= 14.0:
+        if self.config.show_windows and not self.layout_spec.wireframe and base_h >= 14.0:
             out.extend(self._render_windows(iso, col, row, height, base_h, level))
 
         out.append(f'      <polygon class="R{level}" points="{polygon_svg_points(roof_pts)}" />')
@@ -491,7 +671,7 @@ class CityRenderer:
         cx = self.config.width / 2.0
         cy = self.config.height / 2.0
         return (
-            f'  <g id="empty-state" text-anchor="middle">'
+            f'  <g id="{self._id("empty")}" text-anchor="middle">'
             f'<text class="ts" x="{cx}" y="{cy}" font-family="monospace" font-size="14">'
             f"No contribution data to display</text></g>"
         )
@@ -516,8 +696,8 @@ class CityRenderer:
 
         w = self.config.width
         header = [
-            '  <g id="city-hud" transform="translate(40, 42)">',
-            '    <circle class="ta" cx="0" cy="-6" r="4" filter="url(#glow)" />',
+            f'  <g id="{self._id("hud")}" transform="translate(40, 42)">',
+            f'    <circle class="ta" cx="0" cy="-6" r="4" filter="url(#{self._id("glow")})" />',
             f'    <text class="tp" x="14" y="0" font-family="{font_mono}" '
             f'font-size="18" font-weight="700" letter-spacing="1.5">{title}</text>',
             f'    <text class="ts" x="14" y="20" font-family="{font_mono}" '

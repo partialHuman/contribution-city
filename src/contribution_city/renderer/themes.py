@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from contribution_city.renderer.palettes import PALETTE_SPECS
+
 
 @dataclass(frozen=True)
 class LevelPalette:
@@ -420,6 +422,32 @@ THEME_NAVY_CYAN_LIGHT = Theme(
     },
 )
 
+
+def _theme_from_spec(spec: dict) -> Theme:
+    """Build a Theme from a compact palette spec (see palettes.py)."""
+    bg_top, bg_bottom = spec["bg"]
+    plat_top, plat_left, plat_right, plat_grid = spec["platform"]
+    ground_fill, ground_stroke = spec["ground"]
+    primary, secondary, accent = spec["text"]
+    return Theme(
+        name=spec["name"],
+        description=spec["description"],
+        bg_top=bg_top,
+        bg_bottom=bg_bottom,
+        platform_top=plat_top,
+        platform_left=plat_left,
+        platform_right=plat_right,
+        platform_grid=plat_grid,
+        ground_tile_fill=ground_fill,
+        ground_tile_stroke=ground_stroke,
+        text_primary=primary,
+        text_secondary=secondary,
+        text_accent=accent,
+        star_color=spec["star"],
+        levels={i + 1: LevelPalette(*lv) for i, lv in enumerate(spec["levels"])},
+    )
+
+
 THEMES: dict[str, Theme] = {
     "navy-cyan": THEME_NAVY_CYAN,
     "matrix-green": THEME_MATRIX_GREEN,
@@ -430,6 +458,8 @@ THEMES: dict[str, Theme] = {
     "profile-light": THEME_PROFILE_LIGHT,
     "navy-cyan-light": THEME_NAVY_CYAN_LIGHT,
 }
+# v1.2 themes are defined as data in palettes.py
+THEMES.update({spec["name"]: _theme_from_spec(spec) for spec in PALETTE_SPECS})
 
 # Dark theme -> its light companion, used by appearance="auto"
 LIGHT_PAIRS: dict[str, str] = {

@@ -10,7 +10,13 @@ from typing import Any
 
 import yaml
 
-from contribution_city.renderer.svg import APPEARANCES, HEIGHT_MODES, LAYOUTS, RenderConfig
+from contribution_city.renderer.svg import (
+    APPEARANCES,
+    BACKGROUND_MODES,
+    HEIGHT_MODES,
+    LAYOUTS,
+    RenderConfig,
+)
 from contribution_city.renderer.themes import THEMES
 
 
@@ -40,9 +46,25 @@ class CitySettings:
     show_tooltips: bool = True
     auto_fit: bool = True
     pixel_art: bool = True
+    # Background mode (solid | transparent | transparent-sky | auto). When set it takes precedence
+    # over the legacy ``transparent`` flag.
+    background: str | None = None
+    id_prefix: str | None = None
 
     def validate(self) -> None:
         """Validate city dimensions and scaling factors."""
+        if self.background is not None and self.background not in BACKGROUND_MODES:
+            raise ConfigError(
+                f"city.background must be one of {', '.join(BACKGROUND_MODES)}, "
+                f"got '{self.background}'"
+            )
+        if self.id_prefix is not None and not re.fullmatch(
+            r"[A-Za-z][A-Za-z0-9_-]{0,30}", self.id_prefix
+        ):
+            raise ConfigError(
+                f"city.id_prefix '{self.id_prefix}' is invalid: use letters, digits, '-' or '_', "
+                "starting with a letter (max 31 characters)."
+            )
         if self.height_mode not in HEIGHT_MODES:
             raise ConfigError(
                 f"city.height_mode must be one of {', '.join(HEIGHT_MODES)}, got '{self.height_mode}'"
@@ -139,6 +161,8 @@ class AppConfig:
             show_tooltips=self.city.show_tooltips,
             auto_fit=self.city.auto_fit,
             pixel_art=self.city.pixel_art,
+            background=self.city.background,
+            id_prefix=self.city.id_prefix,
         )
 
     @classmethod
@@ -170,6 +194,12 @@ class AppConfig:
             show_tooltips=bool(city_data.get("show_tooltips", True)),
             auto_fit=bool(city_data.get("auto_fit", True)),
             pixel_art=bool(city_data.get("pixel_art", True)),
+            background=(
+                str(city_data["background"]) if city_data.get("background") is not None else None
+            ),
+            id_prefix=(
+                str(city_data["id_prefix"]) if city_data.get("id_prefix") is not None else None
+            ),
         )
 
         raw_years = data.get("years") or []
