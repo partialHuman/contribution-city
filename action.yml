@@ -15,11 +15,11 @@ inputs:
     required: false
     default: ${{ github.token }}
   theme:
-    description: "Visual theme: navy-cyan, matrix-green, sunset-neon, monochrome-slate, solar-amber, profile, profile-light, navy-cyan-light"
+    description: "Visual theme: navy-cyan, matrix-green, sunset-neon, monochrome-slate, solar-amber, profile, profile-light, navy-cyan-light, neon-harbor, cyberpunk, emerald-matrix, copper-forge, arctic-glass, sunset-grid"
     required: false
     default: "navy-cyan"
   layout:
-    description: "Grid layout: calendar (default) or compact"
+    description: "Layout: calendar (default), compact, dense-grid, downtown, floating-island or wireframe"
     required: false
     default: "calendar"
   appearance:
@@ -42,10 +42,18 @@ inputs:
     description: "Last day to include, YYYY-MM-DD"
     required: false
     default: ""
+  background:
+    description: "solid, transparent, transparent-sky (stars only) or auto. When set it takes precedence over 'transparent'. Empty keeps the legacy behaviour."
+    required: false
+    default: ""
   transparent:
-    description: "true removes the background rectangle and sky stars"
+    description: "Legacy switch: true removes the background rectangle and sky stars. Ignored when 'background' is set."
     required: false
     default: "false"
+  id-prefix:
+    description: "Prefix for element ids and CSS rules; only needed when inlining several SVGs into one HTML page"
+    required: false
+    default: ""
   tooltips:
     description: "false leaves out hover tooltips for a smaller file"
     required: false
@@ -117,7 +125,9 @@ runs:
         IN_YEARS: ${{ inputs.years }}
         IN_FROM: ${{ inputs.from }}
         IN_TO: ${{ inputs.to }}
+        IN_BACKGROUND: ${{ inputs.background }}
         IN_TRANSPARENT: ${{ inputs.transparent }}
+        IN_ID_PREFIX: ${{ inputs.id-prefix }}
         IN_TOOLTIPS: ${{ inputs.tooltips }}
         IN_AUTO_FIT: ${{ inputs.auto-fit }}
         IN_RETRIES: ${{ inputs.retries }}
@@ -130,6 +140,25 @@ runs:
         DEFAULT_USER: ${{ github.repository_owner }}
       run: |
         set -euo pipefail
+
+        # Early, readable validation of the enumerated inputs (the CLI validates the rest)
+        case "$IN_BACKGROUND" in
+          ""|solid|transparent|transparent-sky|auto) ;;
+          *) echo "::error title=Invalid background::background must be solid, transparent, transparent-sky or auto" >&2; exit 2 ;;
+        esac
+        case "$IN_APPEARANCE" in
+          fixed|auto) ;;
+          *) echo "::error title=Invalid appearance::appearance must be fixed or auto" >&2; exit 2 ;;
+        esac
+        case "$IN_LAYOUT" in
+          calendar|compact|dense-grid|downtown|floating-island|wireframe) ;;
+          *) echo "::error title=Invalid layout::layout must be calendar, compact, dense-grid, downtown, floating-island or wireframe" >&2; exit 2 ;;
+        esac
+        case "$IN_HEIGHT_MODE" in
+          power|linear|sqrt|log) ;;
+          *) echo "::error title=Invalid height-mode::height-mode must be power, linear, sqrt or log" >&2; exit 2 ;;
+        esac
+
         args=(generate --theme "$IN_THEME" --layout "$IN_LAYOUT" --appearance "$IN_APPEARANCE"
               --height-mode "$IN_HEIGHT_MODE" --output "$IN_OUTPUT" --retries "$IN_RETRIES")
 
@@ -144,6 +173,8 @@ runs:
         [ -n "$IN_WIDTH" ] && args+=(--width "$IN_WIDTH")
         [ -n "$IN_HEIGHT" ] && args+=(--height "$IN_HEIGHT")
         [ -n "$IN_SCALE" ] && args+=(--scale "$IN_SCALE")
+        [ -n "$IN_BACKGROUND" ] && args+=(--background "$IN_BACKGROUND")
+        [ -n "$IN_ID_PREFIX" ] && args+=(--id-prefix "$IN_ID_PREFIX")
         [ "$IN_TRANSPARENT" = "true" ] && args+=(--transparent)
         [ "$IN_TOOLTIPS" = "false" ] && args+=(--no-tooltips)
         [ "$IN_AUTO_FIT" = "false" ] && args+=(--no-fit)

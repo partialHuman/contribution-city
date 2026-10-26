@@ -1,0 +1,44 @@
+# Builds the preview gallery on demand and attaches it to the workflow run as a downloadable
+# artifact. It never commits anything, so it only needs read access.
+name: Contribution City gallery
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/contribution_city/renderer/**"
+      - "tests/visual/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gallery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install with the visual extras
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[visual]"
+
+      - name: Generate the gallery
+        run: contribution-city gallery --output-dir gallery --fail-on-error
+
+      - name: Upload the gallery
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: contribution-city-gallery
+          path: gallery/
+          retention-days: 14
