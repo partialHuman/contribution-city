@@ -1,0 +1,669 @@
+{
+ "renders": {
+  "custom-size": {
+   "fixture": "full-year",
+   "options": {
+    "building_scale": 1.5,
+    "height": 450,
+    "show_header": false,
+    "width": 800
+   },
+   "sha256": "e34a9ff0ef1982fea45bdfa2926da6c0a34ab9b6d985c499387e1d96e971dd8f"
+  },
+  "default-calendar": {
+   "fixture": "full-year",
+   "options": {},
+   "sha256": "ab75f1b516cab9a7a73a9ed096a6ed2695f9951c32f8676f85c5c61319dccf01"
+  },
+  "matrix-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "matrix-green"
+   },
+   "sha256": "84fce4a3f78cfa8ee910f8e69588cc73a2f0251f45e3bb99eee5a9e223ca5879"
+  },
+  "minimal-smooth": {
+   "fixture": "minimal",
+   "options": {
+    "pixel_art": false,
+    "show_tooltips": false
+   },
+   "sha256": "a57ca7cdbb506944b89ce3859037f6466aab414f8cd571372d2029b902789c45"
+  },
+  "navy-transparent": {
+   "fixture": "full-year",
+   "options": {
+    "transparent": true
+   },
+   "sha256": "e8c49fea1287eeb74f3913f9a44b1abb5c00e098526fa1ec3827d59bfecc8a5d"
+  },
+  "profile-auto": {
+   "fixture": "full-year",
+   "options": {
+    "appearance": "auto",
+    "theme": "profile"
+   },
+   "sha256": "3879697e154d7614346bebc8ce86366d7013d42e189e7b81e528f69f7e1e8c97"
+  },
+  "solar-linear-nofit": {
+   "fixture": "full-year",
+   "options": {
+    "auto_fit": false,
+    "height_mode": "linear",
+    "theme": "solar-amber"
+   },
+   "sha256": "e4c887adf68f409b7a6a95ed41d182dd3681b8958b1b4d229a2bee98a947faf3"
+  },
+  "theme-matrix-green-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "matrix-green"
+   },
+   "sha256": "f092781c1a4156d497066a7737eae66586939b16979c1ef23eb69310f9daee1f"
+  },
+  "theme-matrix-green-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "matrix-green"
+   },
+   "sha256": "84fce4a3f78cfa8ee910f8e69588cc73a2f0251f45e3bb99eee5a9e223ca5879"
+  },
+  "theme-monochrome-slate-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "monochrome-slate"
+   },
+   "sha256": "05e7dbcb641245c833c0895cd06de55a3a08ed5e2f441736936f8895d74971b0"
+  },
+  "theme-monochrome-slate-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "monochrome-slate"
+   },
+   "sha256": "50446c9c5ebdeb62950bc3bc0d70558b98218c45bd752190f72da96becdd9740"
+  },
+  "theme-navy-cyan-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "navy-cyan"
+   },
+   "sha256": "ab75f1b516cab9a7a73a9ed096a6ed2695f9951c32f8676f85c5c61319dccf01"
+  },
+  "theme-navy-cyan-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "navy-cyan"
+   },
+   "sha256": "857687298737471dac09e3cd52e4fb8685d22cc8d5eb84a08e2c977662f3da13"
+  },
+  "theme-navy-cyan-light-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "navy-cyan-light"
+   },
+   "sha256": "9293342cb159c153a32e3cd82520c6aae7159379b9e3830cc08f37f6d353a258"
+  },
+  "theme-navy-cyan-light-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "navy-cyan-light"
+   },
+   "sha256": "7a2a3a34cb9db36217f7b42f83fb140866f1b4a9478271712d4d5f2d0f6ac938"
+  },
+  "theme-profile-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "profile"
+   },
+   "sha256": "843cae25a238e010976759664e10371f10497ec974e81426c8ebe7a52373ef95"
+  },
+  "theme-profile-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "profile"
+   },
+   "sha256": "702923d1bed708ef923260db050feb9e289fd18784aa17c4e26d5c9f151cbce7"
+  },
+  "theme-profile-light-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "profile-light"
+   },
+   "sha256": "70fac72281e45b4d518f02352ada7d1e775a8b6638d869339ec26822e7149675"
+  },
+  "theme-profile-light-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "profile-light"
+   },
+   "sha256": "cc28d6b4299ff5a0d1347f4b8e54f4065ce76c6ba1a9a474e901272f5fc76a57"
+  },
+  "theme-solar-amber-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "solar-amber"
+   },
+   "sha256": "7e200e81df6e96121837a136c9e4d990806b11527bd7d2f37bd3cb912fcae17b"
+  },
+  "theme-solar-amber-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "solar-amber"
+   },
+   "sha256": "ded73780496dc5ed992df7b403f2f005dcd9d4e5019bd31d685937beaa4cf0a8"
+  },
+  "theme-sunset-neon-calendar": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "calendar",
+    "theme": "sunset-neon"
+   },
+   "sha256": "0cedd7b825cf65c671ec4a6fd417e566753957f7bb0a4dbc7fc0d6f0822d1289"
+  },
+  "theme-sunset-neon-compact": {
+   "fixture": "full-year",
+   "options": {
+    "layout": "compact",
+    "theme": "sunset-neon"
+   },
+   "sha256": "39c4d75d9a09b717db0e4e65423cc66a20cbc9ec0dfb73600b9e650c4703c3a0"
+  }
+ },
+ "themes": {
+  "matrix-green": {
+   "bg": [
+    "#040D06",
+    "#081A0D"
+   ],
+   "ground": [
+    "#0C2415",
+    "#163821"
+   ],
+   "levels": {
+    "1": [
+     "#0E4429",
+     "#0B3721",
+     "#072416",
+     "#39D353",
+     "#1F6F43",
+     "#26A641",
+     "#04150C"
+    ],
+    "2": [
+     "#006D32",
+     "#0E4429",
+     "#0A331E",
+     "#56F076",
+     "#26A641",
+     "#39D353",
+     "#072616"
+    ],
+    "3": [
+     "#26A641",
+     "#006D32",
+     "#005226",
+     "#A8FFBF",
+     "#39D353",
+     "#56F076",
+     "#00401D"
+    ],
+    "4": [
+     "#39D353",
+     "#26A641",
+     "#006D32",
+     "#FFFFFF",
+     "#56F076",
+     "#FFFFFF",
+     "#006D32"
+    ]
+   },
+   "platform": [
+    "#0F2E1B",
+    "#0A1C11",
+    "#06120B",
+    "#1B4D2E"
+   ],
+   "star": "#39D353",
+   "text": [
+    "#D2FBD4",
+    "#57A773",
+    "#00FF66"
+   ]
+  },
+  "monochrome-slate": {
+   "bg": [
+    "#090B0E",
+    "#14181F"
+   ],
+   "ground": [
+    "#191D24",
+    "#272E38"
+   ],
+   "levels": {
+    "1": [
+     "#484F58",
+     "#30363D",
+     "#21262D",
+     "#8B949E",
+     "#484F58",
+     "#6E7681",
+     "#161B22"
+    ],
+    "2": [
+     "#6E7681",
+     "#484F58",
+     "#30363D",
+     "#C9D1D9",
+     "#8B949E",
+     "#B1BAC4",
+     "#21262D"
+    ],
+    "3": [
+     "#8B949E",
+     "#6E7681",
+     "#484F58",
+     "#F0F6FC",
+     "#C9D1D9",
+     "#E6EDF3",
+     "#30363D"
+    ],
+    "4": [
+     "#C9D1D9",
+     "#8B949E",
+     "#6E7681",
+     "#FFFFFF",
+     "#E6EDF3",
+     "#FFFFFF",
+     "#484F58"
+    ]
+   },
+   "platform": [
+    "#1F242C",
+    "#13171C",
+    "#0B0D10",
+    "#363E4B"
+   ],
+   "star": "#C9D1D9",
+   "text": [
+    "#F0F6FC",
+    "#8B949E",
+    "#E6EDF3"
+   ]
+  },
+  "navy-cyan": {
+   "bg": [
+    "#050813",
+    "#0A1128"
+   ],
+   "ground": [
+    "#0E1E33",
+    "#162E4D"
+   ],
+   "levels": {
+    "1": [
+     "#0096C7",
+     "#0077B6",
+     "#023E8A",
+     "#90E0EF",
+     "#0077B6",
+     "#00B4D8",
+     "#03045E"
+    ],
+    "2": [
+     "#00B4D8",
+     "#0096C7",
+     "#0077B6",
+     "#CAF0F8",
+     "#48CAE4",
+     "#90E0EF",
+     "#023E8A"
+    ],
+    "3": [
+     "#00F0FF",
+     "#00B4D8",
+     "#0096C7",
+     "#FFFFFF",
+     "#90E0EF",
+     "#00F0FF",
+     "#0077B6"
+    ],
+    "4": [
+     "#70EEFF",
+     "#00F0FF",
+     "#00B4D8",
+     "#FFFFFF",
+     "#CAF0F8",
+     "#FFFFFF",
+     "#0096C7"
+    ]
+   },
+   "platform": [
+    "#0D1B2A",
+    "#08101A",
+    "#050B12",
+    "#1E3A5F"
+   ],
+   "star": "#4CC9F0",
+   "text": [
+    "#E0FBFC",
+    "#7EA8BE",
+    "#00F0FF"
+   ]
+  },
+  "navy-cyan-light": {
+   "bg": [
+    "#F4FAFF",
+    "#E3F1FA"
+   ],
+   "ground": [
+    "#E3F1FA",
+    "#C5DDEC"
+   ],
+   "levels": {
+    "1": [
+     "#7DD3FC",
+     "#4FB4E6",
+     "#2F93C9",
+     "#FFFFFF",
+     "#2F93C9",
+     "#0096C7",
+     "#1D6C9B"
+    ],
+    "2": [
+     "#38BDF8",
+     "#1AA0DC",
+     "#0F86BD",
+     "#FFFFFF",
+     "#2A8FC4",
+     "#0077B6",
+     "#0B628F"
+    ],
+    "3": [
+     "#0EA5E9",
+     "#0A86BE",
+     "#066E9F",
+     "#FFFFFF",
+     "#2278A6",
+     "#023E8A",
+     "#075579"
+    ],
+    "4": [
+     "#0369A1",
+     "#034F7C",
+     "#023F63",
+     "#E0FBFC",
+     "#2F6F96",
+     "#023E8A",
+     "#02304C"
+    ]
+   },
+   "platform": [
+    "#D6E9F5",
+    "#A9C6DA",
+    "#8FB1C9",
+    "#B9D3E4"
+   ],
+   "star": "#0077B6",
+   "text": [
+    "#0B2A3B",
+    "#46677C",
+    "#0077B6"
+   ]
+  },
+  "profile": {
+   "bg": [
+    "#070D24",
+    "#0A1230"
+   ],
+   "ground": [
+    "#16213F",
+    "#1C2A52"
+   ],
+   "levels": {
+    "1": [
+     "#1F4A8F",
+     "#122A5C",
+     "#0E2048",
+     "#FFB454",
+     "#3A4C7A",
+     "#5CC8FF",
+     "#0A1A40"
+    ],
+    "2": [
+     "#2F7FD8",
+     "#15336F",
+     "#10285A",
+     "#FFB454",
+     "#3A5A98",
+     "#5CC8FF",
+     "#0C2250"
+    ],
+    "3": [
+     "#5CC8FF",
+     "#173A82",
+     "#12306A",
+     "#FFC971",
+     "#3F6BB0",
+     "#8FF0FF",
+     "#10306E"
+    ],
+    "4": [
+     "#FFD27A",
+     "#1A4294",
+     "#143878",
+     "#FFF3D1",
+     "#5A7CC0",
+     "#FFFFFF",
+     "#1A3A80"
+    ]
+   },
+   "platform": [
+    "#101B3D",
+    "#0B1330",
+    "#080E24",
+    "#1F2D5A"
+   ],
+   "star": "#FFD27A",
+   "text": [
+    "#E6EDF3",
+    "#8B9BC2",
+    "#FFD27A"
+   ]
+  },
+  "profile-light": {
+   "bg": [
+    "#F6F8FC",
+    "#E6EDF6"
+   ],
+   "ground": [
+    "#E6EDF6",
+    "#CBD5E3"
+   ],
+   "levels": {
+    "1": [
+     "#A5C8F2",
+     "#8AA7CA",
+     "#738CA9",
+     "#FFF3CF",
+     "#6B86AB",
+     "#1F6FEB",
+     "#5B7595"
+    ],
+    "2": [
+     "#5A9BE6",
+     "#4B81C0",
+     "#3F6CA1",
+     "#FFE6A3",
+     "#5C7BA6",
+     "#1F6FEB",
+     "#35567F"
+    ],
+    "3": [
+     "#1F6FEB",
+     "#1A5DC4",
+     "#164EA4",
+     "#FFDC82",
+     "#4F72B0",
+     "#0A3D91",
+     "#103C80"
+    ],
+    "4": [
+     "#D29922",
+     "#083379",
+     "#072B66",
+     "#FFE9B0",
+     "#4A6CAA",
+     "#9A6700",
+     "#06245A"
+    ]
+   },
+   "platform": [
+    "#DFE7F3",
+    "#B9C4D6",
+    "#A1AEC3",
+    "#C3CEDD"
+   ],
+   "star": "#9A6700",
+   "text": [
+    "#24292F",
+    "#57606A",
+    "#9A6700"
+   ]
+  },
+  "solar-amber": {
+   "bg": [
+    "#120B04",
+    "#241407"
+   ],
+   "ground": [
+    "#291809",
+    "#42270F"
+   ],
+   "levels": {
+    "1": [
+     "#9A5B1E",
+     "#7C4714",
+     "#532F0C",
+     "#FFD166",
+     "#B07026",
+     "#E0922D",
+     "#361F07"
+    ],
+    "2": [
+     "#CA7927",
+     "#A45E1A",
+     "#743F0F",
+     "#FFE39F",
+     "#E0922D",
+     "#FFB703",
+     "#4A290A"
+    ],
+    "3": [
+     "#F48C06",
+     "#D06E00",
+     "#9C4F00",
+     "#FFF3C4",
+     "#FFB703",
+     "#FFBA08",
+     "#633500"
+    ],
+    "4": [
+     "#FFBA08",
+     "#FAA307",
+     "#D06E00",
+     "#FFFFFF",
+     "#FFF3C4",
+     "#FFFFFF",
+     "#8F4800"
+    ]
+   },
+   "platform": [
+    "#38210D",
+    "#231407",
+    "#160C03",
+    "#593717"
+   ],
+   "star": "#FFD166",
+   "text": [
+    "#FFF2E2",
+    "#D4A373",
+    "#FFAA00"
+   ]
+  },
+  "sunset-neon": {
+   "bg": [
+    "#0F051D",
+    "#23093B"
+   ],
+   "ground": [
+    "#260F3D",
+    "#401B63"
+   ],
+   "levels": {
+    "1": [
+     "#7B2CBF",
+     "#5A189A",
+     "#3C096C",
+     "#E0AAFF",
+     "#9D4EDD",
+     "#C77DFF",
+     "#240046"
+    ],
+    "2": [
+     "#B5179E",
+     "#7209B7",
+     "#560BAD",
+     "#FF99E6",
+     "#D633B0",
+     "#F72585",
+     "#3F076B"
+    ],
+    "3": [
+     "#F72585",
+     "#B5179E",
+     "#7209B7",
+     "#FFE3F1",
+     "#FF66B2",
+     "#FF4DA6",
+     "#560BAD"
+    ],
+    "4": [
+     "#FF5D8F",
+     "#F72585",
+     "#B5179E",
+     "#FFFFFF",
+     "#FFAFCC",
+     "#FFFFFF",
+     "#7209B7"
+    ]
+   },
+   "platform": [
+    "#321350",
+    "#1E0A31",
+    "#140621",
+    "#63258A"
+   ],
+   "star": "#FF77AA",
+   "text": [
+    "#FFE2FD",
+    "#C385D9",
+    "#FF3399"
+   ]
+  }
+ }
+}
