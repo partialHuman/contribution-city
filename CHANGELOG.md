@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0 (development, not released)
+## 1.2.0 (2026-10-27)
 
 ### Added
 - **Themes:** `neon-harbor`, `cyberpunk`, `emerald-matrix`, `copper-forge`, `arctic-glass`,
