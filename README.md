@@ -5,25 +5,27 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](pyproject.toml)
 
 Turn your GitHub contribution activity into an isometric pixel-art city, rendered as one small,
-deterministic SVG for profile READMEs and dashboards.
+deterministic SVG for profile READMEs and dashboards. Each day is a building; busy days grow into
+towers with lit windows and rooftop beacons.
 
 <p align="center">
-  <img src="docs/preview-profile-dark.png" alt="Dark city: navy towers with amber windows" width="48%">
-  <img src="docs/preview-profile-light.png" alt="Light city: the same data in light colours" width="48%">
+  <img src="docs/gallery/new-in-1.2.png" alt="New themes and layouts in 1.2: neon-harbor, cyberpunk, emerald-matrix, copper-forge, arctic-glass, sunset-grid, dense-grid, downtown, floating-island, wireframe and a transparent sky" width="100%">
 </p>
 
-Each day is a building. Busy days grow into towers with lit windows and rooftop beacons.
-The same input and options always produce the same file.
+> **Version note:** this working tree is the 1.2.0 development version. The published release is
+> 1.1.0. See [CHANGELOG.md](CHANGELOG.md) and [Upgrading from 1.1.0](#upgrading-from-110).
 
 ## Install
 
 ```bash
 git clone https://github.com/partialHuman/contribution-city
 cd contribution-city
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev]"      # tests, lint and the visual tools
+# or, just the tool:  python -m pip install -e .
 ```
 
-Python 3.10 or newer. The only runtime dependency is `pyyaml`.
+Python 3.10 or newer. The only runtime dependency is `pyyaml`. The visual tools (`gallery`,
+`visual`) need the optional `visual` extra (`resvg-py`, `Pillow`), which `[dev]` includes.
 
 ## Quick start
 
@@ -31,182 +33,236 @@ Python 3.10 or newer. The only runtime dependency is `pyyaml`.
 # Offline, from the bundled sample data
 contribution-city generate --input examples/sample-contributions.json --output dist/city.svg
 
+# Another look
+contribution-city generate --input examples/sample-contributions.json \
+  --theme cyberpunk --layout downtown --height-mode linear
+
 # Live data from GitHub (needs a token with read access)
 export GITHUB_TOKEN=ghp_xxx
-contribution-city generate --username octocat --theme profile --height-mode linear
+contribution-city generate --username octocat --theme profile --year 2024 --year 2025
 ```
 
-## Command-line options
+Output directories are created automatically (`--output a/b/c/city.svg` works).
+
+## Themes
+
+Fourteen themes. Every theme is plain data; the new ones are defined in
+[`renderer/palettes.py`](src/contribution_city/renderer/palettes.py).
+
+| Theme | Look | Light variant |
+|---|---|---|
+| `navy-cyan` (default) | Deep navy sky, electric cyan towers | `navy-cyan-light` |
+| `matrix-green` | Phosphor green on black | |
+| `sunset-neon` | Synthwave magenta, purple and orange | |
+| `monochrome-slate` | Slate and ice white | |
+| `solar-amber` | Warm bronze and amber | |
+| `profile` | Navy night city, amber windows, gold peaks | `profile-light` |
+| **`neon-harbor`** | Deep navy harbor, cyan and electric-blue towers | |
+| **`cyberpunk`** | Near-black purple, magenta and violet towers, electric cyan roofs | |
+| **`emerald-matrix`** | Dark forest green, emerald towers, lime peaks | |
+| **`copper-forge`** | Charcoal and graphite, copper and amber highlights | |
+| **`arctic-glass`** | Cool blue night, steel to pale-white glass towers | |
+| **`sunset-grid`** | Midnight purple, violet to pink to coral to orange | |
+
+All themes use only one blur filter (the small glow behind the header dot); towers use flat colours
+and CSS classes, so files stay small and render fast. Text and tower contrast of the new themes is
+covered by tests.
+
+## Layouts
+
+| Layout | What it does |
+|---|---|
+| `calendar` (default) | GitHub grid: columns are weeks, rows are weekdays |
+| `compact` | Near-square block with one empty tile between buildings |
+| **`dense-grid`** | Near-square block with no gaps: the smallest footprint, good for small embeds |
+| **`downtown`** | Busiest days in the centre, quiet days at the edge (not in date order; tooltips keep the dates) |
+| **`floating-island`** | Dense block on a thick slab with a tapering rock underside and a soft shadow |
+| **`wireframe`** | Outlined schematic; hidden lines stay hidden |
+
+`calendar` and `compact` are unchanged from 1.1.0.
+
+## Backgrounds
+
+| `--background` | Result |
+|---|---|
+| `solid` | The theme's gradient background and sky stars |
+| `transparent` | No background rectangle and no stars: the page shows through |
+| `transparent-sky` | No background rectangle, but the sky stars stay |
+| `auto` | `transparent-sky` when `--appearance auto` is used (the SVG carries a light and a dark palette), otherwise `solid` |
+
+**Legacy flag.** `--transparent` (config: `city.transparent`) still works exactly as in 1.1.0 and is
+the same as `--background transparent`. If both are given, **`--background` wins**; a contradictory
+pair (`--transparent` with `--background solid`) prints a warning. New setups should use
+`--background` only.
+
+Notes: `wireframe` fills faces with the theme's lower background colour to hide lines behind them, so
+on a transparent background use a theme close to your page colour. Stars are tuned for dark pages;
+on a light page prefer `transparent`.
+
+### Light and dark READMEs
+
+- **Two files and `<picture>` (recommended for GitHub).** Generate a dark and a light file
+  (`profile` and `profile-light`, or `navy-cyan` and `navy-cyan-light`) and switch them in HTML:
+
+  ```html
+  <picture>
+    <source media="(prefers-color-scheme: dark)"  srcset="city-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="city-light.svg">
+    <img alt="My contribution city" src="city-dark.svg">
+  </picture>
+  ```
+
+- **One file with `--appearance auto`.** The SVG embeds both palettes and switches with CSS
+  `prefers-color-scheme`. Inside an `<img>` that follows the viewer's operating-system setting,
+  which can differ from the theme chosen on the website you embed it in, so for GitHub profiles use
+  the `<picture>` method. This was not tested in real browsers here. Only themes with a light
+  variant support it (`navy-cyan`, `profile`); others report a clear error.
+
+## Command-line reference
+
+`contribution-city generate [options]`
 
 | Option | Meaning |
 |---|---|
-| `-i, --input FILE` | Contributions JSON file (offline mode) |
-| `-u, --username NAME` | Fetch live data from GitHub |
+| `-i, --input FILE` / `-u, --username NAME` | Offline JSON file, or live GitHub data |
 | `-t, --token TOKEN` | Token; defaults to `GITHUB_TOKEN` / `GH_TOKEN` |
-| `-c, --config FILE` | YAML configuration file; command-line options override it |
+| `-c, --config FILE` | YAML configuration file |
 | `-o, --output FILE` | Output SVG (default `dist/city.svg`) |
-| `--theme NAME` | Colour theme, see [Themes](#themes) |
-| `--appearance fixed\|auto` | `auto` adds a light palette that follows `prefers-color-scheme` |
-| `--layout calendar\|compact` | `calendar` = 53 weeks x 7 days; `compact` = spaced grid |
-| `--height-mode power\|linear\|sqrt\|log` | How building height grows with the count |
-| `--year YYYY` (repeatable) | Calendar years to include (live data) |
-| `--from DATE`, `--to DATE` | Date range, at most one year (live data) |
+| `--theme NAME`, `--layout NAME` | See the tables above |
+| `--background MODE` | `solid`, `transparent`, `transparent-sky`, `auto` |
+| `--appearance fixed\|auto` | Add the light palette (themes with a light variant) |
+| `--height-mode power\|linear\|sqrt\|log` | How building height grows (`linear` is proportional) |
+| `--year YYYY` (repeatable), `--from DATE`, `--to DATE` | Limit the data (offline files and live data; a year list and a date range cannot be combined) |
 | `--retries N` | Retries for temporary GitHub failures (default 2) |
-| `--width`, `--height`, `--scale` | Canvas size and building height multiplier |
-| `--transparent` | No background rectangle or stars |
-| `--no-tooltips` | Leave out hover tooltips (smaller file) |
-| `--no-fit` | Keep the configured tile size instead of filling the canvas |
-| `--smooth` | Anti-aliased edges instead of hard pixel edges |
+| `--width`, `--height`, `--scale` | Canvas size, building height multiplier |
+| `--id-prefix NAME` | Prefix ids and CSS rules; use when inlining several SVGs in one HTML page |
+| `--transparent` | Legacy; see [Backgrounds](#backgrounds) |
+| `--no-tooltips`, `--no-fit`, `--smooth` | Smaller file, fixed tile size, anti-aliased edges |
 | `--no-windows`, `--no-stars`, `--no-header`, `--no-platform` | Hide those parts |
 | `--title TEXT` | Custom header title |
 
-### Height modes
+Other commands: `gallery`, `visual list|check|approve`, `check-svg` (see
+[Visual testing](#visual-testing-and-the-gallery)). Exit status: `0` success, `1` error or failed
+check, `2` usage error (also: `visual approve` without `--yes`).
 
-| Mode | Height above the minimum |
-|---|---|
-| `power` (default) | grows with `count ** 0.78`, so huge days do not dwarf the rest |
-| `linear` | exactly proportional to the day's count (busiest day = maximum height) |
-| `sqrt` | proportional to the square root of the count |
-| `log` | proportional to `log(1 + count)` |
-
-### Layouts
-
-`calendar` places each day on a GitHub-style grid (columns are weeks, rows are weekdays).
-`compact` packs days into a near-square block with one empty tile between buildings.
-
-### Canvas size
-
-By default the city is scaled to fill the canvas, so a bigger `--width` / `--height` gives a
-bigger city. Use `--no-fit` for the old fixed tile size.
-
-## Light and dark
-
-GitHub README images need a light and a dark version. There are two ways:
-
-1. **Two files and `<picture>` (works with GitHub's own theme).** Generate `profile` and
-   `profile-light` (or `navy-cyan` and `navy-cyan-light`) and switch with HTML:
-
-   ```html
-   <picture>
-     <source media="(prefers-color-scheme: dark)"  srcset="city-dark.svg">
-     <source media="(prefers-color-scheme: light)" srcset="city-light.svg">
-     <img alt="My contribution city" src="city-dark.svg">
-   </picture>
-   ```
-
-2. **One file with `--appearance auto`.** The SVG contains both palettes and switches with the
-   viewer's system setting. This is handy for documentation sites, but inside an `<img>` on
-   GitHub it follows your operating system, not GitHub's theme choice, so prefer option 1 there.
-
-Themes with a light variant: `navy-cyan` and `profile`.
-
-## Configuration file
-
-See [`examples/config.example.yaml`](examples/config.example.yaml) for every option. Example:
+**Precedence:** built-in defaults < configuration file < command-line options.
+See [`examples/config.example.yaml`](examples/config.example.yaml) for every key.
 
 ```yaml
-username: octocat
-theme: profile
-appearance: fixed
-years: [2024, 2025]
+theme: neon-harbor
+layout: floating-island
 city:
+  background: transparent-sky
   height_mode: linear
-  transparent: true
 ```
 
-`years` and `from`/`to` cannot be combined. GitHub allows one year per request, so several
-years are fetched one by one and merged.
+### Heights
+
+`power` (default) grows with `count ** 0.78`. `linear` makes the height above the minimum exactly
+proportional to the day's count (the busiest day reaches the maximum); `sqrt` and `log` lie between.
+Heights are capped (`max_building_height`), so extreme values cannot overflow the canvas.
+
+### Canvas
+
+The city is scaled to fill the canvas, so a larger `--width/--height` gives a larger city.
+`--no-fit` keeps the fixed 18 px tile size.
 
 ## GitHub Action
-
-Use it from any repository:
 
 ```yaml
 - uses: partialHuman/contribution-city@v1
   with:
     username: ${{ github.repository_owner }}
     token: ${{ secrets.GITHUB_TOKEN }}
-    theme: profile
+    theme: cyberpunk
+    layout: floating-island
+    background: transparent-sky
     height-mode: linear
-    transparent: "true"
     output: dist/city.svg
 ```
 
-A complete daily workflow that publishes to a separate `output` branch (a single commit, so your
-history never grows) is in
-[`examples/workflows/generate-profile-city.yml`](examples/workflows/generate-profile-city.yml).
-Your profile README then points at
-`https://raw.githubusercontent.com/OWNER/OWNER/output/city-dark.svg`.
+Inputs: `username`, `token`, `theme`, `layout`, `appearance`, `background`, `transparent` (legacy),
+`height-mode`, `years`, `from`, `to`, `retries`, `tooltips`, `auto-fit`, `id-prefix`, `config`,
+`input`, `output` (default `dist/city.svg`), `width`, `height`, `scale`. Output: `svg-path`.
+The action validates `layout`, `appearance`, `background` and `height-mode` before doing any work.
 
-### Inputs
+Example workflows (all third-party actions pinned to commit SHAs):
 
-| Input | Default | Notes |
+| File | Purpose | Permissions |
 |---|---|---|
-| `username` | repository owner | GitHub user |
-| `token` | `github.token` | A personal access token with `read:user` also counts private activity |
-| `theme` | `navy-cyan` | |
-| `layout` | `calendar` | `calendar` or `compact` |
-| `appearance` | `fixed` | `fixed` or `auto` |
-| `height-mode` | `power` | `power`, `linear`, `sqrt`, `log` |
-| `years` | | Comma-separated, for example `2024,2025` |
-| `from`, `to` | | `YYYY-MM-DD`, at most one year |
-| `transparent` | `false` | |
-| `tooltips` | `true` | |
-| `auto-fit` | `true` | |
-| `retries` | `2` | |
-| `config` | | YAML file |
-| `input` | | Local JSON file (offline) |
-| `output` | `dist/city.svg` | |
-| `width`, `height`, `scale` | | Canvas size, height multiplier |
+| [`generate-profile-city.yml`](examples/workflows/generate-profile-city.yml) | Daily dark + light city, published to an `output` branch as a single amended commit. Runs only on schedule or manually, so it cannot trigger itself. | `contents: write` |
+| [`gallery-artifact.yml`](examples/workflows/gallery-artifact.yml) | Builds the gallery and uploads it as a downloadable artifact | `contents: read` |
 
-Output: `svg-path`, the path of the generated file.
+Security: inputs reach the script only as environment variables (never pasted into shell text), the
+token is never put on a command line or printed, and a private-activity token should be a personal
+access token with `read:user` stored as a secret.
 
-### Security
+## Visual testing and the gallery
 
-- Inputs reach the script only as environment variables, never as pasted shell text.
-- The token is read from the environment and is never placed on a command line.
-- Pin the action to a tag or commit SHA in your workflow, and pin third-party actions to commit
-  SHAs as this repository does.
-- Give the workflow only `contents: write`, and only if it pushes.
+```bash
+contribution-city gallery --output-dir gallery     # SVGs, PNG thumbnails, contact-sheet.png, manifest.json
+contribution-city visual check                     # compare with approved baselines (never writes them)
+contribution-city visual approve --yes --case theme-cyberpunk    # explicit, after reviewing
+pytest -m baseline                                 # the same comparison as a test
+```
 
-## Themes
+The full guide (tolerances, artifacts on failure, adding a theme) is in
+[docs/visual-testing.md](docs/visual-testing.md). A generated overview of all cases is committed in
+[`docs/gallery/`](docs/gallery/): `contact-sheet.png` and `manifest.json`.
 
-| Theme | Look | Light variant |
-|---|---|---|
-| `navy-cyan` (default) | Deep navy sky, electric cyan towers | `navy-cyan-light` |
-| `profile` | Navy night city, amber windows, gold peaks | `profile-light` |
-| `matrix-green` | Phosphor green on black | |
-| `sunset-neon` | Synthwave magenta, purple and orange | |
-| `monochrome-slate` | Slate and ice white | |
-| `solar-amber` | Warm bronze and amber | |
+## SVG quality
+
+Every generated SVG is checked by `contribution-city check-svg` and by the test suite for: well-formed
+XML, unique ids, references that resolve, no external resources (`http(s)`, `@import`, `<image>`,
+`<use>`, `<foreignObject>`), no scripts or event handlers, a `viewBox` equal to `width`/`height`,
+and `role="img"` with a `<title>` and `<desc>`. All user-controlled text (username, title, dates) is
+escaped. This is a technical check, **not an accessibility audit**; colour contrast of text was
+checked for the themes added in 1.2 only.
 
 ## Data format
 
-`examples/sample-contributions.json` shows the format. The loader also accepts the raw
-GitHub GraphQL response and a flat list of `{ "date", "count" }` objects. Private activity is
-read from `restrictedContributionsCount` and shown in the header.
+`examples/sample-contributions.json` shows the format. The loader also accepts the raw GitHub GraphQL
+response and a flat list of `{ "date", "count" }` objects. Private activity is read from
+`restrictedContributionsCount` and shown in the header.
 
-## Output notes
+## Upgrading from 1.1.0
 
-- **Size:** the sample year is about 140 KB (about 130 KB without tooltips).
-- **Accessibility:** the root element has `role="img"`, a `<title>` and a `<desc>` with your totals.
-- **Safety:** every piece of text is escaped, and the output never contains scripts.
-- **Deterministic:** no randomness, so unchanged data gives an identical file and no new commit.
+Nothing was removed and the defaults are unchanged: for the same input and options, calendar and
+compact layouts, all five original themes plus `profile`, `profile-light` and `navy-cyan-light`, the
+legacy `--transparent` flag and `--appearance auto` produce **byte-identical SVGs** to 1.1.0
+(checked by tests against references generated from the 1.1.0 source).
+
+What is new or slightly different:
+
+- New themes, layouts, `--background`, `--id-prefix`, offline `--year/--from/--to`, and the `gallery`,
+  `visual`, `check-svg` commands.
+- `--year/--from/--to` with `--input` used to be an error; they now filter the file.
+- Without `--id-prefix` the element ids stay exactly as in 1.1.0 (`bg`, `glow`, `city-hud`, ...), so
+  two default SVGs inlined in one HTML page still share ids. Set a prefix to avoid it.
+
+## Known limitations
+
+- `appearance=auto` exists for `navy-cyan` and `profile` only; the other themes have no light variant.
+- Live GitHub requests cover at most one year; several years are fetched one by one and merged.
+- `downtown` is not chronological. The calendar mapping is lost by design.
+- The island's rock and shadow are decorative and static (no animation).
+- Visual baselines come from one renderer (resvg 0.5.x); pixel comparison runs on Linux in CI.
+  resvg ignores CSS media queries, so the light half of `appearance=auto` is not rendered by the
+  visual tests.
+- Header text depends on installed fonts and is therefore excluded from pixel comparison.
+- Browser behaviour of `prefers-color-scheme` inside `<img>` was not tested.
 
 ## Development
 
 ```bash
 python -m pip install -e ".[dev]"
-pytest
+pytest                                  # everything
+pytest -m "not baseline"                # without the pixel comparison
 ruff check . && ruff format --check .
+pip wheel . --no-deps -w wheelhouse     # package build
 ```
 
-The tests include a snapshot of a tiny city. After an intended rendering change, refresh it with
-`UPDATE_SNAPSHOTS=1 pytest`.
-
-## Contributing
-
-Issues and pull requests are welcome. Please run the tests and Ruff first.
+The snapshot test of a tiny city can be refreshed with `UPDATE_SNAPSHOTS=1 pytest`.
 
 ## License
 

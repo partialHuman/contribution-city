@@ -1,5 +1,43 @@
 # Changelog
 
+## 1.2.0 (development, not released)
+
+### Added
+- **Themes:** `neon-harbor`, `cyberpunk`, `emerald-matrix`, `copper-forge`, `arctic-glass`,
+  `sunset-grid`. They are plain data in `renderer/palettes.py`; tests check text contrast, level
+  separation and window visibility for each.
+- **Layouts:** `dense-grid`, `downtown`, `floating-island`, `wireframe`, from a small layout registry
+  (`renderer/layouts.py`). `calendar` and `compact` are unchanged.
+- **Background modes:** `--background solid | transparent | transparent-sky | auto` (config
+  `city.background`, action input `background`). It takes precedence over the legacy `transparent`
+  flag, which keeps working; contradictory settings warn.
+- **Visual regression suite:** deterministic fixtures, a case registry generated from the theme and
+  layout registries, resvg-based PNG rendering, tolerance-based comparison that separates
+  antialiasing noise from real changes, approved baselines, failure artifacts (current, baseline,
+  diff, side-by-side, JSON) and an explicit `visual approve --yes` command. Baselines are never
+  written by tests or CI.
+- **Gallery:** `contribution-city gallery` writes SVGs, PNG thumbnails, a labelled contact sheet and a
+  deterministic `manifest.json` (settings, validation status, transparency probe, removed duplicates).
+- **`check-svg` command and `svgcheck` module:** well-formed XML, unique ids, resolving references,
+  no external resources or active content, matching viewBox.
+- **`--id-prefix`:** namespaces element ids and scopes the CSS so several SVGs can be inlined in one
+  page. Without it the ids are exactly the 1.1.0 ones.
+- **Offline `--year`, `--from`, `--to`** now filter `--input` files as well as live data.
+- Action: inputs `background` and `id-prefix`; early validation of `layout`, `appearance`,
+  `background`, `height-mode`; local execution tests of the real script (including hostile values).
+- CI: a `visual` job (baseline comparison, gallery, SVG checks, artifacts) and a `build` job that
+  checks the reported version. Example `gallery-artifact.yml` (read-only permissions).
+
+### Changed
+- Default output is byte-identical to 1.1.0 for the same input and options (tested against
+  references generated from the 1.1.0 source).
+- CLI help lists themes and layouts from the registries.
+- Window contrast of three palettes added in this cycle was raised after the contrast tests found it
+  too low (`neon-harbor`, `emerald-matrix`, `arctic-glass`).
+
+### Fixed
+- The gallery records a case with invalid options as `failed` instead of stopping.
+
 ## 1.1.0
 
 ### Fixed
