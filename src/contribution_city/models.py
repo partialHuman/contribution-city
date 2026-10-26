@@ -143,6 +143,36 @@ class ContributionDataSet:
                 previous = None
         return longest
 
+    def restrict(
+        self,
+        start: str | date | None = None,
+        end: str | date | None = None,
+        years: list[int] | None = None,
+    ) -> ContributionDataSet:
+        """Return a copy limited to a date range and/or calendar years.
+
+        Used for offline data so ``--year`` / ``--from`` / ``--to`` behave the same as with live
+        GitHub data. Dates are inclusive; ``years`` and a range are combined with AND.
+        """
+
+        def as_date(value: str | date | None) -> date | None:
+            if value is None or isinstance(value, date):
+                return value
+            return datetime.strptime(str(value), "%Y-%m-%d").date()
+
+        lo, hi = as_date(start), as_date(end)
+        wanted = set(years or [])
+        kept = [
+            d
+            for d in self.days
+            if (lo is None or d.date_obj >= lo)
+            and (hi is None or d.date_obj <= hi)
+            and (not wanted or d.date_obj.year in wanted)
+        ]
+        return ContributionDataSet(
+            username=self.username, days=kept, private_contributions=self.private_contributions
+        )
+
     @classmethod
     def merge(cls, *datasets: ContributionDataSet) -> ContributionDataSet:
         """Combine several datasets (for example one per year) into one.

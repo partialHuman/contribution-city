@@ -18,8 +18,21 @@ from contribution_city.github_api import (
 )
 from contribution_city.models import ContributionDataSet
 from contribution_city.renderer import CityRenderer
-from contribution_city.renderer.svg import APPEARANCES, HEIGHT_MODES, LAYOUTS
-from contribution_city.renderer.themes import THEMES
+from contribution_city.renderer.layouts import LAYOUT_SPECS
+from contribution_city.renderer.svg import APPEARANCES, BACKGROUND_MODES, HEIGHT_MODES, LAYOUTS
+from contribution_city.renderer.themes import LIGHT_PAIRS, THEMES
+
+
+def _theme_lines() -> str:
+    width = max(len(name) for name in THEMES)
+    return "\n".join(f"  {name:<{width}}  {theme.description}" for name, theme in THEMES.items())
+
+
+def _layout_lines() -> str:
+    width = max(len(name) for name in LAYOUT_SPECS)
+    return "\n".join(
+        f"  {name:<{width}}  {spec.description}" for name, spec in LAYOUT_SPECS.items()
+    )
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -39,27 +52,38 @@ Examples:
   # Generate using a YAML configuration file:
   contribution-city generate --config examples/config.example.yaml
 
+  # New in 1.2: layouts, backgrounds and themes
+  contribution-city generate --input examples/sample-contributions.json --theme cyberpunk --layout downtown
+  contribution-city generate --input examples/sample-contributions.json --layout floating-island --background transparent-sky
+  contribution-city generate --input examples/sample-contributions.json --layout wireframe --theme arctic-glass
+
+  # Offline data can be limited to a year or a date range
+  contribution-city generate --input examples/sample-contributions.json --from 2025-03-01 --to 2025-06-30
+
   # Compact skyline layout with custom dimensions:
   contribution-city generate --input examples/sample-contributions.json --layout compact --width 1000 --height 600
 
 Available Themes:
-  navy-cyan         Signature deep navy with electric cyan & cobalt (default)
-  matrix-green      Monochrome phosphor green matrix cyberpunk theme
-  sunset-neon       80s synthwave neon magenta, purple & sunset orange
-  monochrome-slate  Minimalist obsidian, slate gray & ice white
-  solar-amber       Warm industrial bronze & solar amber
-  profile           Navy night city, amber windows and gold peaks (matches a pixel-art banner)
-  profile-light     Light companion of 'profile'
-  navy-cyan-light   Light companion of 'navy-cyan'
+{themes}
 
-Light/dark: use --appearance auto with 'navy-cyan' or 'profile' to embed both palettes in one
-SVG, or generate a dark and a light file and switch them with an HTML <picture> element.
-""",
+Layouts:
+{layouts}
+
+Backgrounds: solid | transparent | transparent-sky | auto   (--background overrides --transparent)
+Light/dark: use --appearance auto with a theme that has a light variant ({pairs}) to embed both
+palettes in one SVG, or generate a dark and a light file and switch them with an HTML <picture>.
+Precedence: built-in defaults < configuration file < command-line options.
+""".replace("{themes}", _theme_lines())
+        .replace("{layouts}", _layout_lines())
+        .replace("{pairs}", ", ".join(LIGHT_PAIRS)),
     )
 
     parser.add_argument("-v", "--version", action="version", version=f"%(prog)s {__version__}")
 
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
+    from contribution_city.visual.cli import add_subcommands
+
+    add_subcommands(subparsers)
     gen_parser = subparsers.add_parser("generate", help="Generate isometric city SVG")
 
     for p in (parser, gen_parser):
@@ -161,24 +185,37 @@ SVG, or generate a dark and a light file and switch them with an HTML <picture> 
             dest="years",
             type=int,
             action="append",
-            help="Calendar year to include; repeat for several years (live GitHub data only)",
+            help="Calendar year to include; repeat for several years (works with --username and --input)",
         )
         p.add_argument(
             "--from",
             dest="date_from",
             metavar="YYYY-MM-DD",
-            help="First day to include (live GitHub data, at most one year long)",
+            help="First day to include (live data: at most one year long)",
         )
         p.add_argument(
             "--to",
             dest="date_to",
             metavar="YYYY-MM-DD",
-            help="Last day to include (live GitHub data)",
+            help="Last day to include",
         )
         p.add_argument(
             "--retries",
             type=int,
             help="How many times to retry temporary GitHub API failures (default: 2)",
+        )
+        p.add_argument(
+            "--background",
+            choices=list(BACKGROUND_MODES),
+            help=(
+                "Background mode: solid, transparent (no rectangle, no stars), transparent-sky "
+                "(no rectangle, stars kept) or auto. Overrides --transparent when both are given."
+            ),
+        )
+        p.add_argument(
+            "--id-prefix",
+            dest="id_prefix",
+            help="Prefix for element ids and CSS rules; use when inlining several SVGs in one page",
         )
         p.add_argument(
             "--transparent",
@@ -247,6 +284,10 @@ def build_config(args: argparse.Namespace) -> AppConfig:
         config.city.height_mode = args.height_mode
     if args.transparent is not None:
         config.city.transparent = args.transparent
+    if args.background is not None:
+        config.city.background = args.background
+    if args.id_prefix is not None:
+        config.city.id_prefix = args.id_prefix
     if args.show_tooltips is not None:
         config.city.show_tooltips = args.show_tooltips
     if args.auto_fit is not None:
@@ -278,12 +319,17 @@ def build_config(args: argparse.Namespace) -> AppConfig:
 def load_dataset(config: AppConfig) -> ContributionDataSet:
     """Load contribution dataset from either input file or GitHub API."""
     if config.input_file:
-        if config.years or config.date_from or config.date_to:
-            raise ValueError("--year/--from/--to only work with --username (live GitHub data).")
         path = Path(config.input_file)
         if not path.is_file():
             raise FileNotFoundError(f"Input file not found: {path}")
-        return ContributionDataSet.from_file(path)
+        dataset = ContributionDataSet.from_file(path)
+        if config.years or config.date_from or config.date_to:
+            dataset = dataset.restrict(config.date_from, config.date_to, config.years)
+            if not dataset.days:
+                sys.stderr.write(
+                    "Note: no days in the selected years/dates; the city will be empty.\n"
+                )
+        return dataset
 
     if config.username:
         client = GitHubClient(token=config.token, max_retries=config.retries)
@@ -352,6 +398,18 @@ def main(argv: Sequence[str] | None = None) -> int:
     """CLI main entry point."""
     parser = create_parser()
     args = parser.parse_args(argv)
+    if args.command == "gallery":
+        from contribution_city.visual.cli import run_gallery
+
+        return run_gallery(args)
+    if args.command == "visual":
+        from contribution_city.visual.cli import run_visual
+
+        return run_visual(args)
+    if args.command == "check-svg":
+        from contribution_city.visual.cli import run_check_svg
+
+        return run_check_svg(args)
     return run(args)
 
 
