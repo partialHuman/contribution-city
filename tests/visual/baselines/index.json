@@ -1,0 +1,216 @@
+{
+  "_renderer": {
+    "Pillow": "13.0.0",
+    "resvg-py": "0.5.0"
+  },
+  "background-transparent": {
+    "key": "4c440fa09b2f14ab",
+    "svg_sha256": "c09fe36d0f5417f99e56cc37355e0242b2e9877ae1742c10ec2a63fbc58eec25",
+    "title": "background transparent",
+    "width": 560
+  },
+  "background-transparent-sky": {
+    "key": "7f4a5ea2418cd5f3",
+    "svg_sha256": "3ee7667228d5b5bf175999987790e1018306fb625187e037c05dd48da58f712d",
+    "title": "background transparent-sky",
+    "width": 560
+  },
+  "custom-size": {
+    "key": "21aaca8939b29b7c",
+    "svg_sha256": "e34a9ff0ef1982fea45bdfa2926da6c0a34ab9b6d985c499387e1d96e971dd8f",
+    "title": "800x450, scale 1.5",
+    "width": 560
+  },
+  "fit-off": {
+    "key": "40f5bd3ec3241179",
+    "svg_sha256": "7b17d68b7a9eb8811dc9d40a15074147f752355d6ee41190970db3fc5bf83e08",
+    "title": "auto-fit off",
+    "width": 560
+  },
+  "fixture-empty": {
+    "key": "07a23033f3ebdee4",
+    "svg_sha256": "cfcb9b4cdcb3f56d3e9a162db5919ced0036cc3d6fd2b95b85ae42780bea7335",
+    "title": "empty",
+    "width": 560
+  },
+  "fixture-extreme": {
+    "key": "362bd6481bbf74eb",
+    "svg_sha256": "72944d37ad92105822ed19658e68fb6670258ae3d90a4f9e637bb546bb84dc42",
+    "title": "extreme",
+    "width": 560
+  },
+  "fixture-isolated-peaks": {
+    "key": "8c8e25dbc4ead27b",
+    "svg_sha256": "61a162a84fe2cbdac6a39c9f3094c34ee90a6f9295aeae7f3e86b453cc5c1b79",
+    "title": "isolated-peaks",
+    "width": 560
+  },
+  "fixture-long-streak": {
+    "key": "fb8eef238c8ab2f8",
+    "svg_sha256": "83f4a1ec50ac8d401f9b37e6f5468948598e0561470dff3e26dd4bcb87c4bea5",
+    "title": "long-streak",
+    "width": 560
+  },
+  "fixture-minimal": {
+    "key": "f4871167951e58eb",
+    "svg_sha256": "93c8779092fcb85b495850eb614515abe8d20afef4f3e924395724609f9d908f",
+    "title": "minimal",
+    "width": 560
+  },
+  "fixture-special-chars": {
+    "key": "f5b46b848641e2fe",
+    "svg_sha256": "84bc3dd8dc4627805c3f017d1c32f8ead84c7c0f6ac8907701c548cf07a3d967",
+    "title": "special characters (header off)",
+    "width": 560
+  },
+  "fixture-uniform": {
+    "key": "daeabe46e3049839",
+    "svg_sha256": "1ab4f7d78c14266630a25caf540513f58960b23713e00517479728eacf04d600",
+    "title": "uniform",
+    "width": 560
+  },
+  "height-linear": {
+    "key": "cd4752e8ea3f4b80",
+    "svg_sha256": "215b770cd7889534a02e56da58551b1746638c48e4fedf78ebc63e3593a5c00e",
+    "title": "height linear",
+    "width": 560
+  },
+  "height-log": {
+    "key": "40c064609479ccf4",
+    "svg_sha256": "7083d93d542206cc39c0d6d431d0a15a0796b22052dcabaa65dffa5673f1ee13",
+    "title": "height log",
+    "width": 560
+  },
+  "height-sqrt": {
+    "key": "5dd4123351ae33e0",
+    "svg_sha256": "8eeb997348f5474e623193dd49b60a9dd03434800ef77958965fd84d4feb18ac",
+    "title": "height sqrt",
+    "width": 560
+  },
+  "layout-compact": {
+    "key": "82ce8db4f0591b0d",
+    "svg_sha256": "73b574ad21ccfa651d8f20602cdd3b4e65cdb4156e103e77087654b57d7e254c",
+    "title": "compact",
+    "width": 560
+  },
+  "layout-dense-grid": {
+    "key": "04a6d5279616b53f",
+    "svg_sha256": "ab67f7e62b52d5b753d18a215c7813b4dd8a99ed227977e3d068e83eee4a7c1f",
+    "title": "dense-grid",
+    "width": 560
+  },
+  "layout-downtown": {
+    "key": "9839a548493d134c",
+    "svg_sha256": "6780afd4047e01a7f183ceadc046bf0750f8494bf0cd1445e33694c17cc3e2d2",
+    "title": "downtown",
+    "width": 560
+  },
+  "layout-floating-island": {
+    "key": "10827875184f18a0",
+    "svg_sha256": "adf87940b3bfa46212a89c8780b3272a954c31b7b6eec5efb8312423c8c0b30c",
+    "title": "floating-island",
+    "width": 560
+  },
+  "layout-wireframe": {
+    "key": "478f43dd9133ca6f",
+    "svg_sha256": "1f9eb91d773c1e84bc27fb399f1022e5b3247e3703fa14a7aa04d3e335a86790",
+    "title": "wireframe",
+    "width": 560
+  },
+  "range-2024-q4": {
+    "key": "d2f877383b94ba2b",
+    "svg_sha256": "d2b77afa72af0b662d021c4dbb07258dc24f78e698ed6286a030b58b32a6465d",
+    "title": "2024-10-01 to 2024-12-31",
+    "width": 560
+  },
+  "theme-arctic-glass": {
+    "key": "422d1638b5c6485f",
+    "svg_sha256": "83db0e75a8a5227d25fae87e5dafd8c7dfc15fbac26821ea50b89e7b24eb7a98",
+    "title": "arctic-glass",
+    "width": 560
+  },
+  "theme-copper-forge": {
+    "key": "c6c61260937ebdbc",
+    "svg_sha256": "86da4a8f1c495891a506b3b9b5f3a5ed60af929eaf72a946214c827104eacdb4",
+    "title": "copper-forge",
+    "width": 560
+  },
+  "theme-cyberpunk": {
+    "key": "73decef9dd9bd619",
+    "svg_sha256": "5d8847a74d046ebd95ca8c3c74ee16f497b1ac1f26c7a7cb09cbabe33d560685",
+    "title": "cyberpunk",
+    "width": 560
+  },
+  "theme-emerald-matrix": {
+    "key": "225b4d740ea98ca6",
+    "svg_sha256": "d92993fa3d9dabedbd548a6677c4224ad84041e7bf62e5397472fd3341fd807d",
+    "title": "emerald-matrix",
+    "width": 560
+  },
+  "theme-matrix-green": {
+    "key": "49e11d87d48a8675",
+    "svg_sha256": "068dfd00d90e83c8a4256d22f1d14d94bb07d855b5b663323d7eaae9211b81d8",
+    "title": "matrix-green",
+    "width": 560
+  },
+  "theme-monochrome-slate": {
+    "key": "de03f72bdde969e5",
+    "svg_sha256": "9c9bdf11bf786b6cf3f0f71798377746db42ae14e0c10e0ecbd7f7d1c4e0a819",
+    "title": "monochrome-slate",
+    "width": 560
+  },
+  "theme-navy-cyan": {
+    "key": "b5b4e650effd6fea",
+    "svg_sha256": "95da53deaacffaa3493d7de9445f214a8d4440838cf5a21eadf0c151c77e84bd",
+    "title": "navy-cyan",
+    "width": 560
+  },
+  "theme-navy-cyan-light": {
+    "key": "68ac697a0576e561",
+    "svg_sha256": "90287eb45f6d2ad15c7ba8e8ec0a840579ba48e1906929506b49f2fb4352af32",
+    "title": "navy-cyan-light",
+    "width": 560
+  },
+  "theme-neon-harbor": {
+    "key": "8d5f1a0e9e603c9e",
+    "svg_sha256": "de54372ce350b82818d254acbdf9c30d5a35afc509dcd6e9a40c52fc243f6f51",
+    "title": "neon-harbor",
+    "width": 560
+  },
+  "theme-profile": {
+    "key": "3d3290e51202bd5c",
+    "svg_sha256": "b5bca57bd588b7f6438ce06b1c7d23c76d50a76f3dfbba36e13fa0cd57a9e4c6",
+    "title": "profile",
+    "width": 560
+  },
+  "theme-profile-light": {
+    "key": "30b5427d212985cd",
+    "svg_sha256": "ad654f7059b7a111e9f7ad52b307deec561fce5c324e94a6a7c3d362ed0b1f1c",
+    "title": "profile-light",
+    "width": 560
+  },
+  "theme-solar-amber": {
+    "key": "ea90d1d2751f806b",
+    "svg_sha256": "c82c2219b728f0812e262de82762abc5de538c9c9a2f89ab50c654bb09668e49",
+    "title": "solar-amber",
+    "width": 560
+  },
+  "theme-sunset-grid": {
+    "key": "732fb9d0efbd1ade",
+    "svg_sha256": "e4a962a0a0721714ea5d4c591b3d63960af50669453872b5e3f51bf20eec05bd",
+    "title": "sunset-grid",
+    "width": 560
+  },
+  "theme-sunset-neon": {
+    "key": "57f7b9a5da8384dc",
+    "svg_sha256": "4021bb96a2db8f44df3113b9a341564292c3c796d14734d63bd8725196b942d7",
+    "title": "sunset-neon",
+    "width": 560
+  },
+  "year-2025": {
+    "key": "fc4b4ee3d8fb21fc",
+    "svg_sha256": "0f9d73e426ea3f0474a9d80ec464cd6d8790619086c30b2b2f8b3feaf9467ca0",
+    "title": "calendar year 2025",
+    "width": 560
+  }
+}
