@@ -19,6 +19,11 @@ from contribution_city.github_api import (
 from contribution_city.models import ContributionDataSet
 from contribution_city.renderer import CityRenderer
 from contribution_city.renderer.layouts import LAYOUT_SPECS
+from contribution_city.renderer.presets import (
+    BUILDING_STYLES,
+    HEIGHT_PRESET_NAMES,
+    VIEW_ANGLE_NAMES,
+)
 from contribution_city.renderer.svg import APPEARANCES, BACKGROUND_MODES, HEIGHT_MODES, LAYOUTS
 from contribution_city.renderer.themes import LIGHT_PAIRS, THEMES
 
@@ -134,7 +139,45 @@ Precedence: built-in defaults < configuration file < command-line options.
             "--scale",
             type=float,
             dest="building_scale",
-            help="Building height scaling multiplier (e.g. 1.0, 1.5)",
+            help="Multiplier for building heights, 0.1-5 (e.g. 0.8, 1.5). Without --height-preset "
+            "this keeps the 1.2.0 'custom' behaviour",
+        )
+        p.add_argument(
+            "--height-preset",
+            dest="height_preset",
+            choices=list(HEIGHT_PRESET_NAMES),
+            help="Overall building height profile: standard (default), tall (the 1.0-1.2 look) or "
+            "custom (your own --scale / --min-building-height / --max-building-height)",
+        )
+        p.add_argument(
+            "--min-building-height",
+            dest="min_building_height",
+            type=float,
+            help="Height of the smallest building in unscaled pixels (0-40)",
+        )
+        p.add_argument(
+            "--max-building-height",
+            dest="max_building_height",
+            type=float,
+            help="Tallest allowed building in unscaled pixels (8-400)",
+        )
+        p.add_argument(
+            "--building-style",
+            dest="building_style",
+            choices=list(BUILDING_STYLES),
+            help="detailed (windows, rooftop beacons; default) or solid (plain shaded buildings)",
+        )
+        p.add_argument(
+            "--view-angle",
+            dest="view_angle",
+            choices=list(VIEW_ANGLE_NAMES),
+            help="Camera preset: isometric (default), low, high or top-down",
+        )
+        p.add_argument(
+            "--view-elevation",
+            dest="view_elevation",
+            type=float,
+            help="Camera elevation in degrees (10-70); overrides --view-angle",
         )
         p.add_argument(
             "--no-windows",
@@ -301,6 +344,17 @@ def build_config(args: argparse.Namespace) -> AppConfig:
         config.city.height = args.height
     if args.building_scale is not None:
         config.city.building_scale = args.building_scale
+    for name in (
+        "height_preset",
+        "min_building_height",
+        "max_building_height",
+        "building_style",
+        "view_angle",
+        "view_elevation",
+    ):
+        value = getattr(args, name)
+        if value is not None:
+            setattr(config.city, name, value)
     if args.show_windows is not None:
         config.city.show_windows = args.show_windows
     if args.show_stars is not None:
@@ -406,6 +460,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         from contribution_city.visual.cli import run_visual
 
         return run_visual(args)
+    if args.command == "previews":
+        from contribution_city.visual.cli import run_previews
+
+        return run_previews(args)
     if args.command == "check-svg":
         from contribution_city.visual.cli import run_check_svg
 

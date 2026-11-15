@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import re
 from dataclasses import dataclass, field
 from datetime import date
@@ -10,9 +11,15 @@ from typing import Any
 
 import yaml
 
+from contribution_city.renderer.presets import (
+    HEIGHT_PRESET_NAMES,
+    LIMITS,
+    VIEW_ANGLE_NAMES,
+)
 from contribution_city.renderer.svg import (
     APPEARANCES,
     BACKGROUND_MODES,
+    BUILDING_STYLES,
     HEIGHT_MODES,
     LAYOUTS,
     RenderConfig,
@@ -24,6 +31,48 @@ class ConfigError(Exception):
     """Raised when configuration file or options are invalid."""
 
 
+def _opt_float(data: dict[str, Any], key: str) -> float | None:
+    """A float setting that may be absent (None = use the preset)."""
+    value = data.get(key)
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError) as err:
+        raise ConfigError(f"city.{key} must be a number, got {value!r}") from err
+
+
+def _opt_str(data: dict[str, Any], key: str) -> str | None:
+    value = data.get(key)
+    return None if value is None else str(value)
+
+
+def _coerce_dim(data: dict[str, Any], key: str, default: int) -> int:
+    """Parse a canvas dimension (width / height) with strict type checking.
+
+    Accepts only plain integers (and integer-valued floats like ``1200.0``).
+    Rejects ``null``, booleans, non-integer floats, and non-numeric strings —
+    all with a readable :class:`ConfigError`.
+    """
+    value = data.get(key)
+    if value is None:
+        if key in data:
+            # An explicitly supplied YAML null (e.g. ``width:``) is an invalid dimension type.
+            raise ConfigError(f"city.{key} must be an integer, got null")
+        # When the key is omitted entirely, fall back to the default dimension.
+        return default
+    if isinstance(value, bool):
+        raise ConfigError(f"city.{key} must be an integer, got {value!r}")
+    if isinstance(value, float):
+        if not math.isfinite(value) or value != int(value):
+            raise ConfigError(f"city.{key} must be a whole-number integer, got {value!r}")
+        return int(value)
+    try:
+        return int(value)
+    except (TypeError, ValueError) as err:
+        raise ConfigError(f"city.{key} must be an integer, got {value!r}") from err
+
+
 @dataclass
 class CitySettings:
     """City geometry and visual customization settings."""
@@ -32,9 +81,15 @@ class CitySettings:
     height: int = 680
     tile_width: float = 18.0
     tile_height: float = 9.0
-    building_scale: float = 1.0
-    min_building_height: float = 6.0
-    max_building_height: float = 125.0
+    # Height controls. Unset (None) means "use the preset"; setting building_scale or a min/max
+    # height without a preset keeps the 1.2.0 behaviour (preset 'custom').
+    height_preset: str | None = None
+    building_scale: float | None = None
+    min_building_height: float | None = None
+    max_building_height: float | None = None
+    building_style: str = "detailed"
+    view_angle: str | None = None
+    view_elevation: float | None = None
     show_windows: bool = True
     show_stars: bool = True
     show_header: bool = True
@@ -73,13 +128,47 @@ class CitySettings:
             raise ConfigError(f"city.width must be an integer >= 300, got {self.width}")
         if not isinstance(self.height, int) or self.height < 200:
             raise ConfigError(f"city.height must be an integer >= 200, got {self.height}")
-        if self.building_scale <= 0.0 or self.building_scale > 5.0:
+        if self.height_preset is not None and self.height_preset not in HEIGHT_PRESET_NAMES:
             raise ConfigError(
-                f"city.building_scale must be between 0.1 and 5.0, got {self.building_scale}"
+                f"city.height_preset must be one of {', '.join(HEIGHT_PRESET_NAMES)}, "
+                f"got '{self.height_preset}'"
             )
-        if self.tile_width < 4.0 or self.tile_width > 64.0:
+        if self.building_style not in BUILDING_STYLES:
+            raise ConfigError(
+                f"city.building_style must be one of {', '.join(BUILDING_STYLES)}, "
+                f"got '{self.building_style}'"
+            )
+        if self.view_angle is not None and self.view_angle not in VIEW_ANGLE_NAMES:
+            raise ConfigError(
+                f"city.view_angle must be one of {', '.join(VIEW_ANGLE_NAMES)}, "
+                f"got '{self.view_angle}'"
+            )
+        for key in (
+            "building_scale",
+            "min_building_height",
+            "max_building_height",
+            "view_elevation",
+        ):
+            value = getattr(self, key)
+            if value is None:
+                continue
+            lo, hi = LIMITS[key]
+            if not lo <= value <= hi:
+                raise ConfigError(f"city.{key} must be between {lo} and {hi}, got {value}")
+        low = self.min_building_height
+        high = self.max_building_height
+        if low is not None and high is not None and high < low + 1.0:
+            raise ConfigError(
+                f"city.max_building_height ({high}) must be at least 1 higher than "
+                f"city.min_building_height ({low})"
+            )
+        if not (4.0 <= self.tile_width <= 64.0) or not math.isfinite(self.tile_width):
             raise ConfigError(
                 f"city.tile_width must be between 4.0 and 64.0, got {self.tile_width}"
+            )
+        if not (4.0 <= self.tile_height <= 64.0) or not math.isfinite(self.tile_height):
+            raise ConfigError(
+                f"city.tile_height must be between 4.0 and 64.0, got {self.tile_height}"
             )
 
 
@@ -147,9 +236,13 @@ class AppConfig:
             appearance=self.appearance,
             tile_width=self.city.tile_width,
             tile_height=self.city.tile_height,
+            height_preset=self.city.height_preset,
             building_scale=self.city.building_scale,
             min_building_height=self.city.min_building_height,
             max_building_height=self.city.max_building_height,
+            building_style=self.city.building_style,
+            view_angle=self.city.view_angle,
+            view_elevation=self.city.view_elevation,
             show_windows=self.city.show_windows,
             show_stars=self.city.show_stars,
             show_header=self.city.show_header,
@@ -176,13 +269,17 @@ class AppConfig:
             raise ConfigError(f"Field 'city' must be a mapping, got {type(city_data).__name__}")
 
         city_settings = CitySettings(
-            width=int(city_data.get("width", 1200)),
-            height=int(city_data.get("height", 680)),
+            width=_coerce_dim(city_data, "width", 1200),
+            height=_coerce_dim(city_data, "height", 680),
             tile_width=float(city_data.get("tile_width", 18.0)),
             tile_height=float(city_data.get("tile_height", 9.0)),
-            building_scale=float(city_data.get("building_scale", 1.0)),
-            min_building_height=float(city_data.get("min_building_height", 6.0)),
-            max_building_height=float(city_data.get("max_building_height", 125.0)),
+            height_preset=_opt_str(city_data, "height_preset"),
+            building_scale=_opt_float(city_data, "building_scale"),
+            min_building_height=_opt_float(city_data, "min_building_height"),
+            max_building_height=_opt_float(city_data, "max_building_height"),
+            building_style=str(city_data.get("building_style", "detailed")),
+            view_angle=_opt_str(city_data, "view_angle"),
+            view_elevation=_opt_float(city_data, "view_elevation"),
             show_windows=bool(city_data.get("show_windows", True)),
             show_stars=bool(city_data.get("show_stars", True)),
             show_header=bool(city_data.get("show_header", True)),

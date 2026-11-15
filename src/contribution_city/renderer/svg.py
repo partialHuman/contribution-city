@@ -11,6 +11,16 @@ from html import escape
 from contribution_city.models import ContributionDataSet, ContributionDay
 from contribution_city.renderer.geometry import IsoProjection, Point2D, polygon_svg_points
 from contribution_city.renderer.layouts import LAYOUT_NAMES, LAYOUT_SPECS, GridItem
+from contribution_city.renderer.presets import (
+    BUILDING_STYLES,
+    DEFAULT_HEIGHT_PRESET,
+    HEIGHT_PRESET_NAMES,
+    HEIGHT_PRESETS,
+    LIMITS,
+    VIEW_ANGLE_NAMES,
+    VIEW_ANGLES,
+    height_factor,
+)
 from contribution_city.renderer.themes import LevelPalette, Theme, get_light_pair, get_theme
 
 HEIGHT_MODES = ("power", "linear", "sqrt", "log")
@@ -36,7 +46,10 @@ PLINTH_DEPTH = 16.0
 FLOOR_SPACING = 7.0
 SIDE_MARGIN = 40.0
 BOTTOM_MARGIN = 30.0
-MIN_SCALE, MAX_SCALE = 0.5, 3.0
+MIN_SCALE, MAX_SCALE = (
+    0.1,
+    3.0,
+)  # MIN_SCALE only guards against degenerate sizes; the city always fits
 ISLAND_SLAB = 26.0  # thickness of the floating island's top slab
 ISLAND_SHADOW = 30.0  # space reserved for the island's shadow
 
@@ -51,9 +64,18 @@ class RenderConfig:
     layout: str = "calendar"  # see LAYOUTS: calendar, compact, dense-grid, downtown, ...
     tile_width: float = 18.0
     tile_height: float = 9.0
-    building_scale: float = 1.0
-    min_building_height: float = 6.0
-    max_building_height: float = 125.0
+    # Height controls. ``height_preset`` is the overall profile (standard, tall, custom). When it is
+    # left unset, setting any of building_scale / min_building_height / max_building_height keeps the
+    # 1.2.0 behaviour (preset "custom"); otherwise the "standard" preset is used. See presets.py.
+    height_preset: str | None = None
+    building_scale: float | None = None
+    min_building_height: float | None = None
+    max_building_height: float | None = None
+    # 'detailed' (windows and rooftop beacons) or 'solid' (plain shaded boxes)
+    building_style: str = "detailed"
+    # Camera: a named preset (isometric, low, high, top-down) or an explicit elevation in degrees
+    view_angle: str | None = None
+    view_elevation: float | None = None
     show_windows: bool = True
     show_stars: bool = True
     show_header: bool = True
@@ -106,13 +128,18 @@ def _mix(base: str, other: str, amount: float) -> str:
 
 
 def _css_rules(
-    th: Theme, wireframe: bool = False, island: bool = False, scope: str | None = None
+    th: Theme,
+    wireframe: bool = False,
+    island: bool = False,
+    scope: str | None = None,
+    solid: bool = False,
 ) -> list[str]:
     """CSS rules (class -> colors) for one theme.
 
     ``wireframe`` draws outlines over an opaque "paper" colour (the theme's lower background
-    colour) so hidden lines stay hidden. ``island`` adds the underside shades. ``scope`` prefixes
-    every selector so several SVGs can share one HTML page.
+    colour) so hidden lines stay hidden. ``island`` adds the underside shades. ``solid`` paints
+    buildings as plain shaded boxes (no outline, so neighbouring faces meet without seams).
+    ``scope`` prefixes every selector so several SVGs can share one HTML page.
     """
     star_white = th.text_secondary if _luminance(th.bg_top) > 0.5 else "#FFFFFF"
     paper = th.bg_bottom
@@ -149,6 +176,12 @@ def _css_rules(
                 f".R{lvl}{{fill:{paper};stroke:{p.roof};stroke-width:1.4}}",
                 f".A{lvl}{{fill:{paper};stroke:{p.roof};stroke-width:1.4;stroke-opacity:.8}}",
                 f".Z{lvl}{{fill:{paper};stroke:{p.roof};stroke-width:1.4;stroke-opacity:.6}}",
+            ]
+        elif solid:
+            rules += [
+                f".R{lvl}{{fill:{p.roof};stroke:{p.roof};stroke-width:.6}}",
+                f".A{lvl}{{fill:{p.left_face};stroke:{p.left_face};stroke-width:.6}}",
+                f".Z{lvl}{{fill:{p.right_face};stroke:{p.right_face};stroke-width:.6}}",
             ]
         else:
             rules += [
@@ -210,6 +243,8 @@ class CityRenderer:
             )
         self.layout_spec = LAYOUT_SPECS[cfg.layout.lower()]
         self.background_mode = self._resolve_background()
+        self._resolve_heights()
+        self._resolve_view()
 
         self.theme = get_theme(cfg.theme) if isinstance(cfg.theme, str) else cfg.theme
         self.light_theme: Theme | None = None
@@ -218,6 +253,85 @@ class CityRenderer:
 
         self._max_count = 0
         self._scale = 1.0
+
+    def _resolve_heights(self) -> None:
+        """Validate the height settings and resolve preset, bounds and growth coefficient."""
+        cfg = self.config
+        if cfg.building_style not in BUILDING_STYLES:
+            raise ValueError(
+                f"Unknown building_style '{cfg.building_style}'. "
+                f"Choose from: {', '.join(BUILDING_STYLES)}"
+            )
+        if cfg.height_preset is not None and cfg.height_preset not in HEIGHT_PRESET_NAMES:
+            raise ValueError(
+                f"Unknown height_preset '{cfg.height_preset}'. "
+                f"Choose from: {', '.join(HEIGHT_PRESET_NAMES)}"
+            )
+        for name in ("building_scale", "min_building_height", "max_building_height"):
+            value = getattr(cfg, name)
+            if value is None:
+                continue
+            lo, hi = LIMITS[name]
+            if not lo <= value <= hi or value != value:
+                raise ValueError(f"{name} must be between {lo} and {hi}, got {value}")
+
+        explicit = any(
+            v is not None
+            for v in (cfg.building_scale, cfg.min_building_height, cfg.max_building_height)
+        )
+        name = cfg.height_preset or ("custom" if explicit else DEFAULT_HEIGHT_PRESET)
+        preset = HEIGHT_PRESETS[name]
+        self.height_preset = name
+        self.min_height = (
+            cfg.min_building_height if cfg.min_building_height is not None else preset.min_height
+        )
+        self.max_height = (
+            cfg.max_building_height if cfg.max_building_height is not None else preset.max_height
+        )
+        self.height_multiplier = cfg.building_scale if cfg.building_scale is not None else 1.0
+        self.height_coefficient = preset.coefficient
+        if self.max_height < self.min_height + 1.0:
+            raise ValueError(
+                f"max_building_height ({self.max_height}) must be at least 1 higher than "
+                f"min_building_height ({self.min_height})"
+            )
+        for label, value in (("width", cfg.width), ("height", cfg.height)):
+            lo, hi = LIMITS["canvas"]
+            if not lo <= value <= hi:
+                raise ValueError(f"{label} must be between {lo} and {hi} pixels, got {value}")
+
+    def _resolve_view(self) -> None:
+        """Pick the camera elevation: preset, explicit degrees, or the classic tile ratio."""
+        cfg = self.config
+        if cfg.view_angle is not None and cfg.view_angle not in VIEW_ANGLES:
+            raise ValueError(
+                f"Unknown view_angle '{cfg.view_angle}'. Choose from: {', '.join(VIEW_ANGLE_NAMES)}"
+            )
+        if cfg.view_elevation is not None:
+            lo, hi = LIMITS["view_elevation"]
+            if not lo <= cfg.view_elevation <= hi:
+                raise ValueError(
+                    f"view_elevation must be between {lo} and {hi} degrees, got {cfg.view_elevation}"
+                )
+            if cfg.view_angle not in (None, "isometric") and cfg.view_angle in VIEW_ANGLES:
+                if VIEW_ANGLES[cfg.view_angle].elevation != cfg.view_elevation:
+                    warnings.warn(
+                        "view_elevation overrides view_angle; remove one of the two settings.",
+                        UserWarning,
+                        stacklevel=3,
+                    )
+            elevation = cfg.view_elevation
+        elif cfg.view_angle in (None, "isometric"):
+            # classic view: keep honouring tile_width/tile_height exactly as earlier releases did
+            self.view_elevation = 30.0
+            self.tile_ratio = cfg.tile_height / cfg.tile_width
+            self.height_factor = 1.0
+            return
+        else:
+            elevation = VIEW_ANGLES[cfg.view_angle].elevation
+        self.view_elevation = elevation
+        self.tile_ratio = math.sin(math.radians(elevation))
+        self.height_factor = height_factor(elevation)
 
     def _resolve_background(self) -> str:
         """Effective background mode: solid, transparent or transparent-sky.
@@ -307,12 +421,17 @@ class CityRenderer:
             for _, _, day in grid_items
             if day and day.count > 0
         ]
-        return (max(heights) + 12.0) if heights else 0.0
+        if not heights:
+            return 0.0
+        spire = 2.0 if self.config.building_style == "solid" else 12.0
+        return (max(heights) * self.height_factor) + spire
 
     def _calculate_projection(self, grid_items: list[GridItem]) -> IsoProjection:
         """Pick scale and origin so the city is centred (and, if enabled, fills the canvas)."""
         cfg = self.config
-        tw0, th0 = cfg.tile_width, cfg.tile_height
+        tw0 = cfg.tile_width
+        th0 = tw0 * self.tile_ratio
+        hf = self.height_factor
 
         if not grid_items:
             self._scale = 1.0
@@ -332,11 +451,11 @@ class CityRenderer:
 
         # Extent of the city at scale 1
         ex = (c1 - r0) * (tw0 / 2.0) - (c0 - r1) * (tw0 / 2.0) + tw0
-        ey = (c1 + r1) * (th0 / 2.0) - (c0 + r0) * (th0 / 2.0) + th0 + max_h + PLINTH_DEPTH
+        ey = (c1 + r1) * (th0 / 2.0) - (c0 + r0) * (th0 / 2.0) + th0 + max_h + PLINTH_DEPTH * hf
         ey += self.layout_spec.extra_depth
         if self.layout_spec.island:
             # slab + tapering rock + shadow below the city, in unscaled pixels
-            ey += ISLAND_SLAB + 1.14 * ((c1 + r1) - (c0 + r0)) * th0 / 4.0 + ISLAND_SHADOW
+            ey += ISLAND_SLAB * hf + 1.14 * ((c1 + r1) - (c0 + r0)) * th0 / 4.0 + ISLAND_SHADOW
 
         header_space = 100.0 if cfg.show_header else 40.0
         avail_w = cfg.width - 2 * SIDE_MARGIN
@@ -378,7 +497,12 @@ class CityRenderer:
     def _render_style_and_defs(self) -> str:
         cfg = self.config
         spec = self.layout_spec
-        opts = {"wireframe": spec.wireframe, "island": spec.island, "scope": cfg.id_prefix}
+        opts = {
+            "wireframe": spec.wireframe,
+            "island": spec.island,
+            "scope": cfg.id_prefix,
+            "solid": cfg.building_style == "solid",
+        }
         css = "".join(_css_rules(self.theme, **opts))
         if self.light_theme is not None:
             light = "".join(_css_rules(self.light_theme, **opts))
@@ -445,7 +569,7 @@ class CityRenderer:
         left_tile = iso.get_tile_top(min_c, max_r)
         left_corner = Point2D(left_tile.x - iso.half_w, left_tile.y + iso.half_h)
 
-        depth = PLINTH_DEPTH * self._scale
+        depth = PLINTH_DEPTH * self._scale * self.height_factor
         pts_top = [top_corner, right_corner, bottom_corner, left_corner]
         pts_left = [
             left_corner,
@@ -484,7 +608,7 @@ class CityRenderer:
         west = Point2D(left_t.x - iso.half_w, left_t.y + iso.half_h)
 
         s = self._scale
-        slab = ISLAND_SLAB * s
+        slab = ISLAND_SLAB * s * self.height_factor
         half_diag = (south.y - north.y) / 2.0
         tier_h = 0.38 * half_diag  # deep enough that the tapering rock shows below the slab
         parts = [f'  <g id="{self._id("platform")}">']
@@ -559,32 +683,33 @@ class CityRenderer:
     def _calculate_building_height(self, count: int, max_count: int | None = None) -> float:
         """Building height in unscaled pixels for a given contribution count.
 
-        ``power`` (default) grows sub-linearly (count**0.78). ``linear`` makes the height above
-        the minimum exactly proportional to the count, ``sqrt`` and ``log`` sit in between.
-        All non-default modes are relative to ``max_count`` (the busiest day).
+        The height *preset* decides the bounds and growth rate; the height *mode* decides the
+        shape of the curve. ``power`` (default) grows sub-linearly (count**0.78). ``linear``
+        makes the height above the minimum exactly proportional to the count, ``sqrt`` and
+        ``log`` sit in between. All non-default modes are relative to ``max_count`` (the
+        busiest day).
         """
         if count <= 0:
             return 0.0
-        cfg = self.config
-        mode = cfg.height_mode
+        mode = self.config.height_mode
+        lo, hi, mult = self.min_height, self.max_height, self.height_multiplier
         if mode == "power" or not max_count:
-            h = cfg.min_building_height + ((count**0.78) * 8.5 * cfg.building_scale)
+            h = lo + ((count**0.78) * self.height_coefficient * mult)
         else:
-            span = cfg.max_building_height - cfg.min_building_height
             if mode == "linear":
                 frac = count / max_count
             elif mode == "sqrt":
                 frac = math.sqrt(count / max_count)
             else:  # log
                 frac = math.log1p(count) / math.log1p(max_count)
-            h = cfg.min_building_height + span * frac * cfg.building_scale
-        return min(cfg.max_building_height, round(h, 1))
+            h = lo + (hi - lo) * frac * mult
+        return min(hi, round(h, 1))
 
     def _render_building(self, iso: IsoProjection, col: int, row: int, day: ContributionDay) -> str:
         """Render a single 3D isometric building block with rooftop and windows."""
         count, level = day.count, max(1, min(4, day.level))
         palette = self.theme.get_level_palette(level)
-        base_h = self._calculate_building_height(count, self._max_count)
+        base_h = self._calculate_building_height(count, self._max_count) * self.height_factor
         height = base_h * self._scale
 
         roof_pts = iso.get_tile_diamond(col, row, height_offset=height)
@@ -600,12 +725,18 @@ class CityRenderer:
         out.append(f'      <polygon class="A{level}" points="{polygon_svg_points(left_pts)}" />')
         out.append(f'      <polygon class="Z{level}" points="{polygon_svg_points(right_pts)}" />')
 
-        if self.config.show_windows and not self.layout_spec.wireframe and base_h >= 14.0:
+        solid = self.config.building_style == "solid"
+        if (
+            self.config.show_windows
+            and not solid
+            and not self.layout_spec.wireframe
+            and base_h >= 14.0
+        ):
             out.extend(self._render_windows(iso, col, row, height, base_h, level))
 
         out.append(f'      <polygon class="R{level}" points="{polygon_svg_points(roof_pts)}" />')
 
-        if level >= 3 or count >= 8:
+        if not solid and (level >= 3 or count >= 8):
             out.append(self._render_rooftop_accent(iso, col, row, height, level, palette))
 
         out.append("    </g>")
@@ -659,7 +790,7 @@ class CityRenderer:
         top = iso.get_tile_top(col, row)
         center_x = round(top.x, 1)
         center_y = round(top.y - height + iso.half_h, 1)
-        spire_len = (10.0 if level >= 4 else 6.0) * self._scale
+        spire_len = (10.0 if level >= 4 else 6.0) * self._scale * self.height_factor
         spire_top_y = round(center_y - spire_len, 1)
         return (
             f'      <path class="N{level}" fill="none" d="M{center_x} {center_y}V{spire_top_y}" />\n'
