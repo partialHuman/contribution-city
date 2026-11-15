@@ -59,7 +59,7 @@ jobs:
           sha256sum --check --strict "$RUNNER_TEMP/checksums.sha256"
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
 
@@ -71,7 +71,7 @@ jobs:
             dist/contribution_city-1.3.0.tar.gz
 
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
         with:
           packages-dir: dist/
           verify-metadata: true

@@ -271,7 +271,6 @@ class TestLinksResolve:
         "examples/README.md",
         "previews/README.md",
         "docs/visual-testing.md",
-        "IMPLEMENTATION_SUMMARY.md",
         *[f"previews/{c}/README.md" for c, _, _ in CATEGORIES],
     ]
 
