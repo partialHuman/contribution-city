@@ -65,6 +65,13 @@ class VisualCase:
         data["layout"] = cfg.layout.lower()
         data["background"] = renderer.background_mode
         data.pop("transparent", None)
+        # resolve "unset" height and view options to what will really be drawn
+        data["height_preset"] = renderer.height_preset
+        data["building_scale"] = renderer.height_multiplier
+        data["min_building_height"] = renderer.min_height
+        data["max_building_height"] = renderer.max_height
+        data["view_elevation"] = round(renderer.view_elevation, 3)
+        data.pop("view_angle", None)
         return data
 
     def effective_key(self) -> str:
@@ -94,6 +101,9 @@ class VisualCase:
             "background": settings["background"],
             "appearance": settings["appearance"],
             "height_mode": settings["height_mode"],
+            "height_preset": settings["height_preset"],
+            "building_style": settings["building_style"],
+            "view_elevation": settings["view_elevation"],
             "width": settings["width"],
             "height": settings["height"],
             "building_scale": settings["building_scale"],
@@ -154,6 +164,120 @@ def raw_cases() -> list[VisualCase]:
                 baseline=mode != "power",
             )
         )
+
+    # Height presets (the overall profile) - 'standard' is the default and has its own theme cases
+    cases += [
+        _case(
+            "preset-tall",
+            "height preset tall (the 1.0-1.2 look)",
+            tags=("height", "preset"),
+            options={"height_preset": "tall"},
+            baseline=True,
+        ),
+        _case(
+            "preset-tall-linear",
+            "tall preset + linear mode",
+            tags=("height", "preset"),
+            options={"height_preset": "tall", "height_mode": "linear"},
+        ),
+        _case(
+            "preset-custom",
+            "custom: scale 1.5, max 90",
+            tags=("height", "preset"),
+            options={"height_preset": "custom", "building_scale": 1.5, "max_building_height": 90.0},
+            baseline=True,
+        ),
+        _case(
+            "legacy-explicit-scale",
+            "1.2.0 config with only building_scale (becomes custom)",
+            tags=("height", "compat"),
+            options={"building_scale": 1.0},
+        ),
+    ]
+
+    # Building styles
+    cases += [
+        _case(
+            "style-solid",
+            "solid buildings",
+            tags=("style",),
+            options={"building_style": "solid"},
+            baseline=True,
+        ),
+        _case(
+            "style-solid-tall",
+            "solid, tall preset",
+            tags=("style", "preset"),
+            options={"building_style": "solid", "height_preset": "tall"},
+            baseline=True,
+        ),
+        _case(
+            "style-solid-cyberpunk",
+            "solid, cyberpunk",
+            tags=("style", "theme"),
+            options={"building_style": "solid", "theme": "cyberpunk"},
+        ),
+        _case(
+            "style-solid-arctic-glass-downtown",
+            "solid, arctic-glass, downtown",
+            tags=("style", "theme", "layout"),
+            options={"building_style": "solid", "theme": "arctic-glass", "layout": "downtown"},
+        ),
+        _case(
+            "style-detailed",
+            "detailed (default)",
+            tags=("style",),
+            options={"building_style": "detailed"},
+        ),
+    ]
+
+    # Viewing angles
+    for name in ("low", "high", "top-down"):
+        cases.append(
+            _case(
+                f"view-{name}",
+                f"view {name}",
+                tags=("view",),
+                options={"view_angle": name},
+                baseline=True,
+            )
+        )
+    cases += [
+        _case(
+            "view-isometric", "view isometric", tags=("view",), options={"view_angle": "isometric"}
+        ),
+        _case(
+            "view-elevation-45",
+            "elevation 45 degrees",
+            tags=("view",),
+            options={"view_elevation": 45},
+        ),
+        _case(
+            "view-low-dense-grid",
+            "low view, dense-grid",
+            tags=("view", "layout"),
+            options={"view_angle": "low", "layout": "dense-grid"},
+        ),
+        _case(
+            "view-high-floating-island",
+            "high view, floating-island",
+            tags=("view", "layout"),
+            options={"view_angle": "high", "layout": "floating-island"},
+            baseline=True,
+        ),
+        _case(
+            "view-top-down-downtown",
+            "top-down, downtown",
+            tags=("view", "layout"),
+            options={"view_angle": "top-down", "layout": "downtown"},
+        ),
+        _case(
+            "view-low-wireframe",
+            "low view, wireframe",
+            tags=("view", "layout"),
+            options={"view_angle": "low", "layout": "wireframe"},
+        ),
+    ]
 
     # Background modes (and the legacy flag), appearance
     for mode in ("solid", "transparent", "transparent-sky", "auto"):

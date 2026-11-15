@@ -52,6 +52,24 @@ def full_year() -> ContributionDataSet:
     return ContributionDataSet.from_dict({"username": "fixture-user", "days": _days(counts)})
 
 
+def preview() -> ContributionDataSet:
+    """16 weeks with a few busy spells: the sample for the README previews."""
+    rnd = _lcg(1303)
+    counts = []
+    for i in range(112):
+        day = YEAR_START + timedelta(days=i)
+        base = rnd() % 8
+        if day.weekday() >= 5:
+            base //= 3
+        if 24 <= i < 40 or 74 <= i < 90:  # busy spells
+            base += 5 + rnd() % 9
+        if rnd() % 6 == 0:
+            base = 0
+        counts.append(base)
+    counts[58] = 34  # one standout day
+    return ContributionDataSet.from_dict({"username": "preview-user", "days": _days(counts)})
+
+
 def minimal() -> ContributionDataSet:
     return ContributionDataSet.from_dict({"username": "minimal", "days": _days([0, 3, 12, 25])})
 
@@ -101,6 +119,7 @@ def extreme() -> ContributionDataSet:
 
 FIXTURES: dict[str, Callable[[], ContributionDataSet]] = {
     "full-year": full_year,
+    "preview": preview,
     "minimal": minimal,
     "empty": empty,
     "isolated-peaks": isolated_peaks,

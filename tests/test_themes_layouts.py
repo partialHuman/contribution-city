@@ -157,11 +157,45 @@ class TestV110Compatibility:
         import hashlib
 
         ref = REF["renders"][case]
-        svg = CityRenderer(RenderConfig(**ref["options"])).render(build_fixture(ref["fixture"]))
+        # 1.3 changed the default height profile, so the old look is requested explicitly
+        options = {"height_preset": "tall", **ref["options"]}
+        svg = CityRenderer(RenderConfig(**options)).render(build_fixture(ref["fixture"]))
         normalised = re.sub(r'\s+xmlns:c2pa="[^"]*"|<metadata>.*?</metadata>', "", svg, flags=re.S)
         assert hashlib.sha256(normalised.encode()).hexdigest() == ref["sha256"], (
             f"'{case}' no longer renders exactly like v1.1.0"
         )
+
+    @pytest.mark.parametrize("case", sorted(REF["renders"]))
+    def test_default_is_now_the_standard_preset_not_the_old_tall_look(self, case: str) -> None:
+        ref = REF["renders"][case]
+        if any(
+            k in ref["options"]
+            for k in ("building_scale", "min_building_height", "max_building_height")
+        ):
+            pytest.skip("an explicit height setting keeps the 1.2.0 look (tested below)")
+        fixture = build_fixture(ref["fixture"])
+        default = CityRenderer(RenderConfig(**ref["options"])).render(fixture)
+        tall = CityRenderer(RenderConfig(height_preset="tall", **ref["options"])).render(fixture)
+        assert default != tall
+
+    def test_explicit_legacy_height_settings_keep_the_1_2_0_look(self) -> None:
+        """A 1.2.0 configuration that set building_scale must not be reinterpreted."""
+        import hashlib
+
+        ref = REF["renders"]["custom-size"]  # this reference sets building_scale=1.5
+        svg = CityRenderer(RenderConfig(**ref["options"])).render(build_fixture(ref["fixture"]))
+        normalised = re.sub(r'\s+xmlns:c2pa="[^"]*"|<metadata>.*?</metadata>', "", svg, flags=re.S)
+        assert hashlib.sha256(normalised.encode()).hexdigest() == ref["sha256"]
+
+    @pytest.mark.parametrize(
+        "legacy",
+        [{"building_scale": 1.0}, {"min_building_height": 6.0}, {"max_building_height": 125.0}],
+    )
+    def test_any_explicit_legacy_value_equals_the_tall_preset(self, legacy: dict) -> None:
+        fixture = build_fixture("full-year")
+        assert CityRenderer(RenderConfig(**legacy)).render(fixture) == CityRenderer(
+            RenderConfig(height_preset="tall")
+        ).render(fixture)
 
     def test_calendar_and_compact_layouts_still_exist_unchanged(self) -> None:
         assert LAYOUT_NAMES[:2] == ("calendar", "compact")

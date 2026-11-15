@@ -159,8 +159,8 @@ class TestDimensions:
 class TestExtremeAndEmptyData:
     def test_huge_counts_are_capped_not_unbounded(self) -> None:
         r = CityRenderer(RenderConfig(height_mode="linear"))
-        assert r._calculate_building_height(10**9, 10**9) == r.config.max_building_height
-        assert r._calculate_building_height(10**9) == r.config.max_building_height
+        assert r._calculate_building_height(10**9, 10**9) == r.max_height
+        assert r._calculate_building_height(10**9) == r.max_height
 
     @pytest.mark.parametrize("mode", ["power", "linear", "sqrt", "log"])
     def test_extreme_fixture_every_height_mode(self, mode: str) -> None:

@@ -4,212 +4,260 @@
     "resvg-py": "0.5.0"
   },
   "background-transparent": {
-    "key": "4c440fa09b2f14ab",
-    "svg_sha256": "c09fe36d0f5417f99e56cc37355e0242b2e9877ae1742c10ec2a63fbc58eec25",
+    "key": "a4abcb7ff177aa2b",
+    "svg_sha256": "3ea2fa8871b12685ef9bc8870d137f668b0f440b735e930cbff5310f6d180662",
     "title": "background transparent",
     "width": 560
   },
   "background-transparent-sky": {
-    "key": "7f4a5ea2418cd5f3",
-    "svg_sha256": "3ee7667228d5b5bf175999987790e1018306fb625187e037c05dd48da58f712d",
+    "key": "266b4b7effa040fc",
+    "svg_sha256": "1b560c909b557191d79ace9ea0eac2e469299783b18b0a0f2e0852475ea4fd25",
     "title": "background transparent-sky",
     "width": 560
   },
   "custom-size": {
-    "key": "21aaca8939b29b7c",
+    "key": "559527aba3bc044a",
     "svg_sha256": "e34a9ff0ef1982fea45bdfa2926da6c0a34ab9b6d985c499387e1d96e971dd8f",
     "title": "800x450, scale 1.5",
     "width": 560
   },
   "fit-off": {
-    "key": "40f5bd3ec3241179",
-    "svg_sha256": "7b17d68b7a9eb8811dc9d40a15074147f752355d6ee41190970db3fc5bf83e08",
+    "key": "3a9f141477bbe198",
+    "svg_sha256": "81a47bde239313b410b0002753e2702ac2efeb0e3511308a2fcf1cacd7790a01",
     "title": "auto-fit off",
     "width": 560
   },
   "fixture-empty": {
-    "key": "07a23033f3ebdee4",
+    "key": "2743960fa1e6bd6e",
     "svg_sha256": "cfcb9b4cdcb3f56d3e9a162db5919ced0036cc3d6fd2b95b85ae42780bea7335",
     "title": "empty",
     "width": 560
   },
   "fixture-extreme": {
-    "key": "362bd6481bbf74eb",
-    "svg_sha256": "72944d37ad92105822ed19658e68fb6670258ae3d90a4f9e637bb546bb84dc42",
+    "key": "00b87a06622b9c52",
+    "svg_sha256": "887c241f7bd5cdb8611d13c97218f1c012cf4def49e0ec9d8d0eb25efefb521d",
     "title": "extreme",
     "width": 560
   },
   "fixture-isolated-peaks": {
-    "key": "8c8e25dbc4ead27b",
-    "svg_sha256": "61a162a84fe2cbdac6a39c9f3094c34ee90a6f9295aeae7f3e86b453cc5c1b79",
+    "key": "200008d4f6e72215",
+    "svg_sha256": "2694a1f72c8bd02879f9b971772b6037da63f9d9818683afff22c26f22c2c60a",
     "title": "isolated-peaks",
     "width": 560
   },
   "fixture-long-streak": {
-    "key": "fb8eef238c8ab2f8",
-    "svg_sha256": "83f4a1ec50ac8d401f9b37e6f5468948598e0561470dff3e26dd4bcb87c4bea5",
+    "key": "b4c9c818e0c7fa8b",
+    "svg_sha256": "edb317fd507d84c0ac2b09d57fd90b0e47db229180f5f964012bbfd708c37a0a",
     "title": "long-streak",
     "width": 560
   },
   "fixture-minimal": {
-    "key": "f4871167951e58eb",
-    "svg_sha256": "93c8779092fcb85b495850eb614515abe8d20afef4f3e924395724609f9d908f",
+    "key": "ed8b32dbe0005e78",
+    "svg_sha256": "90566987703c2473e7e9ebec0ceb75107999ac79abe997ef97220f3e254b2574",
     "title": "minimal",
     "width": 560
   },
   "fixture-special-chars": {
-    "key": "f5b46b848641e2fe",
-    "svg_sha256": "84bc3dd8dc4627805c3f017d1c32f8ead84c7c0f6ac8907701c548cf07a3d967",
+    "key": "9cbc3afeab305488",
+    "svg_sha256": "34821178896fc08b4d10d3f63c6a0dd43d97a898ff2e8bdf58ad4a7fa7066cc0",
     "title": "special characters (header off)",
     "width": 560
   },
   "fixture-uniform": {
-    "key": "daeabe46e3049839",
-    "svg_sha256": "1ab4f7d78c14266630a25caf540513f58960b23713e00517479728eacf04d600",
+    "key": "4005dd7adfea3456",
+    "svg_sha256": "9bc526bd418e47255cce52b54769fa7a248b587e6e724d323bd49630d7097fc0",
     "title": "uniform",
     "width": 560
   },
   "height-linear": {
-    "key": "cd4752e8ea3f4b80",
-    "svg_sha256": "215b770cd7889534a02e56da58551b1746638c48e4fedf78ebc63e3593a5c00e",
+    "key": "e49ed14ca8eb864b",
+    "svg_sha256": "d3ed04fe021cc5593d5800f3a827e7f3c2084dd5b50cdd9472dcfa201b3e28d4",
     "title": "height linear",
     "width": 560
   },
   "height-log": {
-    "key": "40c064609479ccf4",
-    "svg_sha256": "7083d93d542206cc39c0d6d431d0a15a0796b22052dcabaa65dffa5673f1ee13",
+    "key": "f11b88fa71d5736f",
+    "svg_sha256": "a94cd3c0892aca6d8704fb5effa4f8eeb58260183bd60ec0f276f27e53c23842",
     "title": "height log",
     "width": 560
   },
   "height-sqrt": {
-    "key": "5dd4123351ae33e0",
-    "svg_sha256": "8eeb997348f5474e623193dd49b60a9dd03434800ef77958965fd84d4feb18ac",
+    "key": "266f2e34968e5a18",
+    "svg_sha256": "7242e0a6f6ca15991d22c26cd1a2e08282689c8da6b40965025441ad569a5020",
     "title": "height sqrt",
     "width": 560
   },
   "layout-compact": {
-    "key": "82ce8db4f0591b0d",
-    "svg_sha256": "73b574ad21ccfa651d8f20602cdd3b4e65cdb4156e103e77087654b57d7e254c",
+    "key": "c26e19dc8e9736e4",
+    "svg_sha256": "8d2421400c28251346f7f934723f68c994e34f7077bc05e3a51086a198e2a916",
     "title": "compact",
     "width": 560
   },
   "layout-dense-grid": {
-    "key": "04a6d5279616b53f",
-    "svg_sha256": "ab67f7e62b52d5b753d18a215c7813b4dd8a99ed227977e3d068e83eee4a7c1f",
+    "key": "a1caf99990028811",
+    "svg_sha256": "6d9c6154aefd71eb8b4b77f97f65152c99876886768375b7c44fbae3086d79fe",
     "title": "dense-grid",
     "width": 560
   },
   "layout-downtown": {
-    "key": "9839a548493d134c",
-    "svg_sha256": "6780afd4047e01a7f183ceadc046bf0750f8494bf0cd1445e33694c17cc3e2d2",
+    "key": "684dbf4a3d5847de",
+    "svg_sha256": "0051aeb520c7ebf14c783ac1192a5e62089172572b3f6c7facc3858d2c41c518",
     "title": "downtown",
     "width": 560
   },
   "layout-floating-island": {
-    "key": "10827875184f18a0",
-    "svg_sha256": "adf87940b3bfa46212a89c8780b3272a954c31b7b6eec5efb8312423c8c0b30c",
+    "key": "10dfc3ed04e0274c",
+    "svg_sha256": "8ed7a74e028e9483a9b92488a376d701e74b70a4beae8bab7ed96445cbcf8392",
     "title": "floating-island",
     "width": 560
   },
   "layout-wireframe": {
-    "key": "478f43dd9133ca6f",
-    "svg_sha256": "1f9eb91d773c1e84bc27fb399f1022e5b3247e3703fa14a7aa04d3e335a86790",
+    "key": "4543208765b39420",
+    "svg_sha256": "26689399c60d9d2568460803ff6dfcf0fb363dd7e064f6ac84c4cec48e45812e",
     "title": "wireframe",
     "width": 560
   },
+  "preset-custom": {
+    "key": "02175dcc67c5dacc",
+    "svg_sha256": "6372fb6101b152ef8f5d4fb3ce41768e7367f564f2c09cb0cbec626bfb41a110",
+    "title": "custom: scale 1.5, max 90",
+    "width": 560
+  },
+  "preset-tall": {
+    "key": "f154e7235e765cbb",
+    "svg_sha256": "95da53deaacffaa3493d7de9445f214a8d4440838cf5a21eadf0c151c77e84bd",
+    "title": "height preset tall (the 1.0-1.2 look)",
+    "width": 560
+  },
   "range-2024-q4": {
-    "key": "d2f877383b94ba2b",
-    "svg_sha256": "d2b77afa72af0b662d021c4dbb07258dc24f78e698ed6286a030b58b32a6465d",
+    "key": "08cc0ee7a7a96516",
+    "svg_sha256": "47b22c1cc3f544edac62c20eac232dc4c9b09caf3413f8898433a78921b48186",
     "title": "2024-10-01 to 2024-12-31",
     "width": 560
   },
+  "style-solid": {
+    "key": "0b8496d79ece4b98",
+    "svg_sha256": "7d6ecd957dc8b2acabed4b919bdd5e30d3eb34d3d876060650a8a87c5e5ed5f4",
+    "title": "solid buildings",
+    "width": 560
+  },
+  "style-solid-tall": {
+    "key": "0d09a2d57176d520",
+    "svg_sha256": "24e2e1e94ea4fcfcd44415d55d61709100196bcb9fd066c647450a6f4d6ceb3f",
+    "title": "solid, tall preset",
+    "width": 560
+  },
   "theme-arctic-glass": {
-    "key": "422d1638b5c6485f",
-    "svg_sha256": "83db0e75a8a5227d25fae87e5dafd8c7dfc15fbac26821ea50b89e7b24eb7a98",
+    "key": "21d16e57c6adfeae",
+    "svg_sha256": "67a57a5b92ebdba7c4d81be210ce2579dca55824c6ea83be2a62519f523e7b0c",
     "title": "arctic-glass",
     "width": 560
   },
   "theme-copper-forge": {
-    "key": "c6c61260937ebdbc",
-    "svg_sha256": "86da4a8f1c495891a506b3b9b5f3a5ed60af929eaf72a946214c827104eacdb4",
+    "key": "cb12bbf15b78b8f8",
+    "svg_sha256": "4c45bc488f5d69521ccba93d2454534196ed4708e37d9fc06271a7f9ea2f7032",
     "title": "copper-forge",
     "width": 560
   },
   "theme-cyberpunk": {
-    "key": "73decef9dd9bd619",
-    "svg_sha256": "5d8847a74d046ebd95ca8c3c74ee16f497b1ac1f26c7a7cb09cbabe33d560685",
+    "key": "6a068f59283d26fb",
+    "svg_sha256": "7db79c2e54fad864b36dbddb75a8a13fd0259f5811577675c7b24e6648e0cf8b",
     "title": "cyberpunk",
     "width": 560
   },
   "theme-emerald-matrix": {
-    "key": "225b4d740ea98ca6",
-    "svg_sha256": "d92993fa3d9dabedbd548a6677c4224ad84041e7bf62e5397472fd3341fd807d",
+    "key": "63d9252e1adb5e2c",
+    "svg_sha256": "058c508f7c45e6fc8bf62707e20ddb8545499dd9f5b1cb8d9aab8a4e87ccb741",
     "title": "emerald-matrix",
     "width": 560
   },
   "theme-matrix-green": {
-    "key": "49e11d87d48a8675",
-    "svg_sha256": "068dfd00d90e83c8a4256d22f1d14d94bb07d855b5b663323d7eaae9211b81d8",
+    "key": "eb54e37a96a88c88",
+    "svg_sha256": "5d868037260f1ea523c59b39b1a6feb4d57ccfa24d9c680831e7ef7715fc8905",
     "title": "matrix-green",
     "width": 560
   },
   "theme-monochrome-slate": {
-    "key": "de03f72bdde969e5",
-    "svg_sha256": "9c9bdf11bf786b6cf3f0f71798377746db42ae14e0c10e0ecbd7f7d1c4e0a819",
+    "key": "a02133516c0f4c32",
+    "svg_sha256": "9231e248645c1b4f62563a7028a5bdef0a39c6febd10dc56e81b9a2b00cbd03d",
     "title": "monochrome-slate",
     "width": 560
   },
   "theme-navy-cyan": {
-    "key": "b5b4e650effd6fea",
-    "svg_sha256": "95da53deaacffaa3493d7de9445f214a8d4440838cf5a21eadf0c151c77e84bd",
+    "key": "8e7704ea3b58a718",
+    "svg_sha256": "20a299d3e468ad66cdd5790a38703c5fd7a9d58eda4a9e695b664d04153e115b",
     "title": "navy-cyan",
     "width": 560
   },
   "theme-navy-cyan-light": {
-    "key": "68ac697a0576e561",
-    "svg_sha256": "90287eb45f6d2ad15c7ba8e8ec0a840579ba48e1906929506b49f2fb4352af32",
+    "key": "0bc42af873b74cdc",
+    "svg_sha256": "1d598557bf25a9f31faf470859b252a7dda652659c0abe7546a8dc31da98857e",
     "title": "navy-cyan-light",
     "width": 560
   },
   "theme-neon-harbor": {
-    "key": "8d5f1a0e9e603c9e",
-    "svg_sha256": "de54372ce350b82818d254acbdf9c30d5a35afc509dcd6e9a40c52fc243f6f51",
+    "key": "6e52fa22257b19b2",
+    "svg_sha256": "26afc52fa3127551a1be93e3f398cbb091e13afef0adf1dcc26fad80417fe03c",
     "title": "neon-harbor",
     "width": 560
   },
   "theme-profile": {
-    "key": "3d3290e51202bd5c",
-    "svg_sha256": "b5bca57bd588b7f6438ce06b1c7d23c76d50a76f3dfbba36e13fa0cd57a9e4c6",
+    "key": "5bcf5f62187af4d1",
+    "svg_sha256": "7ed3cdb9894dcce1df7534f0a5b454df675e54a3362d82d84f3f4f9d64b69d11",
     "title": "profile",
     "width": 560
   },
   "theme-profile-light": {
-    "key": "30b5427d212985cd",
-    "svg_sha256": "ad654f7059b7a111e9f7ad52b307deec561fce5c324e94a6a7c3d362ed0b1f1c",
+    "key": "b786770ffcb7f3f3",
+    "svg_sha256": "c23ca45ea62a70a59f16211de8f09e0c3ce3bf84b89ce637a846baf05e7a5ed3",
     "title": "profile-light",
     "width": 560
   },
   "theme-solar-amber": {
-    "key": "ea90d1d2751f806b",
-    "svg_sha256": "c82c2219b728f0812e262de82762abc5de538c9c9a2f89ab50c654bb09668e49",
+    "key": "e88aa75be040feb2",
+    "svg_sha256": "ac29e3d12121a0e4ca319737ea3052013baa2340ce79c25b452f1f7969b0f400",
     "title": "solar-amber",
     "width": 560
   },
   "theme-sunset-grid": {
-    "key": "732fb9d0efbd1ade",
-    "svg_sha256": "e4a962a0a0721714ea5d4c591b3d63960af50669453872b5e3f51bf20eec05bd",
+    "key": "e843ea014747a05b",
+    "svg_sha256": "df1a7687d45703c6e504de5d98276861a010b44425c0c53d7c9dd9c54d56f710",
     "title": "sunset-grid",
     "width": 560
   },
   "theme-sunset-neon": {
-    "key": "57f7b9a5da8384dc",
-    "svg_sha256": "4021bb96a2db8f44df3113b9a341564292c3c796d14734d63bd8725196b942d7",
+    "key": "6d5b9aa7ee73bb6e",
+    "svg_sha256": "736c0b6d19866e9efa7b0ae23ea8d339d85b6d004d1e42147ebc29f7acc48f5b",
     "title": "sunset-neon",
     "width": 560
   },
+  "view-high": {
+    "key": "dcef5ad16940e016",
+    "svg_sha256": "d3d658e714694b43f769731b4644a28e1c0d9a2c98b592227f3e41c2d90771ad",
+    "title": "view high",
+    "width": 560
+  },
+  "view-high-floating-island": {
+    "key": "95fdd21840fec866",
+    "svg_sha256": "33c222e71354fb9787be9eb9760d0899a227aa222713211bd3a551023d020b44",
+    "title": "high view, floating-island",
+    "width": 560
+  },
+  "view-low": {
+    "key": "6e93d943073a90e9",
+    "svg_sha256": "43ed8d6b9d8e02171c6e8a15a5c9696fbaaba927febd83a1cb240d06eb20160f",
+    "title": "view low",
+    "width": 560
+  },
+  "view-top-down": {
+    "key": "08653c7af3530be3",
+    "svg_sha256": "9ec5c0bc8b4613562107de178e9169d2fc66d6fab3cec82977e248117a96573e",
+    "title": "view top-down",
+    "width": 560
+  },
   "year-2025": {
-    "key": "fc4b4ee3d8fb21fc",
-    "svg_sha256": "0f9d73e426ea3f0474a9d80ec464cd6d8790619086c30b2b2f8b3feaf9467ca0",
+    "key": "3bf19177d32cbb2d",
+    "svg_sha256": "e8dcd2adddd7f096486999d8d540e005e752fab7d7ec4f628c95b97663caa176",
     "title": "calendar year 2025",
     "width": 560
   }

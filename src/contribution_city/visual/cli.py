@@ -64,6 +64,27 @@ def add_subcommands(subparsers: argparse._SubParsersAction) -> None:
         else:
             sp.add_argument("--yes", action="store_true", help="Confirm writing baseline files")
 
+    prev = subparsers.add_parser(
+        "previews",
+        help="Generate the browsable SVG preview gallery (previews/) and the README grids",
+        description=(
+            "Render every theme, layout, height, building-style, viewing-angle and background "
+            "preview from deterministic sample data. No extra dependencies are needed."
+        ),
+    )
+    prev.add_argument(
+        "-o", "--output-dir", default="previews", help="Gallery folder (default: previews)"
+    )
+    prev.add_argument(
+        "--readme",
+        help="Also rewrite the marked preview grids of this README (e.g. README.md)",
+    )
+    prev.add_argument(
+        "--check",
+        action="store_true",
+        help="Write nothing; exit 1 if any preview file or README grid is missing or out of date",
+    )
+
     chk = subparsers.add_parser(
         "check-svg",
         help="Validate generated SVG files (well-formed, unique ids, no external references)",
@@ -157,6 +178,37 @@ def run_visual(args: argparse.Namespace) -> int:
         f"{len(failed)} need attention" + (f"; artifacts in {args.artifacts_dir}" if failed else "")
     )
     return EXIT_FAIL if (failed or orphans) else EXIT_OK
+
+
+def run_previews(args: argparse.Namespace) -> int:
+    from contribution_city.previews import check_previews, generate_previews
+
+    if args.readme and not Path(args.readme).is_file():
+        sys.stderr.write(f"Error: README not found: {args.readme}\n")
+        return EXIT_USAGE
+    if args.check:
+        problems = check_previews(args.output_dir, args.readme)
+        for problem in problems:
+            sys.stderr.write(f"  {problem}\n")
+        if problems:
+            sys.stderr.write(
+                f"{len(problems)} problem(s). Run: contribution-city previews -o {args.output_dir}"
+                + (f" --readme {args.readme}" if args.readme else "")
+                + "\n"
+            )
+            return EXIT_FAIL
+        print(f"[previews] {args.output_dir} is up to date")
+        return EXIT_OK
+    manifest = generate_previews(args.output_dir, args.readme)
+    t = manifest["totals"]
+    print(
+        f"[previews] {t['previews']} previews ({t['files']} SVG files, {t['aliases']} shared) "
+        f"-> {args.output_dir}" + (f"; grids updated in {args.readme}" if args.readme else "")
+    )
+    bad = [p["id"] for p in manifest["previews"] if p["alias_of"] is None and not p["valid"]]
+    for name in bad:
+        sys.stderr.write(f"  INVALID: {name}\n")
+    return EXIT_FAIL if bad else EXIT_OK
 
 
 def run_check_svg(args: argparse.Namespace) -> int:

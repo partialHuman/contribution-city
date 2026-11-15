@@ -68,6 +68,12 @@ DEFAULTS = {
     "IN_WIDTH": "",
     "IN_HEIGHT": "",
     "IN_SCALE": "",
+    "IN_HEIGHT_PRESET": ACTION["inputs"]["height-preset"]["default"],
+    "IN_MIN_HEIGHT": "",
+    "IN_MAX_HEIGHT": "",
+    "IN_BUILDING_STYLE": ACTION["inputs"]["building-style"]["default"],
+    "IN_VIEW_ANGLE": ACTION["inputs"]["view-angle"]["default"],
+    "IN_VIEW_ELEVATION": "",
     "DEFAULT_USER": "octocat",
     "GITHUB_TOKEN": "",
 }
@@ -220,3 +226,102 @@ class TestSecurity:
     def test_token_is_not_on_the_command_line(self) -> None:
         assert "--token" not in GENERATE["run"]
         assert "GITHUB_TOKEN" in GENERATE["env"]
+
+
+class TestNewV13Inputs:
+    def test_defaults_give_the_same_city_as_the_cli_defaults(self, consumer: Path) -> None:
+        proc, _ = run_action(consumer)
+        assert proc.returncode == 0, proc.stderr
+        from contribution_city import CityRenderer, ContributionDataSet
+        from contribution_city.renderer import RenderConfig
+
+        data = ContributionDataSet.from_file(consumer / "data.json")
+        expected = CityRenderer(RenderConfig(show_header=True)).render(data)
+        assert (consumer / "dist/city.svg").read_text() == expected
+
+    def test_height_preset_input(self, consumer: Path) -> None:
+        run_action(consumer, IN_OUTPUT="std.svg")
+        run_action(consumer, IN_OUTPUT="tall.svg", IN_HEIGHT_PRESET="tall")
+        assert (consumer / "std.svg").read_text() != (consumer / "tall.svg").read_text()
+
+    def test_scale_alone_keeps_the_1_2_0_look(self, consumer: Path) -> None:
+        run_action(consumer, IN_OUTPUT="legacy.svg", IN_SCALE="1.0")
+        run_action(consumer, IN_OUTPUT="tall.svg", IN_HEIGHT_PRESET="tall")
+        assert (consumer / "legacy.svg").read_text() == (consumer / "tall.svg").read_text()
+
+    def test_min_and_max_height_inputs(self, consumer: Path) -> None:
+        proc, _ = run_action(
+            consumer,
+            IN_HEIGHT_PRESET="custom",
+            IN_MIN_HEIGHT="10",
+            IN_MAX_HEIGHT="50",
+            IN_SCALE="1.2",
+        )
+        assert proc.returncode == 0, proc.stderr
+
+    def test_solid_style_input_removes_windows_and_beacons(self, consumer: Path) -> None:
+        run_action(consumer, IN_BUILDING_STYLE="solid", IN_HEIGHT_PRESET="tall")
+        svg = (consumer / "dist/city.svg").read_text()
+        assert 'class="w ' not in svg and 'class="G' not in svg and check_svg(svg).ok
+
+    @pytest.mark.parametrize("angle", ["isometric", "low", "high", "top-down"])
+    def test_view_angle_input(self, consumer: Path, angle: str) -> None:
+        proc, _ = run_action(consumer, IN_VIEW_ANGLE=angle)
+        assert proc.returncode == 0, proc.stderr
+
+    def test_view_elevation_overrides_the_angle(self, consumer: Path) -> None:
+        run_action(consumer, IN_OUTPUT="a.svg", IN_VIEW_ELEVATION="45")
+        run_action(consumer, IN_OUTPUT="b.svg", IN_VIEW_ELEVATION="45", IN_VIEW_ANGLE="isometric")
+        assert (consumer / "a.svg").read_text() == (consumer / "b.svg").read_text()
+
+    @pytest.mark.parametrize(
+        ("name", "value", "message"),
+        [
+            ("IN_HEIGHT_PRESET", "huge", "Invalid height-preset"),
+            ("IN_BUILDING_STYLE", "glass", "Invalid building-style"),
+            ("IN_VIEW_ANGLE", "sideways", "Invalid view-angle"),
+        ],
+    )
+    def test_bad_enumerated_inputs_fail_early(
+        self, consumer: Path, name: str, value: str, message: str
+    ) -> None:
+        proc, out = run_action(consumer, **{name: value})
+        assert proc.returncode == 2 and message in proc.stderr
+        assert not (consumer / "dist").exists() and "svg-path" not in out.read_text()
+
+    @pytest.mark.parametrize(
+        ("name", "value", "needle"),
+        [
+            ("IN_SCALE", "9", "building_scale"),
+            ("IN_MIN_HEIGHT", "99", "min_building_height"),
+            ("IN_MAX_HEIGHT", "3", "max_building_height"),
+            ("IN_VIEW_ELEVATION", "85", "view_elevation"),
+        ],
+    )
+    def test_out_of_range_numbers_get_a_readable_error(
+        self, consumer: Path, name: str, value: str, needle: str
+    ) -> None:
+        proc, _ = run_action(consumer, **{name: value})
+        assert proc.returncode != 0 and needle in proc.stderr
+
+    @pytest.mark.parametrize(
+        "name",
+        ["IN_HEIGHT_PRESET", "IN_BUILDING_STYLE", "IN_VIEW_ANGLE", "IN_VIEW_ELEVATION", "IN_SCALE"],
+    )
+    def test_hostile_values_in_new_inputs_never_reach_a_shell(
+        self, consumer: Path, name: str
+    ) -> None:
+        run_action(consumer, **{name: "x; touch pwned #"})
+        assert not list(consumer.rglob("pwned"))
+
+    def test_action_defaults_match_the_documented_defaults(self) -> None:
+        inputs = ACTION["inputs"]
+        assert inputs["building-style"]["default"] == "detailed"
+        assert inputs["view-angle"]["default"] == "isometric"
+        assert (
+            inputs["height-preset"]["default"] == ""
+        )  # empty = standard (or custom if scale is set)
+        assert (
+            inputs["layout"]["default"] == "calendar"
+            and inputs["height-mode"]["default"] == "power"
+        )
