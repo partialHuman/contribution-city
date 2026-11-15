@@ -1,0 +1,43 @@
+# SOLID: clean, solid-colour buildings (no windows, no rooftop beacons) committed to your repository.
+# Copy to  .github/workflows/contribution-city-solid.yml
+name: Contribution City (solid buildings)
+
+on:
+  schedule:
+    - cron: "41 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-city-solid
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Generate the solid city
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: arctic-glass
+          layout: dense-grid
+          building-style: solid
+          output: assets/contribution-city-solid.svg
+
+      - name: Commit the SVG (only when it changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/contribution-city-solid.svg
+          if git diff --staged --quiet; then
+            echo "The city did not change."
+          else
+            git commit -m "chore: update solid contribution city [skip ci]"
+            git push
+          fi

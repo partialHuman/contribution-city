@@ -1,0 +1,798 @@
+{
+  "contribution_city_version": "1.3.0",
+  "fixture": "preview",
+  "canvas": {
+    "width": 720,
+    "height": 420
+  },
+  "totals": {
+    "previews": 39,
+    "files": 38,
+    "aliases": 1
+  },
+  "previews": [
+    {
+      "id": "themes/navy-cyan",
+      "label": "navy-cyan",
+      "category": "themes",
+      "cli": "--theme navy-cyan",
+      "file": "themes/navy-cyan.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "navy-cyan"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/matrix-green",
+      "label": "matrix-green",
+      "category": "themes",
+      "cli": "--theme matrix-green",
+      "file": "themes/matrix-green.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "matrix-green"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/sunset-neon",
+      "label": "sunset-neon",
+      "category": "themes",
+      "cli": "--theme sunset-neon",
+      "file": "themes/sunset-neon.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "sunset-neon"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/monochrome-slate",
+      "label": "monochrome-slate",
+      "category": "themes",
+      "cli": "--theme monochrome-slate",
+      "file": "themes/monochrome-slate.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "monochrome-slate"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/solar-amber",
+      "label": "solar-amber",
+      "category": "themes",
+      "cli": "--theme solar-amber",
+      "file": "themes/solar-amber.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "solar-amber"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/profile",
+      "label": "profile",
+      "category": "themes",
+      "cli": "--theme profile",
+      "file": "themes/profile.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "profile"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/profile-light",
+      "label": "profile-light",
+      "category": "themes",
+      "cli": "--theme profile-light",
+      "file": "themes/profile-light.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "profile-light"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/navy-cyan-light",
+      "label": "navy-cyan-light",
+      "category": "themes",
+      "cli": "--theme navy-cyan-light",
+      "file": "themes/navy-cyan-light.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "navy-cyan-light"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/neon-harbor",
+      "label": "neon-harbor",
+      "category": "themes",
+      "cli": "--theme neon-harbor",
+      "file": "themes/neon-harbor.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "neon-harbor"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/cyberpunk",
+      "label": "cyberpunk",
+      "category": "themes",
+      "cli": "--theme cyberpunk",
+      "file": "themes/cyberpunk.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "cyberpunk"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/emerald-matrix",
+      "label": "emerald-matrix",
+      "category": "themes",
+      "cli": "--theme emerald-matrix",
+      "file": "themes/emerald-matrix.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "emerald-matrix"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/copper-forge",
+      "label": "copper-forge",
+      "category": "themes",
+      "cli": "--theme copper-forge",
+      "file": "themes/copper-forge.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "copper-forge"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/arctic-glass",
+      "label": "arctic-glass",
+      "category": "themes",
+      "cli": "--theme arctic-glass",
+      "file": "themes/arctic-glass.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "arctic-glass"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "themes/sunset-grid",
+      "label": "sunset-grid",
+      "category": "themes",
+      "cli": "--theme sunset-grid",
+      "file": "themes/sunset-grid.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "theme": "sunset-grid"
+      },
+      "bytes": 44373,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "layouts/calendar",
+      "label": "calendar",
+      "category": "layouts",
+      "cli": "--layout calendar",
+      "file": "themes/navy-cyan.svg",
+      "alias_of": "themes/navy-cyan.svg",
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "calendar"
+      }
+    },
+    {
+      "id": "layouts/compact",
+      "label": "compact",
+      "category": "layouts",
+      "cli": "--layout compact",
+      "file": "layouts/compact.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "compact"
+      },
+      "bytes": 44577,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "layouts/dense-grid",
+      "label": "dense-grid",
+      "category": "layouts",
+      "cli": "--layout dense-grid",
+      "file": "layouts/dense-grid.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "dense-grid"
+      },
+      "bytes": 44645,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "layouts/downtown",
+      "label": "downtown",
+      "category": "layouts",
+      "cli": "--layout downtown",
+      "file": "layouts/downtown.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "downtown"
+      },
+      "bytes": 44645,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "layouts/floating-island",
+      "label": "floating-island",
+      "category": "layouts",
+      "cli": "--layout floating-island",
+      "file": "layouts/floating-island.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "floating-island"
+      },
+      "bytes": 45567,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "layouts/wireframe",
+      "label": "wireframe",
+      "category": "layouts",
+      "cli": "--layout wireframe",
+      "file": "layouts/wireframe.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "wireframe"
+      },
+      "bytes": 37291,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/standard",
+      "label": "standard (default)",
+      "category": "heights",
+      "cli": "--height-preset standard",
+      "file": "heights/standard.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 44645,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/tall-custom",
+      "label": "tall",
+      "category": "heights",
+      "cli": "--height-preset tall",
+      "file": "heights/tall-custom.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_preset": "tall",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 56633,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/custom-scale-1-5-max-90",
+      "label": "custom: scale 1.5, max 90",
+      "category": "heights",
+      "cli": "--height-preset custom --scale 1.5 --max-building-height 90",
+      "file": "heights/custom-scale-1-5-max-90.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_preset": "custom",
+        "building_scale": 1.5,
+        "max_building_height": 90.0,
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 64512,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/standard-linear",
+      "label": "standard + linear",
+      "category": "heights",
+      "cli": "--height-preset standard --height-mode linear",
+      "file": "heights/standard-linear.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_mode": "linear",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 40729,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/standard-sqrt",
+      "label": "standard + sqrt",
+      "category": "heights",
+      "cli": "--height-preset standard --height-mode sqrt",
+      "file": "heights/standard-sqrt.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_mode": "sqrt",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 49553,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/standard-log",
+      "label": "standard + log",
+      "category": "heights",
+      "cli": "--height-preset standard --height-mode log",
+      "file": "heights/standard-log.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_mode": "log",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 52357,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/tall-linear",
+      "label": "tall + linear",
+      "category": "heights",
+      "cli": "--height-preset tall --height-mode linear",
+      "file": "heights/tall-linear.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_mode": "linear",
+        "height_preset": "tall",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 50633,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/tall-sqrt",
+      "label": "tall + sqrt",
+      "category": "heights",
+      "cli": "--height-preset tall --height-mode sqrt",
+      "file": "heights/tall-sqrt.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_mode": "sqrt",
+        "height_preset": "tall",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 64425,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "heights/tall-log",
+      "label": "tall + log",
+      "category": "heights",
+      "cli": "--height-preset tall --height-mode log",
+      "file": "heights/tall-log.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "height_mode": "log",
+        "height_preset": "tall",
+        "layout": "dense-grid",
+        "theme": "neon-harbor"
+      },
+      "bytes": 69657,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "building-styles/detailed",
+      "label": "detailed",
+      "category": "building-styles",
+      "cli": "--building-style detailed",
+      "file": "building-styles/detailed.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "building_style": "detailed",
+        "height_preset": "tall",
+        "layout": "dense-grid",
+        "theme": "copper-forge"
+      },
+      "bytes": 56633,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "building-styles/solid",
+      "label": "solid",
+      "category": "building-styles",
+      "cli": "--building-style solid",
+      "file": "building-styles/solid.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "building_style": "solid",
+        "height_preset": "tall",
+        "layout": "dense-grid",
+        "theme": "copper-forge"
+      },
+      "bytes": 33099,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "viewing-angles/standard-isometric",
+      "label": "isometric (30 deg)",
+      "category": "viewing-angles",
+      "cli": "--view-angle isometric",
+      "file": "viewing-angles/standard-isometric.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "view_angle": "isometric",
+        "layout": "dense-grid",
+        "theme": "arctic-glass"
+      },
+      "bytes": 44645,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "viewing-angles/low",
+      "label": "low (20 deg)",
+      "category": "viewing-angles",
+      "cli": "--view-angle low",
+      "file": "viewing-angles/low.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "view_angle": "low",
+        "layout": "dense-grid",
+        "theme": "arctic-glass"
+      },
+      "bytes": 46201,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "viewing-angles/high",
+      "label": "high (42 deg)",
+      "category": "viewing-angles",
+      "cli": "--view-angle high",
+      "file": "viewing-angles/high.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "view_angle": "high",
+        "layout": "dense-grid",
+        "theme": "arctic-glass"
+      },
+      "bytes": 42857,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "viewing-angles/top-down",
+      "label": "top-down (58 deg)",
+      "category": "viewing-angles",
+      "cli": "--view-angle top-down",
+      "file": "viewing-angles/top-down.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "view_angle": "top-down",
+        "layout": "dense-grid",
+        "theme": "arctic-glass"
+      },
+      "bytes": 39741,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "backgrounds/solid",
+      "label": "solid",
+      "category": "backgrounds",
+      "cli": "--background solid",
+      "file": "backgrounds/solid.svg",
+      "alias_of": null,
+      "checkerboard_companion": null,
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "background": "solid",
+        "layout": "dense-grid",
+        "theme": "cyberpunk"
+      },
+      "bytes": 44645,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "backgrounds/transparent",
+      "label": "transparent",
+      "category": "backgrounds",
+      "cli": "--background transparent",
+      "file": "backgrounds/transparent.svg",
+      "alias_of": null,
+      "checkerboard_companion": "backgrounds/transparent.on-checkerboard.svg",
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "background": "transparent",
+        "layout": "dense-grid",
+        "theme": "cyberpunk"
+      },
+      "bytes": 40877,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "backgrounds/transparent-sky",
+      "label": "transparent-sky",
+      "category": "backgrounds",
+      "cli": "--background transparent-sky",
+      "file": "backgrounds/transparent-sky.svg",
+      "alias_of": null,
+      "checkerboard_companion": "backgrounds/transparent-sky.on-checkerboard.svg",
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "background": "transparent-sky",
+        "layout": "dense-grid",
+        "theme": "cyberpunk"
+      },
+      "bytes": 44590,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "id": "backgrounds/auto-with-auto-appearance",
+      "label": "auto + appearance auto",
+      "category": "backgrounds",
+      "cli": "--background auto --appearance auto --theme profile",
+      "file": "backgrounds/auto-with-auto-appearance.svg",
+      "alias_of": null,
+      "checkerboard_companion": "backgrounds/auto-with-auto-appearance.on-checkerboard.svg",
+      "settings": {
+        "width": 720,
+        "height": 420,
+        "show_tooltips": false,
+        "show_header": false,
+        "background": "auto",
+        "appearance": "auto",
+        "layout": "dense-grid",
+        "theme": "profile"
+      },
+      "bytes": 46465,
+      "valid": true,
+      "errors": []
+    }
+  ]
+}

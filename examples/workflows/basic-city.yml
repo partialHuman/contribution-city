@@ -1,0 +1,43 @@
+# BASIC: generate your city every day and commit it to your repository.
+# Copy this file to  .github/workflows/contribution-city.yml  in YOUR repository.
+# Result: assets/contribution-city.svg  (standard-height buildings, default theme).
+name: Contribution City
+
+on:
+  schedule:
+    - cron: "17 4 * * *"      # every day at 04:17 UTC
+  workflow_dispatch:           # adds a "Run workflow" button in the Actions tab
+
+# This workflow commits a file, so it needs write access to the repository contents.
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-city
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out your repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Generate the city
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: assets/contribution-city.svg
+
+      - name: Commit the SVG (only when it changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/contribution-city.svg
+          if git diff --staged --quiet; then
+            echo "The city did not change."
+          else
+            git commit -m "chore: update contribution city [skip ci]"
+            git push
+          fi

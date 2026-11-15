@@ -1,0 +1,62 @@
+# Every configuration key of Contribution City, with its default and the accepted values.
+# All keys are optional. Precedence: built-in defaults < this file < command-line options.
+# Use it with:  contribution-city generate --config examples/config/all-options.yaml
+# (or the action input `config:`). Values below are the DEFAULTS unless a comment says otherwise.
+
+# --- data -------------------------------------------------------------------------------------
+username: octocat                 # live GitHub data (needs a token). Or use `input:` for a JSON file.
+# input: examples/sample-contributions.json   # offline data instead of a username
+# token: ghp_...                  # better: set the GITHUB_TOKEN environment variable
+# years: [2024, 2025]             # calendar years to include ...
+# from: 2025-01-01                # ... or a date range of at most one year (not both)
+# to: 2025-12-31
+retries: 2                        # retries for temporary GitHub failures, 0 to 10
+output: dist/city.svg             # parent folders are created automatically
+
+# --- look -------------------------------------------------------------------------------------
+theme: navy-cyan                  # navy-cyan | matrix-green | sunset-neon | monochrome-slate | solar-amber
+                                  # | profile | profile-light | navy-cyan-light | neon-harbor | cyberpunk
+                                  # | emerald-matrix | copper-forge | arctic-glass | sunset-grid
+layout: calendar                  # calendar | compact | dense-grid | downtown | floating-island | wireframe
+appearance: fixed                 # fixed | auto  (auto: embed a light palette; navy-cyan and profile only)
+
+city:
+  # --- building height ------------------------------------------------------------------------
+  # Height PRESET = the overall profile. Height MODE = the curve inside that profile.
+  height_preset: standard         # standard (default) | tall (the 1.0-1.2 look) | custom
+  height_mode: power              # power (default) | linear | sqrt | log
+  # Fine tuning. Leave these out to use the preset. Setting any of them WITHOUT a height_preset
+  # selects 'custom' (the 1.2.0 behaviour).
+  # building_scale: 1.0           # multiplier, 0.1 to 5
+  # min_building_height: 3.0      # unscaled pixels, 0 to 40 (standard: 3, tall: 6)
+  # max_building_height: 56.0     # unscaled pixels, 8 to 400 (standard: 56, tall: 125)
+
+  # --- building appearance --------------------------------------------------------------------
+  building_style: detailed        # detailed (windows + rooftop beacons) | solid (plain shaded boxes)
+  show_windows: true              # windows on detailed buildings
+  show_stars: true
+  show_header: true
+  show_platform: true
+  show_zero_tiles: true           # draw empty days as flat tiles
+
+  # --- tile size (rarely needed) ----------------------------------------------------------------
+  # tile_width: 18.0              # base width of a ground tile; auto_fit scales it to the canvas
+  # tile_height: 9.0              # only used by the default isometric view (2:1); the other
+  #                               # view angles derive it from the camera elevation
+
+  # --- camera ---------------------------------------------------------------------------------
+  view_angle: isometric           # isometric (default, 30 deg) | low (20) | high (42) | top-down (58)
+  # view_elevation: 35            # degrees, 10 to 70; overrides view_angle
+
+  # --- canvas and background ------------------------------------------------------------------
+  width: 1200                     # pixels, 100 to 10000
+  height: 680                     # pixels, 100 to 10000 (canvas height, not building height!)
+  auto_fit: true                  # scale the city to fill the canvas
+  background: solid               # solid | transparent | transparent-sky | auto
+  # transparent: false            # legacy flag; background wins when both are set
+
+  # --- file ------------------------------------------------------------------------------------
+  show_tooltips: true             # false = smaller file
+  pixel_art: true                 # crisp pixel edges (false = smooth edges)
+  # id_prefix: city               # only when inlining several SVGs into one HTML page
+  # custom_title: "My city"       # text of the header (needs show_header)

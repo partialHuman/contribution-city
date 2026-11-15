@@ -19,8 +19,9 @@ the current date, the network or a GitHub account (`src/contribution_city/visual
 | `contribution-city gallery` | SVG + PNG for every case, contact sheet, `manifest.json` | no |
 | `contribution-city check-svg FILE...` | Static checks of any SVG | no |
 | `pytest -m baseline` | The pixel comparison as a test | no |
+| `contribution-city previews [--check] [--readme README.md]` | The browsable `previews/` folder and the README grids (no extra dependencies) | the gallery only |
 
-Only a curated subset (about 35 distinct cases) has a baseline; the full gallery (about 50 cases)
+Only a curated subset (about 43 distinct cases) has a baseline; the full gallery (about 66 cases)
 is generated on demand and uploaded by CI as an artifact.
 
 ## How differences are judged
@@ -95,3 +96,14 @@ lists cases that were dropped because their effective settings equal an earlier 
 - CI compares pixels on Linux only. The cross-platform test matrix runs everything else.
 - This environment cannot run a browser, so how a given browser handles `prefers-color-scheme`
   inside an `<img>` is documented behaviour, not something these tests verify.
+
+## The README preview gallery (`previews/`)
+
+Separate from the test gallery above: `contribution-city previews --readme README.md` writes the
+folder browsed on GitHub (`previews/themes`, `layouts`, `heights`, `building-styles`,
+`viewing-angles`, `backgrounds`, with a README in each) and rewrites the four grids in the root
+README between the `<!-- previews:NAME:start -->` / `end` markers. It uses the `preview` fixture
+(16 weeks, deterministic) and a 720x420 canvas. `--check` renders everything again in memory and
+fails if a file, a README grid or a link target is missing or out of date; CI runs it and the test
+suite runs it too, so the gallery cannot silently drift from the renderer. Add a theme or layout to
+its registry and run the command: the new preview, its folder README and the grid appear.

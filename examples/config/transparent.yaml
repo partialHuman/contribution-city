@@ -1,0 +1,9 @@
+# A city whose background is transparent, so the page behind the image shows through.
+#   transparent      - no background rectangle and no stars
+#   transparent-sky  - no background rectangle, but the sky stars are kept (good on dark pages)
+# Use: contribution-city generate --config examples/config/transparent.yaml
+theme: neon-harbor
+output: dist/city-transparent.svg
+city:
+  background: transparent-sky     # or: transparent
+  show_header: false

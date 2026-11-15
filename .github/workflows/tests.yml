@@ -130,6 +130,9 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+      - name: Check that previews/ and the README grids are up to date
+        run: contribution-city previews --check --readme README.md
+
       - name: Generate the preview gallery
         if: always()
         run: |

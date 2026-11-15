@@ -86,8 +86,32 @@ inputs:
     description: "Canvas height in pixels"
     required: false
     default: ""
+  height-preset:
+    description: "Overall building height profile: standard (default), tall (the 1.0-1.2 look) or custom. Empty means standard, unless scale or a min/max height is given, which keeps the 1.2.0 'custom' behaviour."
+    required: false
+    default: ""
   scale:
-    description: "Building height multiplier"
+    description: "Multiplier for building heights, 0.1-5. On the standard or tall preset it scales that preset; on its own it selects the 'custom' preset as in 1.2.0."
+    required: false
+    default: ""
+  min-building-height:
+    description: "Smallest building height in unscaled pixels, 0-40 (custom bounds)"
+    required: false
+    default: ""
+  max-building-height:
+    description: "Tallest allowed building in unscaled pixels, 8-400 (custom bounds)"
+    required: false
+    default: ""
+  building-style:
+    description: "detailed (windows and rooftop beacons, default) or solid (plain shaded buildings)"
+    required: false
+    default: "detailed"
+  view-angle:
+    description: "Camera preset: isometric (default), low, high or top-down"
+    required: false
+    default: "isometric"
+  view-elevation:
+    description: "Camera elevation in degrees, 10-70. Overrides view-angle when set."
     required: false
     default: ""
 
@@ -137,6 +161,12 @@ runs:
         IN_WIDTH: ${{ inputs.width }}
         IN_HEIGHT: ${{ inputs.height }}
         IN_SCALE: ${{ inputs.scale }}
+        IN_HEIGHT_PRESET: ${{ inputs.height-preset }}
+        IN_MIN_HEIGHT: ${{ inputs.min-building-height }}
+        IN_MAX_HEIGHT: ${{ inputs.max-building-height }}
+        IN_BUILDING_STYLE: ${{ inputs.building-style }}
+        IN_VIEW_ANGLE: ${{ inputs.view-angle }}
+        IN_VIEW_ELEVATION: ${{ inputs.view-elevation }}
         DEFAULT_USER: ${{ github.repository_owner }}
       run: |
         set -euo pipefail
@@ -159,8 +189,22 @@ runs:
           *) echo "::error title=Invalid height-mode::height-mode must be power, linear, sqrt or log" >&2; exit 2 ;;
         esac
 
+        case "$IN_HEIGHT_PRESET" in
+          ""|standard|tall|custom) ;;
+          *) echo "::error title=Invalid height-preset::height-preset must be standard, tall or custom" >&2; exit 2 ;;
+        esac
+        case "$IN_BUILDING_STYLE" in
+          detailed|solid) ;;
+          *) echo "::error title=Invalid building-style::building-style must be detailed or solid" >&2; exit 2 ;;
+        esac
+        case "$IN_VIEW_ANGLE" in
+          isometric|low|high|top-down) ;;
+          *) echo "::error title=Invalid view-angle::view-angle must be isometric, low, high or top-down" >&2; exit 2 ;;
+        esac
+
         args=(generate --theme "$IN_THEME" --layout "$IN_LAYOUT" --appearance "$IN_APPEARANCE"
-              --height-mode "$IN_HEIGHT_MODE" --output "$IN_OUTPUT" --retries "$IN_RETRIES")
+              --height-mode "$IN_HEIGHT_MODE" --building-style "$IN_BUILDING_STYLE"
+              --view-angle "$IN_VIEW_ANGLE" --output "$IN_OUTPUT" --retries "$IN_RETRIES")
 
         if [ -n "$IN_INPUT" ]; then
           args+=(--input "$IN_INPUT")
@@ -173,6 +217,10 @@ runs:
         [ -n "$IN_WIDTH" ] && args+=(--width "$IN_WIDTH")
         [ -n "$IN_HEIGHT" ] && args+=(--height "$IN_HEIGHT")
         [ -n "$IN_SCALE" ] && args+=(--scale "$IN_SCALE")
+        [ -n "$IN_HEIGHT_PRESET" ] && args+=(--height-preset "$IN_HEIGHT_PRESET")
+        [ -n "$IN_MIN_HEIGHT" ] && args+=(--min-building-height "$IN_MIN_HEIGHT")
+        [ -n "$IN_MAX_HEIGHT" ] && args+=(--max-building-height "$IN_MAX_HEIGHT")
+        [ -n "$IN_VIEW_ELEVATION" ] && args+=(--view-elevation "$IN_VIEW_ELEVATION")
         [ -n "$IN_BACKGROUND" ] && args+=(--background "$IN_BACKGROUND")
         [ -n "$IN_ID_PREFIX" ] && args+=(--id-prefix "$IN_ID_PREFIX")
         [ "$IN_TRANSPARENT" = "true" ] && args+=(--transparent)

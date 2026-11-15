@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" shape-rendering="crispEdges" class="pv" role="img" aria-labelledby="pv-title pv-desc">
+  <title id="pv-title">Contribution City of @preview-user</title>
+  <desc id="pv-desc">Isometric pixel-art city of 547 contributions by @preview-user between 2025-01-01 and 2025-04-22. Busiest day: 34 contributions. Longest streak: 12 days.</desc>
+  <style>.pv .bt{stop-color:#0B0B0D}.pv .bb{stop-color:#161618}.pv .gt{fill:#1E1E21;stroke:#2E2E33;stroke-width:.5}.pv .pt{fill:#242427;stroke:#3A3A40;stroke-width:1}.pv .pl{fill:#18181A;stroke:#3A3A40;stroke-width:.75}.pv .pr{fill:#101012;stroke:#3A3A40;stroke-width:.75}.pv .tp{fill:#F5EBE0}.pv .ts{fill:#B3A08C}.pv .ta{fill:#FFB347}.pv .sw{fill:#FFFFFF}.pv .sc{fill:#D9A066}.pv .kw{stroke:#FFFFFF}.pv .kc{stroke:#D9A066}.pv .R1{fill:#8C5A3C;stroke:#8C5A3C;stroke-width:.6}.pv .A1{fill:#6B4430;stroke:#6B4430;stroke-width:.6}.pv .Z1{fill:#4A2F21;stroke:#4A2F21;stroke-width:.6}.pv .WL1{stroke:#FFC474;opacity:.9}.pv .WD1{stroke:#5A3C2B;opacity:.4}.pv .XL1{stroke:#FFC474;opacity:.75}.pv .XD1{stroke:#5A3C2B;opacity:.3}.pv .N1{stroke:#2A1A12;stroke-width:1}.pv .G1{fill:#FFB347}.pv .R2{fill:#B87333;stroke:#B87333;stroke-width:.6}.pv .A2{fill:#8F5A29;stroke:#8F5A29;stroke-width:.6}.pv .Z2{fill:#66401E;stroke:#66401E;stroke-width:.6}.pv .WL2{stroke:#FFC474;opacity:.9}.pv .WD2{stroke:#6A4A2C;opacity:.4}.pv .XL2{stroke:#FFC474;opacity:.75}.pv .XD2{stroke:#6A4A2C;opacity:.3}.pv .N2{stroke:#3A2410;stroke-width:1}.pv .G2{fill:#FFB347}.pv .R3{fill:#D98E4A;stroke:#D98E4A;stroke-width:.6}.pv .A3{fill:#B06E36;stroke:#B06E36;stroke-width:.6}.pv .Z3{fill:#85511F;stroke:#85511F;stroke-width:.6}.pv .WL3{stroke:#FFD79A;opacity:.9}.pv .WD3{stroke:#7A5530;opacity:.4}.pv .XL3{stroke:#FFD79A;opacity:.75}.pv .XD3{stroke:#7A5530;opacity:.3}.pv .N3{stroke:#4A2E14;stroke-width:1}.pv .G3{fill:#FFD166}.pv .R4{fill:#FFB347;stroke:#FFB347;stroke-width:.6}.pv .A4{fill:#D9822B;stroke:#D9822B;stroke-width:.6}.pv .Z4{fill:#B1651A;stroke:#B1651A;stroke-width:.6}.pv .WL4{stroke:#FFF1D0;opacity:.9}.pv .WD4{stroke:#946A3A;opacity:.4}.pv .XL4{stroke:#FFF1D0;opacity:.75}.pv .XD4{stroke:#946A3A;opacity:.3}.pv .N4{stroke:#5E3A12;stroke-width:1}.pv .G4{fill:#FFFFFF}.pv path.w{fill:none;stroke-width:1.2}</style>
+  <defs>
+    <linearGradient id="pv-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" class="bt" />
+      <stop offset="100%" class="bb" />
+    </linearGradient>
+    <filter id="pv-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="720" height="420" fill="url(#pv-bg)" />
+  <g id="pv-stars" opacity="0.6">
+    <circle class="sc" cx="677" cy="60" r="1.8" opacity="0.39" />
+    <path class="kc" fill="none" stroke-width=".7" opacity="0.31" d="M674 60H680M677 57V63" />
+    <circle class="sw" cx="664" cy="155" r="1.0" opacity="0.48" />
+    <circle class="sw" cx="651" cy="96" r="1.0" opacity="0.57" />
+    <circle class="sc" cx="638" cy="37" r="1.0" opacity="0.66" />
+    <circle class="sw" cx="625" cy="132" r="1.8" opacity="0.75" />
+    <circle class="sw" cx="612" cy="73" r="1.0" opacity="0.84" />
+    <circle class="sc" cx="599" cy="168" r="1.0" opacity="0.93" />
+    <circle class="sw" cx="586" cy="109" r="1.0" opacity="0.32" />
+    <circle class="sw" cx="573" cy="50" r="1.8" opacity="0.41" />
+    <circle class="sc" cx="560" cy="145" r="1.0" opacity="0.5" />
+    <circle class="sw" cx="547" cy="86" r="1.0" opacity="0.59" />
+    <circle class="sw" cx="534" cy="181" r="1.0" opacity="0.68" />
+    <path class="kw" fill="none" stroke-width=".7" opacity="0.54" d="M531 181H537M534 178V184" />
+    <circle class="sc" cx="521" cy="122" r="1.8" opacity="0.77" />
+    <circle class="sw" cx="508" cy="63" r="1.0" opacity="0.86" />
+    <circle class="sw" cx="495" cy="158" r="1.0" opacity="0.95" />
+    <circle class="sc" cx="482" cy="99" r="1.0" opacity="0.34" />
+    <circle class="sw" cx="469" cy="40" r="1.8" opacity="0.43" />
+    <circle class="sw" cx="456" cy="135" r="1.0" opacity="0.52" />
+    <circle class="sc" cx="443" cy="76" r="1.0" opacity="0.61" />
+    <circle class="sw" cx="430" cy="171" r="1.0" opacity="0.7" />
+    <circle class="sw" cx="417" cy="112" r="1.8" opacity="0.79" />
+    <circle class="sc" cx="404" cy="53" r="1.0" opacity="0.88" />
+    <circle class="sw" cx="391" cy="148" r="1.0" opacity="0.97" />
+    <path class="kw" fill="none" stroke-width=".7" opacity="0.78" d="M388 148H394M391 145V151" />
+    <circle class="sw" cx="378" cy="89" r="1.0" opacity="0.36" />
+    <circle class="sc" cx="365" cy="184" r="1.8" opacity="0.45" />
+    <circle class="sw" cx="352" cy="125" r="1.0" opacity="0.54" />
+    <circle class="sw" cx="339" cy="66" r="1.0" opacity="0.63" />
+    <circle class="sc" cx="326" cy="161" r="1.0" opacity="0.72" />
+    <circle class="sw" cx="313" cy="102" r="1.8" opacity="0.81" />
+    <circle class="sw" cx="300" cy="43" r="1.0" opacity="0.9" />
+    <circle class="sc" cx="287" cy="138" r="1.0" opacity="0.99" />
+    <circle class="sw" cx="274" cy="79" r="1.0" opacity="0.38" />
+    <circle class="sw" cx="261" cy="174" r="1.8" opacity="0.47" />
+    <circle class="sc" cx="248" cy="115" r="1.0" opacity="0.56" />
+    <path class="kc" fill="none" stroke-width=".7" opacity="0.45" d="M245 115H251M248 112V118" />
+    <circle class="sw" cx="235" cy="56" r="1.0" opacity="0.65" />
+    <circle class="sw" cx="222" cy="151" r="1.0" opacity="0.74" />
+    <circle class="sc" cx="209" cy="92" r="1.8" opacity="0.83" />
+    <circle class="sw" cx="196" cy="187" r="1.0" opacity="0.92" />
+    <circle class="sw" cx="183" cy="128" r="1.0" opacity="0.31" />
+    <circle class="sc" cx="170" cy="69" r="1.0" opacity="0.4" />
+    <circle class="sw" cx="157" cy="164" r="1.8" opacity="0.49" />
+    <circle class="sw" cx="144" cy="105" r="1.0" opacity="0.58" />
+    <circle class="sc" cx="131" cy="46" r="1.0" opacity="0.67" />
+    <circle class="sw" cx="118" cy="141" r="1.0" opacity="0.76" />
+    <circle class="sw" cx="105" cy="82" r="1.8" opacity="0.85" />
+    <path class="kw" fill="none" stroke-width=".7" opacity="0.68" d="M102 82H108M105 79V85" />
+    <circle class="sc" cx="92" cy="177" r="1.0" opacity="0.94" />
+    <circle class="sw" cx="79" cy="118" r="1.0" opacity="0.33" />
+    <circle class="sw" cx="66" cy="59" r="1.0" opacity="0.42" />
+  </g>
+  <g id="pv-platform">
+    <polygon class="pl" points="202.5,289.7 360.0,368.5 360.0,390.0 202.5,311.2" />
+    <polygon class="pr" points="360.0,368.5 517.5,289.7 517.5,311.2 360.0,390.0" />
+    <polygon class="pt" points="360.0,211.0 517.5,289.7 360.0,368.5 202.5,289.7" />
+  </g>
+  <g id="pv-blocks">
+    <path class="gt" d="M347.9 229.1L360.0 235.2L347.9 241.2L335.8 235.2ZM360.0 235.2L372.1 241.2L360.0 247.3L347.9 241.2ZM384.2 247.3L396.3 253.4L384.2 259.4L372.1 253.4ZM420.6 265.5L432.7 271.5L420.6 277.6L408.5 271.5ZM444.8 277.6L456.9 283.7L444.8 289.7L432.7 283.7ZM335.8 235.2L347.9 241.2L335.8 247.3L323.7 241.2ZM360.0 247.3L372.1 253.4L360.0 259.4L347.9 253.4ZM372.1 265.5L384.2 271.5L372.1 277.6L360.0 271.5ZM444.8 301.8L456.9 307.9L444.8 313.9L432.7 307.9ZM323.6 253.4L335.8 259.4L323.6 265.5L311.5 259.4ZM347.9 265.5L360.0 271.5L347.9 277.6L335.8 271.5ZM420.6 301.8L432.7 307.9L420.6 313.9L408.5 307.9ZM323.6 265.5L335.8 271.5L323.6 277.6L311.5 271.5ZM287.3 259.4L299.4 265.5L287.3 271.5L275.2 265.5ZM299.4 265.5L311.5 271.5L299.4 277.6L287.3 271.5ZM360.0 295.8L372.1 301.8L360.0 307.9L347.9 301.8ZM408.5 320.0L420.6 326.1L408.5 332.1L396.3 326.1ZM323.6 289.7L335.8 295.8L323.6 301.8L311.5 295.8ZM372.1 313.9L384.2 320.0L372.1 326.1L360.0 320.0ZM275.2 277.6L287.3 283.7L275.2 289.7L263.1 283.7ZM287.3 283.6L299.4 289.7L287.3 295.8L275.2 289.7ZM275.2 289.7L287.3 295.8L275.2 301.8L263.1 295.8ZM311.5 307.9L323.7 313.9L311.5 320.0L299.4 313.9ZM347.9 326.1L360.0 332.1L347.9 338.2L335.8 332.1ZM372.1 338.2L384.2 344.2L372.1 350.3L360.0 344.2ZM238.8 283.6L251.0 289.7L238.8 295.8L226.7 289.7Z" />
+    <g data-count="1">
+      <polygon class="A1" points="347.9,209.6 360.0,215.7 360.0,235.2 347.9,229.1" />
+      <polygon class="Z1" points="360.0,215.7 372.1,209.6 372.1,229.1 360.0,235.2" />
+      <polygon class="R1" points="360.0,203.6 372.1,209.6 360.0,215.7 347.9,209.6" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="360.0,215.7 372.1,221.7 372.1,241.2 360.0,235.2" />
+      <polygon class="Z1" points="372.1,221.7 384.2,215.7 384.2,235.2 372.1,241.2" />
+      <polygon class="R1" points="372.1,209.6 384.2,215.7 372.1,221.7 360.0,215.7" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="372.1,199.4 384.2,205.4 384.2,247.3 372.1,241.2" />
+      <polygon class="Z2" points="384.2,205.4 396.3,199.4 396.3,241.2 384.2,247.3" />
+      <polygon class="R2" points="384.2,193.3 396.3,199.4 384.2,205.4 372.1,199.4" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="384.2,219.6 396.4,225.6 396.4,253.4 384.2,247.3" />
+      <polygon class="Z1" points="396.4,225.6 408.5,219.6 408.5,247.3 396.4,253.4" />
+      <polygon class="R1" points="396.4,213.5 408.5,219.6 396.4,225.6 384.2,219.6" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="360.0,205.4 372.1,211.5 372.1,253.4 360.0,247.3" />
+      <polygon class="Z2" points="372.1,211.5 384.2,205.4 384.2,247.3 372.1,253.4" />
+      <polygon class="R2" points="372.1,199.4 384.2,205.4 372.1,211.5 360.0,205.4" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="335.8,219.6 347.9,225.6 347.9,253.4 335.8,247.3" />
+      <polygon class="Z1" points="347.9,225.6 360.0,219.6 360.0,247.3 347.9,253.4" />
+      <polygon class="R1" points="347.9,213.5 360.0,219.6 347.9,225.6 335.8,219.6" />
+    </g>
+    <g data-count="18">
+      <polygon class="A4" points="311.5,130.2 323.6,136.2 323.6,253.4 311.5,247.3" />
+      <polygon class="Z4" points="323.6,136.2 335.8,130.2 335.8,247.3 323.6,253.4" />
+      <polygon class="R4" points="323.6,124.1 335.8,130.2 323.6,136.2 311.5,130.2" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="396.3,233.8 408.5,239.9 408.5,259.4 396.3,253.4" />
+      <polygon class="Z1" points="408.5,239.9 420.6,233.8 420.6,253.4 408.5,259.4" />
+      <polygon class="R1" points="408.5,227.8 420.6,233.8 408.5,239.9 396.3,233.8" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="323.7,160.8 335.8,166.8 335.8,259.4 323.7,253.4" />
+      <polygon class="Z3" points="335.8,166.8 347.9,160.8 347.9,253.4 335.8,259.4" />
+      <polygon class="R3" points="335.8,154.7 347.9,160.8 335.8,166.8 323.7,160.8" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="299.4,218.4 311.5,224.4 311.5,259.4 299.4,253.4" />
+      <polygon class="Z2" points="311.5,224.4 323.7,218.4 323.7,253.4 311.5,259.4" />
+      <polygon class="R2" points="311.5,212.3 323.7,218.4 311.5,224.4 299.4,218.4" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="408.5,239.9 420.6,246.0 420.6,265.5 408.5,259.4" />
+      <polygon class="Z1" points="420.6,246.0 432.7,239.9 432.7,259.4 420.6,265.5" />
+      <polygon class="R1" points="420.6,233.9 432.7,239.9 420.6,246.0 408.5,239.9" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="384.2,205.0 396.4,211.1 396.4,265.5 384.2,259.4" />
+      <polygon class="Z2" points="396.4,211.1 408.5,205.0 408.5,259.4 396.4,265.5" />
+      <polygon class="R2" points="396.4,199.0 408.5,205.0 396.4,211.1 384.2,205.0" />
+    </g>
+    <g data-count="8">
+      <polygon class="A3" points="360.0,193.5 372.1,199.5 372.1,265.5 360.0,259.4" />
+      <polygon class="Z3" points="372.1,199.5 384.2,193.5 384.2,259.4 372.1,265.5" />
+      <polygon class="R3" points="372.1,187.4 384.2,193.5 372.1,199.5 360.0,193.5" />
+    </g>
+    <g data-count="17">
+      <polygon class="A4" points="335.8,147.0 347.9,153.1 347.9,265.5 335.8,259.4" />
+      <polygon class="Z4" points="347.9,153.1 360.0,147.0 360.0,259.4 347.9,265.5" />
+      <polygon class="R4" points="347.9,141.0 360.0,147.0 347.9,153.1 335.8,147.0" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="287.3,224.4 299.4,230.5 299.4,265.5 287.3,259.4" />
+      <polygon class="Z2" points="299.4,230.5 311.5,224.4 311.5,259.4 299.4,265.5" />
+      <polygon class="R2" points="299.4,218.4 311.5,224.4 299.4,230.5 287.3,224.4" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="420.6,230.5 432.7,236.5 432.7,271.5 420.6,265.5" />
+      <polygon class="Z2" points="432.7,236.5 444.8,230.5 444.8,265.5 432.7,271.5" />
+      <polygon class="R2" points="432.7,224.4 444.8,230.5 432.7,236.5 420.6,230.5" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="396.3,211.1 408.5,217.2 408.5,271.5 396.3,265.5" />
+      <polygon class="Z2" points="408.5,217.2 420.6,211.1 420.6,265.5 408.5,271.5" />
+      <polygon class="R2" points="408.5,205.0 420.6,211.1 408.5,217.2 396.3,211.1" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="372.1,188.5 384.2,194.5 384.2,271.5 372.1,265.5" />
+      <polygon class="Z3" points="384.2,194.5 396.3,188.5 396.3,265.5 384.2,271.5" />
+      <polygon class="R3" points="384.2,182.4 396.3,188.5 384.2,194.5 372.1,188.5" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="347.9,172.9 360.0,178.9 360.0,271.5 347.9,265.5" />
+      <polygon class="Z3" points="360.0,178.9 372.1,172.9 372.1,265.5 360.0,271.5" />
+      <polygon class="R3" points="360.0,166.8 372.1,172.9 360.0,178.9 347.9,172.9" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="323.7,246.0 335.8,252.0 335.8,271.5 323.7,265.5" />
+      <polygon class="Z1" points="335.8,252.0 347.9,246.0 347.9,265.5 335.8,271.5" />
+      <polygon class="R1" points="335.8,239.9 347.9,246.0 335.8,252.0 323.7,246.0" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="299.4,237.7 311.5,243.8 311.5,271.5 299.4,265.5" />
+      <polygon class="Z1" points="311.5,243.8 323.7,237.7 323.7,265.5 311.5,271.5" />
+      <polygon class="R1" points="311.5,231.7 323.7,237.7 311.5,243.8 299.4,237.7" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="432.7,243.8 444.8,249.9 444.8,277.6 432.7,271.5" />
+      <polygon class="Z1" points="444.8,249.9 456.9,243.8 456.9,271.5 444.8,277.6" />
+      <polygon class="R1" points="444.8,237.7 456.9,243.8 444.8,249.9 432.7,243.8" />
+    </g>
+    <g data-count="14">
+      <polygon class="A3" points="384.2,173.8 396.4,179.9 396.4,277.6 384.2,271.5" />
+      <polygon class="Z3" points="396.4,179.9 408.5,173.8 408.5,271.5 396.4,277.6" />
+      <polygon class="R3" points="396.4,167.7 408.5,173.8 396.4,179.9 384.2,173.8" />
+    </g>
+    <g data-count="18">
+      <polygon class="A4" points="263.1,154.4 275.2,160.5 275.2,277.6 263.1,271.5" />
+      <polygon class="Z4" points="275.2,160.5 287.3,154.4 287.3,271.5 275.2,277.6" />
+      <polygon class="R4" points="275.2,148.4 287.3,154.4 275.2,160.5 263.1,154.4" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="444.8,229.4 456.9,235.5 456.9,283.7 444.8,277.6" />
+      <polygon class="Z2" points="456.9,235.5 469.0,229.4 469.0,277.6 456.9,283.7" />
+      <polygon class="R2" points="456.9,223.3 469.0,229.4 456.9,235.5 444.8,229.4" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="420.6,258.1 432.7,264.1 432.7,283.7 420.6,277.6" />
+      <polygon class="Z1" points="432.7,264.1 444.8,258.1 444.8,277.6 432.7,283.7" />
+      <polygon class="R1" points="432.7,252.0 444.8,258.1 432.7,264.1 420.6,258.1" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="396.3,195.2 408.5,201.3 408.5,283.7 396.3,277.6" />
+      <polygon class="Z3" points="408.5,201.3 420.6,195.2 420.6,277.6 408.5,283.7" />
+      <polygon class="R3" points="408.5,189.2 420.6,195.2 408.5,201.3 396.3,195.2" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="372.1,195.2 384.2,201.3 384.2,283.7 372.1,277.6" />
+      <polygon class="Z3" points="384.2,201.3 396.3,195.2 396.3,277.6 384.2,283.7" />
+      <polygon class="R3" points="384.2,189.2 396.3,195.2 384.2,201.3 372.1,195.2" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="347.9,217.3 360.0,223.3 360.0,283.7 347.9,277.6" />
+      <polygon class="Z3" points="360.0,223.3 372.1,217.3 372.1,277.6 360.0,283.7" />
+      <polygon class="R3" points="360.0,211.2 372.1,217.3 360.0,223.3 347.9,217.3" />
+    </g>
+    <g data-count="34">
+      <polygon class="A4" points="323.7,109.3 335.8,115.4 335.8,283.7 323.7,277.6" />
+      <polygon class="Z4" points="335.8,115.4 347.9,109.3 347.9,277.6 335.8,283.7" />
+      <polygon class="R4" points="335.8,103.3 347.9,109.3 335.8,115.4 323.7,109.3" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="299.4,217.3 311.5,223.3 311.5,283.7 299.4,277.6" />
+      <polygon class="Z3" points="311.5,223.3 323.7,217.3 323.7,277.6 311.5,283.7" />
+      <polygon class="R3" points="311.5,211.2 323.7,217.3 311.5,223.3 299.4,217.3" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="275.2,195.2 287.3,201.3 287.3,283.7 275.2,277.6" />
+      <polygon class="Z3" points="287.3,201.3 299.4,195.2 299.4,277.6 287.3,283.7" />
+      <polygon class="R3" points="287.3,189.2 299.4,195.2 287.3,201.3 275.2,195.2" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="251.0,195.2 263.1,201.3 263.1,283.7 251.0,277.6" />
+      <polygon class="Z3" points="263.1,201.3 275.2,195.2 275.2,277.6 263.1,283.7" />
+      <polygon class="R3" points="263.1,189.2 275.2,195.2 263.1,201.3 251.0,195.2" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="456.9,248.7 469.0,254.7 469.0,289.7 456.9,283.7" />
+      <polygon class="Z2" points="469.0,254.7 481.2,248.7 481.2,283.7 469.0,289.7" />
+      <polygon class="R2" points="469.0,242.6 481.2,248.7 469.0,254.7 456.9,248.7" />
+    </g>
+    <g data-count="12">
+      <polygon class="A3" points="408.5,196.2 420.6,202.2 420.6,289.7 408.5,283.7" />
+      <polygon class="Z3" points="420.6,202.2 432.7,196.2 432.7,283.7 420.6,289.7" />
+      <polygon class="R3" points="420.6,190.1 432.7,196.2 420.6,202.2 408.5,196.2" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="384.2,206.7 396.4,212.7 396.4,289.7 384.2,283.7" />
+      <polygon class="Z3" points="396.4,212.7 408.5,206.7 408.5,283.7 396.4,289.7" />
+      <polygon class="R3" points="396.4,200.6 408.5,206.7 396.4,212.7 384.2,206.7" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="360.0,229.3 372.1,235.3 372.1,289.7 360.0,283.7" />
+      <polygon class="Z2" points="372.1,235.3 384.2,229.3 384.2,283.7 372.1,289.7" />
+      <polygon class="R2" points="372.1,223.2 384.2,229.3 372.1,235.3 360.0,229.3" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="335.8,255.9 347.9,262.0 347.9,289.7 335.8,283.7" />
+      <polygon class="Z1" points="347.9,262.0 360.0,255.9 360.0,283.7 347.9,289.7" />
+      <polygon class="R1" points="347.9,249.9 360.0,255.9 347.9,262.0 335.8,255.9" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="311.5,223.4 323.6,229.4 323.6,289.7 311.5,283.7" />
+      <polygon class="Z3" points="323.6,229.4 335.8,223.4 335.8,283.7 323.6,289.7" />
+      <polygon class="R3" points="323.6,217.3 335.8,223.4 323.6,229.4 311.5,223.4" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="287.3,191.0 299.4,197.1 299.4,289.7 287.3,283.7" />
+      <polygon class="Z3" points="299.4,197.1 311.5,191.0 311.5,283.7 299.4,289.7" />
+      <polygon class="R3" points="299.4,185.0 311.5,191.0 299.4,197.1 287.3,191.0" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="238.8,248.7 251.0,254.7 251.0,289.7 238.8,283.7" />
+      <polygon class="Z2" points="251.0,254.7 263.1,248.7 263.1,283.7 251.0,289.7" />
+      <polygon class="R2" points="251.0,242.6 263.1,248.7 251.0,254.7 238.8,248.7" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="469.0,262.0 481.1,268.0 481.1,295.8 469.0,289.7" />
+      <polygon class="Z1" points="481.1,268.0 493.3,262.0 493.3,289.7 481.1,295.8" />
+      <polygon class="R1" points="481.1,255.9 493.3,262.0 481.1,268.0 469.0,262.0" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="444.8,247.8 456.9,253.9 456.9,295.8 444.8,289.7" />
+      <polygon class="Z2" points="456.9,253.9 469.0,247.8 469.0,289.7 456.9,295.8" />
+      <polygon class="R2" points="456.9,241.8 469.0,247.8 456.9,253.9 444.8,247.8" />
+    </g>
+    <g data-count="14">
+      <polygon class="A3" points="420.6,192.0 432.7,198.0 432.7,295.8 420.6,289.7" />
+      <polygon class="Z3" points="432.7,198.0 444.8,192.0 444.8,289.7 432.7,295.8" />
+      <polygon class="R3" points="432.7,185.9 444.8,192.0 432.7,198.0 420.6,192.0" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="396.3,241.5 408.5,247.6 408.5,295.8 396.3,289.7" />
+      <polygon class="Z2" points="408.5,247.6 420.6,241.5 420.6,289.7 408.5,295.8" />
+      <polygon class="R2" points="408.5,235.5 420.6,241.5 408.5,247.6 396.3,241.5" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="372.1,235.3 384.2,241.4 384.2,295.8 372.1,289.7" />
+      <polygon class="Z2" points="384.2,241.4 396.3,235.3 396.3,289.7 384.2,295.8" />
+      <polygon class="R2" points="384.2,229.3 396.3,235.3 384.2,241.4 372.1,235.3" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="347.9,262.0 360.0,268.0 360.0,295.8 347.9,289.7" />
+      <polygon class="Z1" points="360.0,268.0 372.1,262.0 372.1,289.7 360.0,295.8" />
+      <polygon class="R1" points="360.0,255.9 372.1,262.0 360.0,268.0 347.9,262.0" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="323.7,262.0 335.8,268.0 335.8,295.8 323.7,289.7" />
+      <polygon class="Z1" points="335.8,268.0 347.9,262.0 347.9,289.7 335.8,295.8" />
+      <polygon class="R1" points="335.8,255.9 347.9,262.0 335.8,268.0 323.7,262.0" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="299.4,212.7 311.5,218.8 311.5,295.8 299.4,289.7" />
+      <polygon class="Z3" points="311.5,218.8 323.7,212.7 323.7,289.7 311.5,295.8" />
+      <polygon class="R3" points="311.5,206.6 323.7,212.7 311.5,218.8 299.4,212.7" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="251.0,229.4 263.1,235.5 263.1,295.8 251.0,289.7" />
+      <polygon class="Z3" points="263.1,235.5 275.2,229.4 275.2,289.7 263.1,295.8" />
+      <polygon class="R3" points="263.1,223.3 275.2,229.4 263.1,235.5 251.0,229.4" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="456.9,268.0 469.0,274.1 469.0,301.8 456.9,295.8" />
+      <polygon class="Z1" points="469.0,274.1 481.2,268.0 481.2,295.8 469.0,301.8" />
+      <polygon class="R1" points="469.0,262.0 481.2,268.0 469.0,274.1 456.9,268.0" />
+    </g>
+    <g data-count="9">
+      <polygon class="A3" points="432.7,224.2 444.8,230.2 444.8,301.8 432.7,295.8" />
+      <polygon class="Z3" points="444.8,230.2 456.9,224.2 456.9,295.8 444.8,301.8" />
+      <polygon class="R3" points="444.8,218.1 456.9,224.2 444.8,230.2 432.7,224.2" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="408.5,253.9 420.6,260.0 420.6,301.8 408.5,295.8" />
+      <polygon class="Z2" points="420.6,260.0 432.7,253.9 432.7,295.8 420.6,301.8" />
+      <polygon class="R2" points="420.6,247.8 432.7,253.9 420.6,260.0 408.5,253.9" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="384.2,247.6 396.4,253.6 396.4,301.8 384.2,295.8" />
+      <polygon class="Z2" points="396.4,253.6 408.5,247.6 408.5,295.8 396.4,301.8" />
+      <polygon class="R2" points="396.4,241.5 408.5,247.6 396.4,253.6 384.2,247.6" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="360.0,276.2 372.1,282.3 372.1,301.8 360.0,295.8" />
+      <polygon class="Z1" points="372.1,282.3 384.2,276.2 384.2,295.8 372.1,301.8" />
+      <polygon class="R1" points="372.1,270.2 384.2,276.2 372.1,282.3 360.0,276.2" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="335.8,268.0 347.9,274.1 347.9,301.8 335.8,295.8" />
+      <polygon class="Z1" points="347.9,274.1 360.0,268.0 360.0,295.8 347.9,301.8" />
+      <polygon class="R1" points="347.9,262.0 360.0,268.0 347.9,274.1 335.8,268.0" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="287.3,268.0 299.4,274.1 299.4,301.8 287.3,295.8" />
+      <polygon class="Z1" points="299.4,274.1 311.5,268.0 311.5,295.8 299.4,301.8" />
+      <polygon class="R1" points="299.4,262.0 311.5,268.0 299.4,274.1 287.3,268.0" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="238.8,247.6 251.0,253.6 251.0,301.8 238.8,295.8" />
+      <polygon class="Z2" points="251.0,253.6 263.1,247.6 263.1,295.8 251.0,301.8" />
+      <polygon class="R2" points="251.0,241.5 263.1,247.6 251.0,253.6 238.8,247.6" />
+    </g>
+    <g data-count="12">
+      <polygon class="A3" points="444.8,214.3 456.9,220.4 456.9,307.9 444.8,301.8" />
+      <polygon class="Z3" points="456.9,220.4 469.0,214.3 469.0,301.8 456.9,307.9" />
+      <polygon class="R3" points="456.9,208.3 469.0,214.3 456.9,220.4 444.8,214.3" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="420.6,241.5 432.7,247.6 432.7,307.9 420.6,301.8" />
+      <polygon class="Z3" points="432.7,247.6 444.8,241.5 444.8,301.8 432.7,307.9" />
+      <polygon class="R3" points="432.7,235.5 444.8,241.5 432.7,247.6 420.6,241.5" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="396.3,282.3 408.5,288.4 408.5,307.9 396.3,301.8" />
+      <polygon class="Z1" points="408.5,288.4 420.6,282.3 420.6,301.8 408.5,307.9" />
+      <polygon class="R1" points="408.5,276.3 420.6,282.3 408.5,288.4 396.3,282.3" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="372.1,247.4 384.2,253.5 384.2,307.9 372.1,301.8" />
+      <polygon class="Z2" points="384.2,253.5 396.3,247.4 396.3,301.8 384.2,307.9" />
+      <polygon class="R2" points="384.2,241.4 396.3,247.4 384.2,253.5 372.1,247.4" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="323.7,219.4 335.8,225.5 335.8,307.9 323.7,301.8" />
+      <polygon class="Z3" points="335.8,225.5 347.9,219.4 347.9,301.8 335.8,307.9" />
+      <polygon class="R3" points="335.8,213.4 347.9,219.4 335.8,225.5 323.7,219.4" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="299.4,274.1 311.5,280.2 311.5,307.9 299.4,301.8" />
+      <polygon class="Z1" points="311.5,280.2 323.7,274.1 323.7,301.8 311.5,307.9" />
+      <polygon class="R1" points="311.5,268.0 323.7,274.1 311.5,280.2 299.4,274.1" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="275.2,274.1 287.3,280.2 287.3,307.9 275.2,301.8" />
+      <polygon class="Z1" points="287.3,280.2 299.4,274.1 299.4,301.8 287.3,307.9" />
+      <polygon class="R1" points="287.3,268.0 299.4,274.1 287.3,280.2 275.2,274.1" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="384.2,266.0 396.4,272.1 396.4,313.9 384.2,307.9" />
+      <polygon class="Z2" points="396.4,272.1 408.5,266.0 408.5,307.9 396.4,313.9" />
+      <polygon class="R2" points="396.4,260.0 408.5,266.0 396.4,272.1 384.2,266.0" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="360.0,288.4 372.1,294.4 372.1,313.9 360.0,307.9" />
+      <polygon class="Z1" points="372.1,294.4 384.2,288.4 384.2,307.9 372.1,313.9" />
+      <polygon class="R1" points="372.1,282.3 384.2,288.4 372.1,294.4 360.0,288.4" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="335.8,225.5 347.9,231.6 347.9,313.9 335.8,307.9" />
+      <polygon class="Z3" points="347.9,231.6 360.0,225.5 360.0,307.9 347.9,313.9" />
+      <polygon class="R3" points="347.9,219.4 360.0,225.5 347.9,231.6 335.8,225.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="311.5,272.9 323.6,278.9 323.6,313.9 311.5,307.9" />
+      <polygon class="Z2" points="323.6,278.9 335.8,272.9 335.8,307.9 323.6,313.9" />
+      <polygon class="R2" points="323.6,266.8 335.8,272.9 323.6,278.9 311.5,272.9" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="287.3,272.9 299.4,278.9 299.4,313.9 287.3,307.9" />
+      <polygon class="Z2" points="299.4,278.9 311.5,272.9 311.5,307.9 299.4,313.9" />
+      <polygon class="R2" points="299.4,266.8 311.5,272.9 299.4,278.9 287.3,272.9" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="420.6,272.1 432.7,278.1 432.7,320.0 420.6,313.9" />
+      <polygon class="Z2" points="432.7,278.1 444.8,272.1 444.8,313.9 432.7,320.0" />
+      <polygon class="R2" points="432.7,266.0 444.8,272.1 432.7,278.1 420.6,272.1" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="396.3,265.7 408.5,271.8 408.5,320.0 396.3,313.9" />
+      <polygon class="Z2" points="408.5,271.8 420.6,265.7 420.6,313.9 408.5,320.0" />
+      <polygon class="R2" points="408.5,259.7 420.6,265.7 408.5,271.8 396.3,265.7" />
+    </g>
+    <g data-count="8">
+      <polygon class="A3" points="372.1,248.0 384.2,254.0 384.2,320.0 372.1,313.9" />
+      <polygon class="Z3" points="384.2,254.0 396.3,248.0 396.3,313.9 384.2,320.0" />
+      <polygon class="R3" points="384.2,241.9 396.3,248.0 384.2,254.0 372.1,248.0" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="347.9,231.6 360.0,237.6 360.0,320.0 347.9,313.9" />
+      <polygon class="Z3" points="360.0,237.6 372.1,231.6 372.1,313.9 360.0,320.0" />
+      <polygon class="R3" points="360.0,225.5 372.1,231.6 360.0,237.6 347.9,231.6" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="323.7,294.4 335.8,300.5 335.8,320.0 323.7,313.9" />
+      <polygon class="Z1" points="335.8,300.5 347.9,294.4 347.9,313.9 335.8,320.0" />
+      <polygon class="R1" points="335.8,288.4 347.9,294.4 335.8,300.5 323.7,294.4" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="408.5,271.8 420.6,277.9 420.6,326.1 408.5,320.0" />
+      <polygon class="Z2" points="420.6,277.9 432.7,271.8 432.7,320.0 420.6,326.1" />
+      <polygon class="R2" points="420.6,265.7 432.7,271.8 420.6,277.9 408.5,271.8" />
+    </g>
+    <g data-count="8">
+      <polygon class="A3" points="384.2,254.0 396.4,260.1 396.4,326.1 384.2,320.0" />
+      <polygon class="Z3" points="396.4,260.1 408.5,254.0 408.5,320.0 396.4,326.1" />
+      <polygon class="R3" points="396.4,248.0 408.5,254.0 396.4,260.1 384.2,254.0" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="335.8,292.3 347.9,298.3 347.9,326.1 335.8,320.0" />
+      <polygon class="Z1" points="347.9,298.3 360.0,292.3 360.0,320.0 347.9,326.1" />
+      <polygon class="R1" points="347.9,286.2 360.0,292.3 347.9,298.3 335.8,292.3" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="311.5,271.8 323.6,277.9 323.6,326.1 311.5,320.0" />
+      <polygon class="Z2" points="323.6,277.9 335.8,271.8 335.8,320.0 323.6,326.1" />
+      <polygon class="R2" points="323.6,265.7 335.8,271.8 323.6,277.9 311.5,271.8" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="372.1,233.4 384.2,239.5 384.2,332.1 372.1,326.1" />
+      <polygon class="Z3" points="384.2,239.5 396.3,233.4 396.3,326.1 384.2,332.1" />
+      <polygon class="R3" points="384.2,227.4 396.3,233.4 384.2,239.5 372.1,233.4" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="347.9,265.8 360.0,271.8 360.0,332.1 347.9,326.1" />
+      <polygon class="Z3" points="360.0,271.8 372.1,265.8 372.1,326.1 360.0,332.1" />
+      <polygon class="R3" points="360.0,259.7 372.1,265.8 360.0,271.8 347.9,265.8" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="323.7,265.8 335.8,271.8 335.8,332.1 323.7,326.1" />
+      <polygon class="Z3" points="335.8,271.8 347.9,265.8 347.9,326.1 335.8,332.1" />
+      <polygon class="R3" points="335.8,259.7 347.9,265.8 335.8,271.8 323.7,265.8" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="384.2,255.1 396.4,261.2 396.4,338.2 384.2,332.1" />
+      <polygon class="Z3" points="396.4,261.2 408.5,255.1 408.5,332.1 396.4,338.2" />
+      <polygon class="R3" points="396.4,249.1 408.5,255.1 396.4,261.2 384.2,255.1" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="360.0,297.1 372.1,303.2 372.1,338.2 360.0,332.1" />
+      <polygon class="Z2" points="372.1,303.2 384.2,297.1 384.2,332.1 372.1,338.2" />
+      <polygon class="R2" points="372.1,291.1 384.2,297.1 372.1,303.2 360.0,297.1" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="372.1,290.0 384.2,296.0 384.2,344.2 372.1,338.2" />
+      <polygon class="Z2" points="384.2,296.0 396.3,290.0 396.3,338.2 384.2,344.2" />
+      <polygon class="R2" points="384.2,283.9 396.3,290.0 384.2,296.0 372.1,290.0" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="347.9,318.7 360.0,324.7 360.0,344.2 347.9,338.2" />
+      <polygon class="Z1" points="360.0,324.7 372.1,318.7 372.1,338.2 360.0,344.2" />
+      <polygon class="R1" points="360.0,312.6 372.1,318.7 360.0,324.7 347.9,318.7" />
+    </g>
+  </g>
+</svg>

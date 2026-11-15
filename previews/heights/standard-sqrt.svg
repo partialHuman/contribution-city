@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" shape-rendering="crispEdges" class="pv" role="img" aria-labelledby="pv-title pv-desc">
+  <title id="pv-title">Contribution City of @preview-user</title>
+  <desc id="pv-desc">Isometric pixel-art city of 547 contributions by @preview-user between 2025-01-01 and 2025-04-22. Busiest day: 34 contributions. Longest streak: 12 days.</desc>
+  <style>.pv .bt{stop-color:#030A1C}.pv .bb{stop-color:#071A3A}.pv .gt{fill:#0B2A4F;stroke:#103A6B;stroke-width:.5}.pv .pt{fill:#0A2342;stroke:#14407A;stroke-width:1}.pv .pl{fill:#061830;stroke:#14407A;stroke-width:.75}.pv .pr{fill:#041022;stroke:#14407A;stroke-width:.75}.pv .tp{fill:#EAF8FF}.pv .ts{fill:#7FB3D9}.pv .ta{fill:#19E6FF}.pv .sw{fill:#FFFFFF}.pv .sc{fill:#5BE0FF}.pv .kw{stroke:#FFFFFF}.pv .kc{stroke:#5BE0FF}.pv .R1{fill:#1E6BD6;stroke:#0A2A5E;stroke-width:.6}.pv .A1{fill:#154FA3;stroke:#0A2A5E;stroke-width:.6}.pv .Z1{fill:#0F3978;stroke:#0A2A5E;stroke-width:.6}.pv .WL1{stroke:#7FE9FF;opacity:.9}.pv .WD1{stroke:#1B4F96;opacity:.4}.pv .XL1{stroke:#7FE9FF;opacity:.75}.pv .XD1{stroke:#1B4F96;opacity:.3}.pv .N1{stroke:#0A2A5E;stroke-width:1}.pv .G1{fill:#19E6FF}.pv .R2{fill:#2E8BFF;stroke:#0C3270;stroke-width:.6}.pv .A2{fill:#1C66C9;stroke:#0C3270;stroke-width:.6}.pv .Z2{fill:#134C9C;stroke:#0C3270;stroke-width:.6}.pv .WL2{stroke:#9AF0FF;opacity:.9}.pv .WD2{stroke:#2159A8;opacity:.4}.pv .XL2{stroke:#9AF0FF;opacity:.75}.pv .XD2{stroke:#2159A8;opacity:.3}.pv .N2{stroke:#0C3270;stroke-width:1}.pv .G2{fill:#19E6FF}.pv .R3{fill:#19D3FF;stroke:#0E4E92;stroke-width:.6}.pv .A3{fill:#1688E0;stroke:#0E4E92;stroke-width:.6}.pv .Z3{fill:#0F6AB8;stroke:#0E4E92;stroke-width:.6}.pv .WL3{stroke:#C8F8FF;opacity:.9}.pv .WD3{stroke:#2A74C0;opacity:.4}.pv .XL3{stroke:#C8F8FF;opacity:.75}.pv .XD3{stroke:#2A74C0;opacity:.3}.pv .N3{stroke:#0E4E92;stroke-width:1}.pv .G3{fill:#7FF5FF}.pv .R4{fill:#7DF9FF;stroke:#1068A8;stroke-width:.6}.pv .A4{fill:#169ED8;stroke:#1068A8;stroke-width:.6}.pv .Z4{fill:#1078B8;stroke:#1068A8;stroke-width:.6}.pv .WL4{stroke:#FFFFFF;opacity:.9}.pv .WD4{stroke:#3C9BE0;opacity:.4}.pv .XL4{stroke:#FFFFFF;opacity:.75}.pv .XD4{stroke:#3C9BE0;opacity:.3}.pv .N4{stroke:#1068A8;stroke-width:1}.pv .G4{fill:#FFFFFF}.pv path.w{fill:none;stroke-width:1.2}</style>
+  <defs>
+    <linearGradient id="pv-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" class="bt" />
+      <stop offset="100%" class="bb" />
+    </linearGradient>
+    <filter id="pv-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <rect width="720" height="420" fill="url(#pv-bg)" />
+  <g id="pv-stars" opacity="0.6">
+    <circle class="sc" cx="677" cy="60" r="1.8" opacity="0.39" />
+    <path class="kc" fill="none" stroke-width=".7" opacity="0.31" d="M674 60H680M677 57V63" />
+    <circle class="sw" cx="664" cy="155" r="1.0" opacity="0.48" />
+    <circle class="sw" cx="651" cy="96" r="1.0" opacity="0.57" />
+    <circle class="sc" cx="638" cy="37" r="1.0" opacity="0.66" />
+    <circle class="sw" cx="625" cy="132" r="1.8" opacity="0.75" />
+    <circle class="sw" cx="612" cy="73" r="1.0" opacity="0.84" />
+    <circle class="sc" cx="599" cy="168" r="1.0" opacity="0.93" />
+    <circle class="sw" cx="586" cy="109" r="1.0" opacity="0.32" />
+    <circle class="sw" cx="573" cy="50" r="1.8" opacity="0.41" />
+    <circle class="sc" cx="560" cy="145" r="1.0" opacity="0.5" />
+    <circle class="sw" cx="547" cy="86" r="1.0" opacity="0.59" />
+    <circle class="sw" cx="534" cy="181" r="1.0" opacity="0.68" />
+    <path class="kw" fill="none" stroke-width=".7" opacity="0.54" d="M531 181H537M534 178V184" />
+    <circle class="sc" cx="521" cy="122" r="1.8" opacity="0.77" />
+    <circle class="sw" cx="508" cy="63" r="1.0" opacity="0.86" />
+    <circle class="sw" cx="495" cy="158" r="1.0" opacity="0.95" />
+    <circle class="sc" cx="482" cy="99" r="1.0" opacity="0.34" />
+    <circle class="sw" cx="469" cy="40" r="1.8" opacity="0.43" />
+    <circle class="sw" cx="456" cy="135" r="1.0" opacity="0.52" />
+    <circle class="sc" cx="443" cy="76" r="1.0" opacity="0.61" />
+    <circle class="sw" cx="430" cy="171" r="1.0" opacity="0.7" />
+    <circle class="sw" cx="417" cy="112" r="1.8" opacity="0.79" />
+    <circle class="sc" cx="404" cy="53" r="1.0" opacity="0.88" />
+    <circle class="sw" cx="391" cy="148" r="1.0" opacity="0.97" />
+    <path class="kw" fill="none" stroke-width=".7" opacity="0.78" d="M388 148H394M391 145V151" />
+    <circle class="sw" cx="378" cy="89" r="1.0" opacity="0.36" />
+    <circle class="sc" cx="365" cy="184" r="1.8" opacity="0.45" />
+    <circle class="sw" cx="352" cy="125" r="1.0" opacity="0.54" />
+    <circle class="sw" cx="339" cy="66" r="1.0" opacity="0.63" />
+    <circle class="sc" cx="326" cy="161" r="1.0" opacity="0.72" />
+    <circle class="sw" cx="313" cy="102" r="1.8" opacity="0.81" />
+    <circle class="sw" cx="300" cy="43" r="1.0" opacity="0.9" />
+    <circle class="sc" cx="287" cy="138" r="1.0" opacity="0.99" />
+    <circle class="sw" cx="274" cy="79" r="1.0" opacity="0.38" />
+    <circle class="sw" cx="261" cy="174" r="1.8" opacity="0.47" />
+    <circle class="sc" cx="248" cy="115" r="1.0" opacity="0.56" />
+    <path class="kc" fill="none" stroke-width=".7" opacity="0.45" d="M245 115H251M248 112V118" />
+    <circle class="sw" cx="235" cy="56" r="1.0" opacity="0.65" />
+    <circle class="sw" cx="222" cy="151" r="1.0" opacity="0.74" />
+    <circle class="sc" cx="209" cy="92" r="1.8" opacity="0.83" />
+    <circle class="sw" cx="196" cy="187" r="1.0" opacity="0.92" />
+    <circle class="sw" cx="183" cy="128" r="1.0" opacity="0.31" />
+    <circle class="sc" cx="170" cy="69" r="1.0" opacity="0.4" />
+    <circle class="sw" cx="157" cy="164" r="1.8" opacity="0.49" />
+    <circle class="sw" cx="144" cy="105" r="1.0" opacity="0.58" />
+    <circle class="sc" cx="131" cy="46" r="1.0" opacity="0.67" />
+    <circle class="sw" cx="118" cy="141" r="1.0" opacity="0.76" />
+    <circle class="sw" cx="105" cy="82" r="1.8" opacity="0.85" />
+    <path class="kw" fill="none" stroke-width=".7" opacity="0.68" d="M102 82H108M105 79V85" />
+    <circle class="sc" cx="92" cy="177" r="1.0" opacity="0.94" />
+    <circle class="sw" cx="79" cy="118" r="1.0" opacity="0.33" />
+    <circle class="sw" cx="66" cy="59" r="1.0" opacity="0.42" />
+  </g>
+  <g id="pv-platform">
+    <polygon class="pl" points="156.3,260.3 360.0,362.1 360.0,390.0 156.3,288.1" />
+    <polygon class="pr" points="360.0,362.1 563.7,260.3 563.7,288.1 360.0,390.0" />
+    <polygon class="pt" points="360.0,158.4 563.7,260.3 360.0,362.1 156.3,260.3" />
+  </g>
+  <g id="pv-blocks">
+    <path class="gt" d="M344.3 181.9L360.0 189.8L344.3 197.6L328.7 189.8ZM360.0 189.8L375.7 197.6L360.0 205.4L344.3 197.6ZM391.3 205.4L407.0 213.3L391.3 221.1L375.7 213.3ZM438.4 228.9L454.0 236.8L438.4 244.6L422.7 236.8ZM469.7 244.6L485.4 252.4L469.7 260.3L454.0 252.4ZM328.7 189.8L344.3 197.6L328.7 205.4L313.0 197.6ZM360.0 205.4L375.7 213.3L360.0 221.1L344.3 213.3ZM375.7 228.9L391.3 236.8L375.7 244.6L360.0 236.8ZM469.7 275.9L485.4 283.8L469.7 291.6L454.0 283.8ZM313.0 213.3L328.7 221.1L313.0 228.9L297.3 221.1ZM344.3 228.9L360.0 236.8L344.3 244.6L328.7 236.8ZM438.4 275.9L454.0 283.8L438.4 291.6L422.7 283.8ZM313.0 228.9L328.7 236.8L313.0 244.6L297.3 236.8ZM266.0 221.1L281.6 228.9L266.0 236.8L250.3 228.9ZM281.6 228.9L297.3 236.8L281.6 244.6L266.0 236.8ZM360.0 268.1L375.7 275.9L360.0 283.8L344.3 275.9ZM422.7 299.4L438.4 307.3L422.7 315.1L407.0 307.3ZM313.0 260.3L328.7 268.1L313.0 275.9L297.3 268.1ZM375.7 291.6L391.3 299.5L375.7 307.3L360.0 299.5ZM250.3 244.6L266.0 252.4L250.3 260.3L234.6 252.4ZM266.0 252.4L281.6 260.3L266.0 268.1L250.3 260.3ZM250.3 260.3L266.0 268.1L250.3 275.9L234.6 268.1ZM297.3 283.8L313.0 291.6L297.3 299.5L281.6 291.6ZM344.3 307.3L360.0 315.1L344.3 323.0L328.7 315.1ZM375.7 323.0L391.3 330.8L375.7 338.6L360.0 330.8ZM203.3 252.4L219.0 260.3L203.3 268.1L187.6 260.3Z" />
+    <g data-count="1">
+      <polygon class="A1" points="344.3,160.8 360.0,168.7 360.0,189.8 344.3,181.9" />
+      <polygon class="Z1" points="360.0,168.7 375.7,160.8 375.7,181.9 360.0,189.8" />
+      <polygon class="R1" points="360.0,153.0 375.7,160.8 360.0,168.7 344.3,160.8" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="360.0,168.7 375.7,176.5 375.7,197.6 360.0,189.8" />
+      <polygon class="Z1" points="375.7,176.5 391.3,168.7 391.3,189.8 375.7,197.6" />
+      <polygon class="R1" points="375.7,160.9 391.3,168.7 375.7,176.5 360.0,168.7" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="375.7,160.7 391.3,168.5 391.3,205.4 375.7,197.6" />
+      <polygon class="Z2" points="391.3,168.5 407.0,160.7 407.0,197.6 391.3,205.4" />
+      <path class="w WL2" d="M380 169L387 166" />
+      <path class="w XL2" d="M396 166L402 169" />
+      <polygon class="R2" points="391.3,152.8 407.0,160.7 391.3,168.5 375.7,160.7" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="391.3,177.7 407.0,185.6 407.0,213.3 391.3,205.4" />
+      <polygon class="Z1" points="407.0,185.6 422.7,177.7 422.7,205.4 407.0,213.3" />
+      <path class="w WL1" d="M396 186L402 183" />
+      <path class="w XL1" d="M412 183L418 186" />
+      <polygon class="R1" points="407.0,169.9 422.7,177.7 407.0,185.6 391.3,177.7" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="360.0,168.5 375.7,176.3 375.7,213.3 360.0,205.4" />
+      <polygon class="Z2" points="375.7,176.3 391.3,168.5 391.3,205.4 375.7,213.3" />
+      <path class="w WL2" d="M365 177L371 173" />
+      <path class="w XL2" d="M380 173L387 177" />
+      <polygon class="R2" points="375.7,160.7 391.3,168.5 375.7,176.3 360.0,168.5" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="328.7,177.7 344.3,185.6 344.3,213.3 328.7,205.4" />
+      <polygon class="Z1" points="344.3,185.6 360.0,177.7 360.0,205.4 344.3,213.3" />
+      <path class="w WL1" d="M333 186L340 183" />
+      <path class="w XL1" d="M349 183L355 186" />
+      <polygon class="R1" points="344.3,169.9 360.0,177.7 344.3,185.6 328.7,177.7" />
+    </g>
+    <g data-count="18">
+      <polygon class="A4" points="297.3,133.0 313.0,140.8 313.0,213.3 297.3,205.4" />
+      <polygon class="Z4" points="313.0,140.8 328.7,133.0 328.7,205.4 313.0,213.3" />
+      <path class="w WL4" d="M302 141L308 138M302 153L308 150M302 165L308 162" />
+      <path class="w WD4" d="M302 178L308 175" />
+      <path class="w XL4" d="M318 138L324 141M318 150L324 153M318 162L324 165" />
+      <path class="w XD4" d="M318 175L324 178" />
+      <polygon class="R4" points="313.0,125.2 328.7,133.0 313.0,140.8 297.3,133.0" />
+      <path class="N4" fill="none" d="M313.0 133.0V115.6" />
+      <circle class="G4" cx="313.0" cy="115.6" r="1.5" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="407.0,192.2 422.7,200.0 422.7,221.1 407.0,213.3" />
+      <polygon class="Z1" points="422.7,200.0 438.4,192.2 438.4,213.3 422.7,221.1" />
+      <polygon class="R1" points="422.7,184.4 438.4,192.2 422.7,200.0 407.0,192.2" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="313.0,150.9 328.7,158.8 328.7,221.1 313.0,213.3" />
+      <polygon class="Z3" points="328.7,158.8 344.3,150.9 344.3,213.3 328.7,221.1" />
+      <path class="w WL3" d="M318 159L324 156M318 171L324 168" />
+      <path class="w WD3" d="M318 183L324 180" />
+      <path class="w XL3" d="M333 156L340 159M333 168L340 171" />
+      <path class="w XD3" d="M333 180L340 183" />
+      <polygon class="R3" points="328.7,143.1 344.3,150.9 328.7,158.8 313.0,150.9" />
+      <path class="N3" fill="none" d="M328.7 150.9V140.5" />
+      <circle class="G3" cx="328.7" cy="140.5" r="1.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="281.6,180.7 297.3,188.5 297.3,221.1 281.6,213.3" />
+      <polygon class="Z2" points="297.3,188.5 313.0,180.7 313.0,213.3 297.3,221.1" />
+      <path class="w WD2" d="M286 189L293 186" />
+      <path class="w XD2" d="M302 186L308 189" />
+      <polygon class="R2" points="297.3,172.9 313.0,180.7 297.3,188.5 281.6,180.7" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="422.7,200.0 438.4,207.9 438.4,228.9 422.7,221.1" />
+      <polygon class="Z1" points="438.4,207.9 454.0,200.0 454.0,221.1 438.4,228.9" />
+      <polygon class="R1" points="438.4,192.2 454.0,200.0 438.4,207.9 422.7,200.0" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="391.3,177.0 407.0,184.9 407.0,228.9 391.3,221.1" />
+      <polygon class="Z2" points="407.0,184.9 422.7,177.0 422.7,221.1 407.0,228.9" />
+      <path class="w WL2" d="M396 185L402 182" />
+      <path class="w WD2" d="M396 197L402 194" />
+      <path class="w XL2" d="M412 182L418 185" />
+      <path class="w XD2" d="M412 194L418 197" />
+      <polygon class="R2" points="407.0,169.2 422.7,177.0 407.0,184.9 391.3,177.0" />
+    </g>
+    <g data-count="8">
+      <polygon class="A3" points="360.0,171.1 375.7,179.0 375.7,228.9 360.0,221.1" />
+      <polygon class="Z3" points="375.7,179.0 391.3,171.1 391.3,221.1 375.7,228.9" />
+      <path class="w WL3" d="M365 179L371 176M365 191L371 188" />
+      <path class="w XL3" d="M380 176L387 179M380 188L387 191" />
+      <polygon class="R3" points="375.7,163.3 391.3,171.1 375.7,179.0 360.0,171.1" />
+      <path class="N3" fill="none" d="M375.7 171.1V160.7" />
+      <circle class="G3" cx="375.7" cy="160.7" r="1.5" />
+    </g>
+    <g data-count="17">
+      <polygon class="A4" points="328.7,150.6 344.3,158.4 344.3,228.9 328.7,221.1" />
+      <polygon class="Z4" points="344.3,158.4 360.0,150.6 360.0,221.1 344.3,228.9" />
+      <path class="w WL4" d="M333 159L340 156M333 183L340 180M333 195L340 192" />
+      <path class="w WD4" d="M333 171L340 168" />
+      <path class="w XL4" d="M349 156L355 159M349 180L355 183M349 192L355 195" />
+      <path class="w XD4" d="M349 168L355 171" />
+      <polygon class="R4" points="344.3,142.7 360.0,150.6 344.3,158.4 328.7,150.6" />
+      <path class="N4" fill="none" d="M344.3 150.6V133.2" />
+      <circle class="G4" cx="344.3" cy="133.2" r="1.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="266.0,188.5 281.6,196.4 281.6,228.9 266.0,221.1" />
+      <polygon class="Z2" points="281.6,196.4 297.3,188.5 297.3,221.1 281.6,228.9" />
+      <path class="w WL2" d="M271 197L277 193" />
+      <path class="w XL2" d="M286 193L293 197" />
+      <polygon class="R2" points="281.6,180.7 297.3,188.5 281.6,196.4 266.0,188.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="438.4,196.4 454.0,204.2 454.0,236.8 438.4,228.9" />
+      <polygon class="Z2" points="454.0,204.2 469.7,196.4 469.7,228.9 454.0,236.8" />
+      <path class="w WL2" d="M443 204L449 201" />
+      <path class="w XL2" d="M459 201L465 204" />
+      <polygon class="R2" points="454.0,188.5 469.7,196.4 454.0,204.2 438.4,196.4" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="407.0,184.9 422.7,192.7 422.7,236.8 407.0,228.9" />
+      <polygon class="Z2" points="422.7,192.7 438.4,184.9 438.4,228.9 422.7,236.8" />
+      <path class="w WL2" d="M412 205L418 202" />
+      <path class="w WD2" d="M412 193L418 190" />
+      <path class="w XL2" d="M427 202L434 205" />
+      <path class="w XD2" d="M427 190L434 193" />
+      <polygon class="R2" points="422.7,177.0 438.4,184.9 422.7,192.7 407.0,184.9" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="375.7,173.7 391.3,181.6 391.3,236.8 375.7,228.9" />
+      <polygon class="Z3" points="391.3,181.6 407.0,173.7 407.0,228.9 391.3,236.8" />
+      <path class="w WL3" d="M380 182L387 179M380 194L387 191" />
+      <path class="w WD3" d="M380 206L387 203" />
+      <path class="w XL3" d="M396 179L402 182M396 191L402 194" />
+      <path class="w XD3" d="M396 203L402 206" />
+      <polygon class="R3" points="391.3,165.9 407.0,173.7 391.3,181.6 375.7,173.7" />
+      <path class="N3" fill="none" d="M391.3 173.7V163.3" />
+      <circle class="G3" cx="391.3" cy="163.3" r="1.5" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="344.3,166.6 360.0,174.4 360.0,236.8 344.3,228.9" />
+      <polygon class="Z3" points="360.0,174.4 375.7,166.6 375.7,228.9 360.0,236.8" />
+      <path class="w WL3" d="M349 187L355 184M349 199L355 196" />
+      <path class="w WD3" d="M349 175L355 172" />
+      <path class="w XL3" d="M365 184L371 187M365 196L371 199" />
+      <path class="w XD3" d="M365 172L371 175" />
+      <polygon class="R3" points="360.0,158.8 375.7,166.6 360.0,174.4 344.3,166.6" />
+      <path class="N3" fill="none" d="M360.0 166.6V156.2" />
+      <circle class="G3" cx="360.0" cy="156.2" r="1.5" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="313.0,207.9 328.7,215.7 328.7,236.8 313.0,228.9" />
+      <polygon class="Z1" points="328.7,215.7 344.3,207.9 344.3,228.9 328.7,236.8" />
+      <polygon class="R1" points="328.7,200.0 344.3,207.9 328.7,215.7 313.0,207.9" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="281.6,201.2 297.3,209.1 297.3,236.8 281.6,228.9" />
+      <polygon class="Z1" points="297.3,209.1 313.0,201.2 313.0,228.9 297.3,236.8" />
+      <path class="w WD1" d="M286 209L293 206" />
+      <path class="w XD1" d="M302 206L308 209" />
+      <polygon class="R1" points="297.3,193.4 313.0,201.2 297.3,209.1 281.6,201.2" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="454.0,209.1 469.7,216.9 469.7,244.6 454.0,236.8" />
+      <polygon class="Z1" points="469.7,216.9 485.4,209.1 485.4,236.8 469.7,244.6" />
+      <path class="w WL1" d="M459 217L465 214" />
+      <path class="w XL1" d="M474 214L481 217" />
+      <polygon class="R1" points="469.7,201.2 485.4,209.1 469.7,216.9 454.0,209.1" />
+    </g>
+    <g data-count="14">
+      <polygon class="A3" points="391.3,172.3 407.0,180.2 407.0,244.6 391.3,236.8" />
+      <polygon class="Z3" points="407.0,180.2 422.7,172.3 422.7,236.8 407.0,244.6" />
+      <path class="w WL3" d="M396 180L402 177M396 205L402 202M396 217L402 214" />
+      <path class="w WD3" d="M396 193L402 189" />
+      <path class="w XL3" d="M412 177L418 180M412 202L418 205M412 214L418 217" />
+      <path class="w XD3" d="M412 189L418 193" />
+      <polygon class="R3" points="407.0,164.5 422.7,172.3 407.0,180.2 391.3,172.3" />
+      <path class="N3" fill="none" d="M407.0 172.3V161.9" />
+      <circle class="G3" cx="407.0" cy="161.9" r="1.5" />
+    </g>
+    <g data-count="18">
+      <polygon class="A4" points="234.6,164.3 250.3,172.2 250.3,244.6 234.6,236.8" />
+      <polygon class="Z4" points="250.3,172.2 266.0,164.3 266.0,236.8 250.3,244.6" />
+      <path class="w WL4" d="M239 172L246 169M239 185L246 181M239 197L246 194" />
+      <path class="w WD4" d="M239 209L246 206" />
+      <path class="w XL4" d="M255 169L261 172M255 181L261 185M255 194L261 197" />
+      <path class="w XD4" d="M255 206L261 209" />
+      <polygon class="R4" points="250.3,156.5 266.0,164.3 250.3,172.2 234.6,164.3" />
+      <path class="N4" fill="none" d="M250.3 164.3V146.9" />
+      <circle class="G4" cx="250.3" cy="146.9" r="1.5" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="469.7,204.0 485.4,211.9 485.4,252.4 469.7,244.6" />
+      <polygon class="Z2" points="485.4,211.9 501.0,204.0 501.0,244.6 485.4,252.4" />
+      <path class="w WL2" d="M474 224L481 221" />
+      <path class="w WD2" d="M474 212L481 209" />
+      <path class="w XL2" d="M490 221L496 224" />
+      <path class="w XD2" d="M490 209L496 212" />
+      <polygon class="R2" points="485.4,196.2 501.0,204.0 485.4,211.9 469.7,204.0" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="438.4,223.5 454.0,231.4 454.0,252.4 438.4,244.6" />
+      <polygon class="Z1" points="454.0,231.4 469.7,223.5 469.7,244.6 454.0,252.4" />
+      <polygon class="R1" points="454.0,215.7 469.7,223.5 454.0,231.4 438.4,223.5" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="407.0,187.0 422.7,194.8 422.7,252.4 407.0,244.6" />
+      <polygon class="Z3" points="422.7,194.8 438.4,187.0 438.4,244.6 422.7,252.4" />
+      <path class="w WL3" d="M412 207L418 204M412 219L418 216" />
+      <path class="w WD3" d="M412 195L418 192" />
+      <path class="w XL3" d="M427 204L434 207M427 216L434 219" />
+      <path class="w XD3" d="M427 192L434 195" />
+      <polygon class="R3" points="422.7,179.1 438.4,187.0 422.7,194.8 407.0,187.0" />
+      <path class="N3" fill="none" d="M422.7 187.0V176.6" />
+      <circle class="G3" cx="422.7" cy="176.6" r="1.5" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="375.7,187.0 391.3,194.8 391.3,252.4 375.7,244.6" />
+      <polygon class="Z3" points="391.3,194.8 407.0,187.0 407.0,244.6 391.3,252.4" />
+      <path class="w WL3" d="M380 195L387 192M380 207L387 204" />
+      <path class="w WD3" d="M380 219L387 216" />
+      <path class="w XL3" d="M396 192L402 195M396 204L402 207" />
+      <path class="w XD3" d="M396 216L402 219" />
+      <polygon class="R3" points="391.3,179.1 407.0,187.0 391.3,194.8 375.7,187.0" />
+      <path class="N3" fill="none" d="M391.3 187.0V176.6" />
+      <circle class="G3" cx="391.3" cy="176.6" r="1.5" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="344.3,197.6 360.0,205.4 360.0,252.4 344.3,244.6" />
+      <polygon class="Z3" points="360.0,205.4 375.7,197.6 375.7,244.6 360.0,252.4" />
+      <path class="w WL3" d="M349 218L355 215" />
+      <path class="w WD3" d="M349 206L355 203" />
+      <path class="w XL3" d="M365 215L371 218" />
+      <path class="w XD3" d="M365 203L371 206" />
+      <polygon class="R3" points="360.0,189.8 375.7,197.6 360.0,205.4 344.3,197.6" />
+      <path class="N3" fill="none" d="M360.0 197.6V187.2" />
+      <circle class="G3" cx="360.0" cy="187.2" r="1.5" />
+    </g>
+    <g data-count="34">
+      <polygon class="A4" points="313.0,147.1 328.7,154.9 328.7,252.4 313.0,244.6" />
+      <polygon class="Z4" points="328.7,154.9 344.3,147.1 344.3,244.6 328.7,252.4" />
+      <path class="w WL4" d="M318 155L324 152M318 167L324 164M318 192L324 189M318 204L324 201M318 216L324 213" />
+      <path class="w WD4" d="M318 180L324 176" />
+      <path class="w XL4" d="M333 152L340 155M333 164L340 167M333 189L340 192M333 201L340 204M333 213L340 216" />
+      <path class="w XD4" d="M333 176L340 180" />
+      <polygon class="R4" points="328.7,139.3 344.3,147.1 328.7,154.9 313.0,147.1" />
+      <path class="N4" fill="none" d="M328.7 147.1V129.7" />
+      <circle class="G4" cx="328.7" cy="129.7" r="1.5" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="281.6,197.6 297.3,205.4 297.3,252.4 281.6,244.6" />
+      <polygon class="Z3" points="297.3,205.4 313.0,197.6 313.0,244.6 297.3,252.4" />
+      <path class="w WL3" d="M286 218L293 215" />
+      <path class="w WD3" d="M286 206L293 203" />
+      <path class="w XL3" d="M302 215L308 218" />
+      <path class="w XD3" d="M302 203L308 206" />
+      <polygon class="R3" points="297.3,189.8 313.0,197.6 297.3,205.4 281.6,197.6" />
+      <path class="N3" fill="none" d="M297.3 197.6V187.2" />
+      <circle class="G3" cx="297.3" cy="187.2" r="1.5" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="250.3,187.0 266.0,194.8 266.0,252.4 250.3,244.6" />
+      <polygon class="Z3" points="266.0,194.8 281.6,187.0 281.6,244.6 266.0,252.4" />
+      <path class="w WL3" d="M255 195L261 192M255 207L261 204" />
+      <path class="w WD3" d="M255 219L261 216" />
+      <path class="w XL3" d="M271 192L277 195M271 204L277 207" />
+      <path class="w XD3" d="M271 216L277 219" />
+      <polygon class="R3" points="266.0,179.1 281.6,187.0 266.0,194.8 250.3,187.0" />
+      <path class="N3" fill="none" d="M266.0 187.0V176.6" />
+      <circle class="G3" cx="266.0" cy="176.6" r="1.5" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="219.0,187.0 234.6,194.8 234.6,252.4 219.0,244.6" />
+      <polygon class="Z3" points="234.6,194.8 250.3,187.0 250.3,244.6 234.6,252.4" />
+      <path class="w WL3" d="M224 207L230 204M224 219L230 216" />
+      <path class="w WD3" d="M224 195L230 192" />
+      <path class="w XL3" d="M239 204L246 207M239 216L246 219" />
+      <path class="w XD3" d="M239 192L246 195" />
+      <polygon class="R3" points="234.6,179.1 250.3,187.0 234.6,194.8 219.0,187.0" />
+      <path class="N3" fill="none" d="M234.6 187.0V176.6" />
+      <circle class="G3" cx="234.6" cy="176.6" r="1.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="485.4,219.9 501.0,227.7 501.0,260.3 485.4,252.4" />
+      <polygon class="Z2" points="501.0,227.7 516.7,219.9 516.7,252.4 501.0,260.3" />
+      <path class="w WL2" d="M490 228L496 225" />
+      <path class="w XL2" d="M506 225L512 228" />
+      <polygon class="R2" points="501.0,212.0 516.7,219.9 501.0,227.7 485.4,219.9" />
+    </g>
+    <g data-count="12">
+      <polygon class="A3" points="422.7,192.4 438.4,200.2 438.4,260.3 422.7,252.4" />
+      <polygon class="Z3" points="438.4,200.2 454.0,192.4 454.0,252.4 438.4,260.3" />
+      <path class="w WL3" d="M427 200L434 197M427 213L434 210M427 225L434 222" />
+      <path class="w XL3" d="M443 197L449 200M443 210L449 213M443 222L449 225" />
+      <polygon class="R3" points="438.4,184.5 454.0,192.4 438.4,200.2 422.7,192.4" />
+      <path class="N3" fill="none" d="M438.4 192.4V182.0" />
+      <circle class="G3" cx="438.4" cy="182.0" r="1.5" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="391.3,197.2 407.0,205.1 407.0,260.3 391.3,252.4" />
+      <polygon class="Z3" points="407.0,205.1 422.7,197.2 422.7,252.4 407.0,260.3" />
+      <path class="w WL3" d="M396 205L402 202M396 230L402 227" />
+      <path class="w WD3" d="M396 218L402 214" />
+      <path class="w XL3" d="M412 202L418 205M412 227L418 230" />
+      <path class="w XD3" d="M412 214L418 218" />
+      <polygon class="R3" points="407.0,189.4 422.7,197.2 407.0,205.1 391.3,197.2" />
+      <path class="N3" fill="none" d="M407.0 197.2V186.8" />
+      <circle class="G3" cx="407.0" cy="186.8" r="1.5" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="360.0,208.4 375.7,216.2 375.7,260.3 360.0,252.4" />
+      <polygon class="Z2" points="375.7,216.2 391.3,208.4 391.3,252.4 375.7,260.3" />
+      <path class="w WL2" d="M365 216L371 213M365 229L371 226" />
+      <path class="w XL2" d="M380 213L387 216M380 226L387 229" />
+      <polygon class="R2" points="375.7,200.5 391.3,208.4 375.7,216.2 360.0,208.4" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="328.7,224.7 344.3,232.6 344.3,260.3 328.7,252.4" />
+      <polygon class="Z1" points="344.3,232.6 360.0,224.7 360.0,252.4 344.3,260.3" />
+      <path class="w WL1" d="M333 233L340 230" />
+      <path class="w XL1" d="M349 230L355 233" />
+      <polygon class="R1" points="344.3,216.9 360.0,224.7 344.3,232.6 328.7,224.7" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="297.3,205.4 313.0,213.3 313.0,260.3 297.3,252.4" />
+      <polygon class="Z3" points="313.0,213.3 328.7,205.4 328.7,252.4 313.0,260.3" />
+      <path class="w WL3" d="M302 214L308 210M302 226L308 223" />
+      <path class="w XL3" d="M318 210L324 214M318 223L324 226" />
+      <polygon class="R3" points="313.0,197.6 328.7,205.4 313.0,213.3 297.3,205.4" />
+      <path class="N3" fill="none" d="M313.0 205.4V195.0" />
+      <circle class="G3" cx="313.0" cy="195.0" r="1.5" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="266.0,190.1 281.6,197.9 281.6,260.3 266.0,252.4" />
+      <polygon class="Z3" points="281.6,197.9 297.3,190.1 297.3,252.4 281.6,260.3" />
+      <path class="w WL3" d="M271 198L277 195M271 223L277 219" />
+      <path class="w WD3" d="M271 210L277 207" />
+      <path class="w XL3" d="M286 195L293 198M286 219L293 223" />
+      <path class="w XD3" d="M286 207L293 210" />
+      <polygon class="R3" points="281.6,182.3 297.3,190.1 281.6,197.9 266.0,190.1" />
+      <path class="N3" fill="none" d="M281.6 190.1V179.7" />
+      <circle class="G3" cx="281.6" cy="179.7" r="1.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="203.3,219.9 219.0,227.7 219.0,260.3 203.3,252.4" />
+      <polygon class="Z2" points="219.0,227.7 234.6,219.9 234.6,252.4 219.0,260.3" />
+      <path class="w WL2" d="M208 228L214 225" />
+      <path class="w XL2" d="M224 225L230 228" />
+      <polygon class="R2" points="219.0,212.0 234.6,219.9 219.0,227.7 203.3,219.9" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="501.0,232.6 516.7,240.4 516.7,268.1 501.0,260.3" />
+      <polygon class="Z1" points="516.7,240.4 532.4,232.6 532.4,260.3 516.7,268.1" />
+      <path class="w WL1" d="M506 241L512 238" />
+      <path class="w XL1" d="M521 238L528 241" />
+      <polygon class="R1" points="516.7,224.8 532.4,232.6 516.7,240.4 501.0,232.6" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="469.7,223.4 485.4,231.2 485.4,268.1 469.7,260.3" />
+      <polygon class="Z2" points="485.4,231.2 501.0,223.4 501.0,260.3 485.4,268.1" />
+      <path class="w WD2" d="M474 231L481 228" />
+      <path class="w XD2" d="M490 228L496 231" />
+      <polygon class="R2" points="485.4,215.5 501.0,223.4 485.4,231.2 469.7,223.4" />
+    </g>
+    <g data-count="14">
+      <polygon class="A3" points="438.4,195.8 454.0,203.7 454.0,268.1 438.4,260.3" />
+      <polygon class="Z3" points="454.0,203.7 469.7,195.8 469.7,260.3 454.0,268.1" />
+      <path class="w WL3" d="M443 204L449 201M443 216L449 213M443 241L449 237" />
+      <path class="w WD3" d="M443 228L449 225" />
+      <path class="w XL3" d="M459 201L465 204M459 213L465 216M459 237L465 241" />
+      <path class="w XD3" d="M459 225L465 228" />
+      <polygon class="R3" points="454.0,188.0 469.7,195.8 454.0,203.7 438.4,195.8" />
+      <path class="N3" fill="none" d="M454.0 195.8V185.4" />
+      <circle class="G3" cx="454.0" cy="185.4" r="1.5" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="407.0,219.7 422.7,227.5 422.7,268.1 407.0,260.3" />
+      <polygon class="Z2" points="422.7,227.5 438.4,219.7 438.4,260.3 422.7,268.1" />
+      <path class="w WL2" d="M412 240L418 237" />
+      <path class="w WD2" d="M412 228L418 225" />
+      <path class="w XL2" d="M427 237L434 240" />
+      <path class="w XD2" d="M427 225L434 228" />
+      <polygon class="R2" points="422.7,211.9 438.4,219.7 422.7,227.5 407.0,219.7" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="375.7,216.2 391.3,224.1 391.3,268.1 375.7,260.3" />
+      <polygon class="Z2" points="391.3,224.1 407.0,216.2 407.0,260.3 391.3,268.1" />
+      <path class="w WL2" d="M380 224L387 221M380 237L387 233" />
+      <path class="w XL2" d="M396 221L402 224M396 233L402 237" />
+      <polygon class="R2" points="391.3,208.4 407.0,216.2 391.3,224.1 375.7,216.2" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="344.3,232.6 360.0,240.4 360.0,268.1 344.3,260.3" />
+      <polygon class="Z1" points="360.0,240.4 375.7,232.6 375.7,260.3 360.0,268.1" />
+      <path class="w WD1" d="M349 241L355 238" />
+      <path class="w XD1" d="M365 238L371 241" />
+      <polygon class="R1" points="360.0,224.8 375.7,232.6 360.0,240.4 344.3,232.6" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="313.0,232.6 328.7,240.4 328.7,268.1 313.0,260.3" />
+      <polygon class="Z1" points="328.7,240.4 344.3,232.6 344.3,260.3 328.7,268.1" />
+      <path class="w WL1" d="M318 241L324 238" />
+      <path class="w XL1" d="M333 238L340 241" />
+      <polygon class="R1" points="328.7,224.8 344.3,232.6 328.7,240.4 313.0,232.6" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="281.6,205.1 297.3,212.9 297.3,268.1 281.6,260.3" />
+      <polygon class="Z3" points="297.3,212.9 313.0,205.1 313.0,260.3 297.3,268.1" />
+      <path class="w WL3" d="M286 225L293 222M286 238L293 234" />
+      <path class="w WD3" d="M286 213L293 210" />
+      <path class="w XL3" d="M302 222L308 225M302 234L308 238" />
+      <path class="w XD3" d="M302 210L308 213" />
+      <polygon class="R3" points="297.3,197.2 313.0,205.1 297.3,212.9 281.6,205.1" />
+      <path class="N3" fill="none" d="M297.3 205.1V194.7" />
+      <circle class="G3" cx="297.3" cy="194.7" r="1.5" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="219.0,213.3 234.6,221.1 234.6,268.1 219.0,260.3" />
+      <polygon class="Z3" points="234.6,221.1 250.3,213.3 250.3,260.3 234.6,268.1" />
+      <path class="w WL3" d="M224 234L230 230" />
+      <path class="w WD3" d="M224 221L230 218" />
+      <path class="w XL3" d="M239 230L246 234" />
+      <path class="w XD3" d="M239 218L246 221" />
+      <polygon class="R3" points="234.6,205.4 250.3,213.3 234.6,221.1 219.0,213.3" />
+      <path class="N3" fill="none" d="M234.6 213.3V202.9" />
+      <circle class="G3" cx="234.6" cy="202.9" r="1.5" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="485.4,240.4 501.0,248.3 501.0,275.9 485.4,268.1" />
+      <polygon class="Z1" points="501.0,248.3 516.7,240.4 516.7,268.1 501.0,275.9" />
+      <path class="w WL1" d="M490 249L496 245" />
+      <path class="w XL1" d="M506 245L512 249" />
+      <polygon class="R1" points="501.0,232.6 516.7,240.4 501.0,248.3 485.4,240.4" />
+    </g>
+    <g data-count="9">
+      <polygon class="A3" points="454.0,215.3 469.7,223.2 469.7,275.9 454.0,268.1" />
+      <polygon class="Z3" points="469.7,223.2 485.4,215.3 485.4,268.1 469.7,275.9" />
+      <path class="w WL3" d="M459 223L465 220M459 248L465 245" />
+      <path class="w WD3" d="M459 236L465 232" />
+      <path class="w XL3" d="M474 220L481 223M474 245L481 248" />
+      <path class="w XD3" d="M474 232L481 236" />
+      <polygon class="R3" points="469.7,207.5 485.4,215.3 469.7,223.2 454.0,215.3" />
+      <path class="N3" fill="none" d="M469.7 215.3V204.9" />
+      <circle class="G3" cx="469.7" cy="204.9" r="1.5" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="422.7,231.2 438.4,239.0 438.4,275.9 422.7,268.1" />
+      <polygon class="Z2" points="438.4,239.0 454.0,231.2 454.0,268.1 438.4,275.9" />
+      <path class="w WL2" d="M427 239L434 236" />
+      <path class="w XL2" d="M443 236L449 239" />
+      <polygon class="R2" points="438.4,223.4 454.0,231.2 438.4,239.0 422.7,231.2" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="391.3,227.5 407.0,235.4 407.0,275.9 391.3,268.1" />
+      <polygon class="Z2" points="407.0,235.4 422.7,227.5 422.7,268.1 407.0,275.9" />
+      <path class="w WL2" d="M396 236L402 232" />
+      <path class="w WD2" d="M396 248L402 245" />
+      <path class="w XL2" d="M412 232L418 236" />
+      <path class="w XD2" d="M412 245L418 248" />
+      <polygon class="R2" points="407.0,219.7 422.7,227.5 407.0,235.4 391.3,227.5" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="360.0,247.0 375.7,254.9 375.7,275.9 360.0,268.1" />
+      <polygon class="Z1" points="375.7,254.9 391.3,247.0 391.3,268.1 375.7,275.9" />
+      <polygon class="R1" points="375.7,239.2 391.3,247.0 375.7,254.9 360.0,247.0" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="328.7,240.4 344.3,248.3 344.3,275.9 328.7,268.1" />
+      <polygon class="Z1" points="344.3,248.3 360.0,240.4 360.0,268.1 344.3,275.9" />
+      <path class="w WL1" d="M333 249L340 245" />
+      <path class="w XL1" d="M349 245L355 249" />
+      <polygon class="R1" points="344.3,232.6 360.0,240.4 344.3,248.3 328.7,240.4" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="266.0,240.4 281.6,248.3 281.6,275.9 266.0,268.1" />
+      <polygon class="Z1" points="281.6,248.3 297.3,240.4 297.3,268.1 281.6,275.9" />
+      <path class="w WL1" d="M271 249L277 245" />
+      <path class="w XL1" d="M286 245L293 249" />
+      <polygon class="R1" points="281.6,232.6 297.3,240.4 281.6,248.3 266.0,240.4" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="203.3,227.5 219.0,235.4 219.0,275.9 203.3,268.1" />
+      <polygon class="Z2" points="219.0,235.4 234.6,227.5 234.6,268.1 219.0,275.9" />
+      <path class="w WL2" d="M208 236L214 232" />
+      <path class="w WD2" d="M208 248L214 245" />
+      <path class="w XL2" d="M224 232L230 236" />
+      <path class="w XD2" d="M224 245L230 248" />
+      <polygon class="R2" points="219.0,219.7 234.6,227.5 219.0,235.4 203.3,227.5" />
+    </g>
+    <g data-count="12">
+      <polygon class="A3" points="469.7,215.9 485.4,223.7 485.4,283.8 469.7,275.9" />
+      <polygon class="Z3" points="485.4,223.7 501.0,215.9 501.0,275.9 485.4,283.8" />
+      <path class="w WL3" d="M474 236L481 233M474 248L481 245" />
+      <path class="w WD3" d="M474 224L481 221" />
+      <path class="w XL3" d="M490 233L496 236M490 245L496 248" />
+      <path class="w XD3" d="M490 221L496 224" />
+      <polygon class="R3" points="485.4,208.0 501.0,215.9 485.4,223.7 469.7,215.9" />
+      <path class="N3" fill="none" d="M485.4 215.9V205.5" />
+      <circle class="G3" cx="485.4" cy="205.5" r="1.5" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="438.4,228.9 454.0,236.8 454.0,283.8 438.4,275.9" />
+      <polygon class="Z3" points="454.0,236.8 469.7,228.9 469.7,275.9 454.0,283.8" />
+      <path class="w WL3" d="M443 237L449 234M443 249L449 246" />
+      <path class="w XL3" d="M459 234L465 237M459 246L465 249" />
+      <polygon class="R3" points="454.0,221.1 469.7,228.9 454.0,236.8 438.4,228.9" />
+      <path class="N3" fill="none" d="M454.0 228.9V218.5" />
+      <circle class="G3" cx="454.0" cy="218.5" r="1.5" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="407.0,254.9 422.7,262.7 422.7,283.8 407.0,275.9" />
+      <polygon class="Z1" points="422.7,262.7 438.4,254.9 438.4,275.9 422.7,283.8" />
+      <polygon class="R1" points="422.7,247.0 438.4,254.9 422.7,262.7 407.0,254.9" />
+    </g>
+    <g data-count="6">
+      <polygon class="A2" points="375.7,231.9 391.3,239.7 391.3,283.8 375.7,275.9" />
+      <polygon class="Z2" points="391.3,239.7 407.0,231.9 407.0,275.9 391.3,283.8" />
+      <path class="w WL2" d="M380 240L387 237M380 252L387 249" />
+      <path class="w XL2" d="M396 237L402 240M396 249L402 252" />
+      <polygon class="R2" points="391.3,224.1 407.0,231.9 391.3,239.7 375.7,231.9" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="313.0,218.3 328.7,226.1 328.7,283.8 313.0,275.9" />
+      <polygon class="Z3" points="328.7,226.1 344.3,218.3 344.3,275.9 328.7,283.8" />
+      <path class="w WL3" d="M318 226L324 223M318 239L324 235" />
+      <path class="w WD3" d="M318 251L324 248" />
+      <path class="w XL3" d="M333 223L340 226M333 235L340 239" />
+      <path class="w XD3" d="M333 248L340 251" />
+      <polygon class="R3" points="328.7,210.5 344.3,218.3 328.7,226.1 313.0,218.3" />
+      <path class="N3" fill="none" d="M328.7 218.3V207.9" />
+      <circle class="G3" cx="328.7" cy="207.9" r="1.5" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="281.6,248.3 297.3,256.1 297.3,283.8 281.6,275.9" />
+      <polygon class="Z1" points="297.3,256.1 313.0,248.3 313.0,275.9 297.3,283.8" />
+      <path class="w WD1" d="M286 256L293 253" />
+      <path class="w XD1" d="M302 253L308 256" />
+      <polygon class="R1" points="297.3,240.4 313.0,248.3 297.3,256.1 281.6,248.3" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="250.3,248.3 266.0,256.1 266.0,283.8 250.3,275.9" />
+      <polygon class="Z1" points="266.0,256.1 281.6,248.3 281.6,275.9 266.0,283.8" />
+      <path class="w WL1" d="M255 256L261 253" />
+      <path class="w XL1" d="M271 253L277 256" />
+      <polygon class="R1" points="266.0,240.4 281.6,248.3 266.0,256.1 250.3,248.3" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="391.3,246.9 407.0,254.7 407.0,291.6 391.3,283.8" />
+      <polygon class="Z2" points="407.0,254.7 422.7,246.9 422.7,283.8 407.0,291.6" />
+      <path class="w WL2" d="M396 255L402 252" />
+      <path class="w XL2" d="M412 252L418 255" />
+      <polygon class="R2" points="407.0,239.0 422.7,246.9 407.0,254.7 391.3,246.9" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="360.0,262.7 375.7,270.6 375.7,291.6 360.0,283.8" />
+      <polygon class="Z1" points="375.7,270.6 391.3,262.7 391.3,283.8 375.7,291.6" />
+      <polygon class="R1" points="375.7,254.9 391.3,262.7 375.7,270.6 360.0,262.7" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="328.7,226.1 344.3,234.0 344.3,291.6 328.7,283.8" />
+      <polygon class="Z3" points="344.3,234.0 360.0,226.1 360.0,283.8 344.3,291.6" />
+      <path class="w WL3" d="M333 234L340 231M333 259L340 255" />
+      <path class="w WD3" d="M333 246L340 243" />
+      <path class="w XL3" d="M349 231L355 234M349 255L355 259" />
+      <path class="w XD3" d="M349 243L355 246" />
+      <polygon class="R3" points="344.3,218.3 360.0,226.1 344.3,234.0 328.7,226.1" />
+      <path class="N3" fill="none" d="M344.3 226.1V215.7" />
+      <circle class="G3" cx="344.3" cy="215.7" r="1.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="297.3,251.2 313.0,259.1 313.0,291.6 297.3,283.8" />
+      <polygon class="Z2" points="313.0,259.1 328.7,251.2 328.7,283.8 313.0,291.6" />
+      <path class="w WL2" d="M302 259L308 256" />
+      <path class="w XL2" d="M318 256L324 259" />
+      <polygon class="R2" points="313.0,243.4 328.7,251.2 313.0,259.1 297.3,251.2" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="266.0,251.2 281.6,259.1 281.6,291.6 266.0,283.8" />
+      <polygon class="Z2" points="281.6,259.1 297.3,251.2 297.3,283.8 281.6,291.6" />
+      <path class="w WL2" d="M271 259L277 256" />
+      <path class="w XL2" d="M286 256L293 259" />
+      <polygon class="R2" points="281.6,243.4 297.3,251.2 281.6,259.1 266.0,251.2" />
+    </g>
+    <g data-count="4">
+      <polygon class="A2" points="438.4,254.7 454.0,262.5 454.0,299.5 438.4,291.6" />
+      <polygon class="Z2" points="454.0,262.5 469.7,254.7 469.7,291.6 454.0,299.5" />
+      <path class="w WL2" d="M443 263L449 260" />
+      <path class="w XL2" d="M459 260L465 263" />
+      <polygon class="R2" points="454.0,246.9 469.7,254.7 454.0,262.5 438.4,254.7" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="407.0,251.0 422.7,258.9 422.7,299.5 407.0,291.6" />
+      <polygon class="Z2" points="422.7,258.9 438.4,251.0 438.4,291.6 422.7,299.5" />
+      <path class="w WL2" d="M412 271L418 268" />
+      <path class="w WD2" d="M412 259L418 256" />
+      <path class="w XL2" d="M427 268L434 271" />
+      <path class="w XD2" d="M427 256L434 259" />
+      <polygon class="R2" points="422.7,243.2 438.4,251.0 422.7,258.9 407.0,251.0" />
+    </g>
+    <g data-count="8">
+      <polygon class="A3" points="375.7,241.6 391.3,249.5 391.3,299.5 375.7,291.6" />
+      <polygon class="Z3" points="391.3,249.5 407.0,241.6 407.0,291.6 391.3,299.5" />
+      <path class="w WL3" d="M380 250L387 247M380 262L387 259" />
+      <path class="w XL3" d="M396 247L402 250M396 259L402 262" />
+      <polygon class="R3" points="391.3,233.8 407.0,241.6 391.3,249.5 375.7,241.6" />
+      <path class="N3" fill="none" d="M391.3 241.6V231.2" />
+      <circle class="G3" cx="391.3" cy="231.2" r="1.5" />
+    </g>
+    <g data-count="11">
+      <polygon class="A3" points="344.3,234.0 360.0,241.8 360.0,299.5 344.3,291.6" />
+      <polygon class="Z3" points="360.0,241.8 375.7,234.0 375.7,291.6 360.0,299.5" />
+      <path class="w WL3" d="M349 254L355 251M349 266L355 263" />
+      <path class="w WD3" d="M349 242L355 239" />
+      <path class="w XL3" d="M365 251L371 254M365 263L371 266" />
+      <path class="w XD3" d="M365 239L371 242" />
+      <polygon class="R3" points="360.0,226.1 375.7,234.0 360.0,241.8 344.3,234.0" />
+      <path class="N3" fill="none" d="M360.0 234.0V223.6" />
+      <circle class="G3" cx="360.0" cy="223.6" r="1.5" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="313.0,270.5 328.7,278.4 328.7,299.5 313.0,291.6" />
+      <polygon class="Z1" points="328.7,278.4 344.3,270.5 344.3,291.6 328.7,299.5" />
+      <polygon class="R1" points="328.7,262.7 344.3,270.5 328.7,278.4 313.0,270.5" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="422.7,258.9 438.4,266.7 438.4,307.3 422.7,299.5" />
+      <polygon class="Z2" points="438.4,266.7 454.0,258.9 454.0,299.5 438.4,307.3" />
+      <path class="w WL2" d="M427 267L434 264M427 279L434 276" />
+      <path class="w XL2" d="M443 264L449 267M443 276L449 279" />
+      <polygon class="R2" points="438.4,251.0 454.0,258.9 438.4,266.7 422.7,258.9" />
+    </g>
+    <g data-count="8">
+      <polygon class="A3" points="391.3,249.5 407.0,257.3 407.0,307.3 391.3,299.5" />
+      <polygon class="Z3" points="407.0,257.3 422.7,249.5 422.7,299.5 407.0,307.3" />
+      <path class="w WL3" d="M396 258L402 254" />
+      <path class="w WD3" d="M396 270L402 267" />
+      <path class="w XL3" d="M412 254L418 258" />
+      <path class="w XD3" d="M412 267L418 270" />
+      <polygon class="R3" points="407.0,241.6 422.7,249.5 407.0,257.3 391.3,249.5" />
+      <path class="N3" fill="none" d="M407.0 249.5V239.1" />
+      <circle class="G3" cx="407.0" cy="239.1" r="1.5" />
+    </g>
+    <g data-count="2">
+      <polygon class="A1" points="328.7,271.8 344.3,279.6 344.3,307.3 328.7,299.5" />
+      <polygon class="Z1" points="344.3,279.6 360.0,271.8 360.0,299.5 344.3,307.3" />
+      <path class="w WL1" d="M333 280L340 277" />
+      <path class="w XL1" d="M349 277L355 280" />
+      <polygon class="R1" points="344.3,263.9 360.0,271.8 344.3,279.6 328.7,271.8" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="297.3,258.9 313.0,266.7 313.0,307.3 297.3,299.5" />
+      <polygon class="Z2" points="313.0,266.7 328.7,258.9 328.7,299.5 313.0,307.3" />
+      <path class="w WL2" d="M302 267L308 264M302 279L308 276" />
+      <path class="w XL2" d="M318 264L324 267M318 276L324 279" />
+      <polygon class="R2" points="313.0,251.0 328.7,258.9 313.0,266.7 297.3,258.9" />
+    </g>
+    <g data-count="13">
+      <polygon class="A3" points="375.7,244.9 391.3,252.8 391.3,315.1 375.7,307.3" />
+      <polygon class="Z3" points="391.3,252.8 407.0,244.9 407.0,307.3 391.3,315.1" />
+      <path class="w WL3" d="M380 253L387 250M380 265L387 262" />
+      <path class="w WD3" d="M380 277L387 274" />
+      <path class="w XL3" d="M396 250L402 253M396 262L402 265" />
+      <path class="w XD3" d="M396 274L402 277" />
+      <polygon class="R3" points="391.3,237.1 407.0,244.9 391.3,252.8 375.7,244.9" />
+      <path class="N3" fill="none" d="M391.3 244.9V234.5" />
+      <circle class="G3" cx="391.3" cy="234.5" r="1.5" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="344.3,260.3 360.0,268.1 360.0,315.1 344.3,307.3" />
+      <polygon class="Z3" points="360.0,268.1 375.7,260.3 375.7,307.3 360.0,315.1" />
+      <path class="w WL3" d="M349 281L355 277" />
+      <path class="w WD3" d="M349 268L355 265" />
+      <path class="w XL3" d="M365 277L371 281" />
+      <path class="w XD3" d="M365 265L371 268" />
+      <polygon class="R3" points="360.0,252.4 375.7,260.3 360.0,268.1 344.3,260.3" />
+      <path class="N3" fill="none" d="M360.0 260.3V249.9" />
+      <circle class="G3" cx="360.0" cy="249.9" r="1.5" />
+    </g>
+    <g data-count="7">
+      <polygon class="A3" points="313.0,260.3 328.7,268.1 328.7,315.1 313.0,307.3" />
+      <polygon class="Z3" points="328.7,268.1 344.3,260.3 344.3,307.3 328.7,315.1" />
+      <path class="w WL3" d="M318 268L324 265M318 281L324 277" />
+      <path class="w XL3" d="M333 265L340 268M333 277L340 281" />
+      <polygon class="R3" points="328.7,252.4 344.3,260.3 328.7,268.1 313.0,260.3" />
+      <path class="N3" fill="none" d="M328.7 260.3V249.9" />
+      <circle class="G3" cx="328.7" cy="249.9" r="1.5" />
+    </g>
+    <g data-count="10">
+      <polygon class="A3" points="391.3,259.9 407.0,267.8 407.0,323.0 391.3,315.1" />
+      <polygon class="Z3" points="407.0,267.8 422.7,259.9 422.7,315.1 407.0,323.0" />
+      <path class="w WL3" d="M396 268L402 265M396 292L402 289" />
+      <path class="w WD3" d="M396 280L402 277" />
+      <path class="w XL3" d="M412 265L418 268M412 289L418 292" />
+      <path class="w XD3" d="M412 277L418 280" />
+      <polygon class="R3" points="407.0,252.1 422.7,259.9 407.0,267.8 391.3,259.9" />
+      <path class="N3" fill="none" d="M407.0 259.9V249.5" />
+      <circle class="G3" cx="407.0" cy="249.5" r="1.5" />
+    </g>
+    <g data-count="3">
+      <polygon class="A2" points="360.0,282.6 375.7,290.4 375.7,323.0 360.0,315.1" />
+      <polygon class="Z2" points="375.7,290.4 391.3,282.6 391.3,315.1 375.7,323.0" />
+      <path class="w WL2" d="M365 291L371 288" />
+      <path class="w XL2" d="M380 288L387 291" />
+      <polygon class="R2" points="375.7,274.7 391.3,282.6 375.7,290.4 360.0,282.6" />
+    </g>
+    <g data-count="5">
+      <polygon class="A2" points="375.7,282.4 391.3,290.2 391.3,330.8 375.7,323.0" />
+      <polygon class="Z2" points="391.3,290.2 407.0,282.4 407.0,323.0 391.3,330.8" />
+      <path class="w WL2" d="M380 290L387 287M380 303L387 300" />
+      <path class="w XL2" d="M396 287L402 290M396 300L402 303" />
+      <polygon class="R2" points="391.3,274.5 407.0,282.4 391.3,290.2 375.7,282.4" />
+    </g>
+    <g data-count="1">
+      <polygon class="A1" points="344.3,301.9 360.0,309.7 360.0,330.8 344.3,323.0" />
+      <polygon class="Z1" points="360.0,309.7 375.7,301.9 375.7,323.0 360.0,330.8" />
+      <polygon class="R1" points="360.0,294.1 375.7,301.9 360.0,309.7 344.3,301.9" />
+    </g>
+  </g>
+</svg>

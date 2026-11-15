@@ -1,0 +1,8 @@
+# Clean, solid-colour buildings: no windows, no rooftop beacons, no outlines.
+# Use: contribution-city generate --config examples/config/solid.yaml
+theme: arctic-glass
+layout: dense-grid
+output: dist/city-solid.svg
+city:
+  building_style: solid
+  show_header: false

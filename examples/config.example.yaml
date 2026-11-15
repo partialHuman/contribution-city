@@ -1,4 +1,5 @@
-# Contribution City configuration example (every key is optional)
+# Contribution City configuration example (every key is optional).
+# The full reference with all values is in examples/config/all-options.yaml
 username: octocat-architect       # live GitHub data (needs a token); or set `input:` for a JSON file
 theme: neon-harbor                # navy-cyan, profile, cyberpunk, ... (see "Themes" in the README)
 appearance: fixed                 # fixed | auto  (auto needs a theme with a light variant)
@@ -16,10 +17,14 @@ city:
   width: 1200
   height: 680
   auto_fit: true                  # scale the city to fill the canvas
+  height_preset: standard         # standard (default since 1.3) | tall (the old look) | custom
   height_mode: linear             # power | linear | sqrt | log
-  building_scale: 1.0
-  min_building_height: 6.0
-  max_building_height: 125.0
+  building_style: detailed        # detailed | solid
+  view_angle: isometric           # isometric | low | high | top-down
+  # To tune heights yourself, uncomment (any of these without a height_preset selects 'custom'):
+  # building_scale: 1.0
+  # min_building_height: 3.0
+  # max_building_height: 56.0
   background: solid               # solid | transparent | transparent-sky | auto (wins over `transparent`)
   transparent: false              # legacy: true = same as background: transparent
   # id_prefix: city                # only when inlining several SVGs into one HTML page

@@ -1,0 +1,16 @@
+# Normal-height buildings, tall buildings and camera angles side by side.
+# Edit the three marked lines and run it, or copy a block.
+# Use: contribution-city generate --config examples/config/heights-and-angles.yaml
+theme: profile
+layout: dense-grid
+output: dist/city-heights-and-angles.svg
+city:
+  height_preset: standard         # standard = normal height. Try: tall
+  height_mode: linear             # how counts become heights. Try: power, sqrt, log
+  view_angle: high                # camera. Try: isometric, low, top-down
+  # A custom profile instead of a preset:
+  # height_preset: custom
+  # building_scale: 1.4
+  # max_building_height: 90
+  # A camera angle that is not one of the presets:
+  # view_elevation: 35

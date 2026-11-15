@@ -1,0 +1,53 @@
+# TRANSPARENT: two files with a transparent background, committed to your repository.
+#   city-transparent.svg      - no background and no stars
+#   city-transparent-sky.svg  - no background, but the sky stars stay (they suit dark pages)
+# Copy to  .github/workflows/contribution-city-transparent.yml
+name: Contribution City (transparent)
+
+on:
+  schedule:
+    - cron: "5 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-city-transparent
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Transparent city
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: neon-harbor
+          background: transparent
+          output: assets/city-transparent.svg
+
+      - name: Transparent city with stars
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: neon-harbor
+          background: transparent-sky
+          output: assets/city-transparent-sky.svg
+
+      - name: Commit the SVGs (only when they changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/city-transparent.svg assets/city-transparent-sky.svg
+          if git diff --staged --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -m "chore: update transparent cities [skip ci]"
+            git push
+          fi

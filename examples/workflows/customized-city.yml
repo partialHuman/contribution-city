@@ -1,0 +1,38 @@
+# CUSTOMIZED: choose a theme, layout, building style, height preset, height mode, camera angle,
+# background and size. Remove any line you do not need - every input has a default.
+# This version only uploads the SVG as a downloadable artifact, so it needs read access only.
+name: Contribution City (customized)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate the city
+        id: city
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          theme: cyberpunk              # 14 themes, see the README gallery
+          layout: floating-island       # calendar, compact, dense-grid, downtown, floating-island, wireframe
+          building-style: solid         # detailed (windows) or solid (plain boxes)
+          height-preset: tall           # standard (default) or tall
+          height-mode: linear           # power (default), linear, sqrt, log
+          view-angle: low               # isometric (default), low, high, top-down
+          background: transparent-sky   # solid, transparent, transparent-sky, auto
+          width: "1000"                 # canvas size in pixels
+          height: "560"                 # canvas HEIGHT (not building height)
+          output: dist/city.svg
+
+      - name: Upload the SVG
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: contribution-city
+          path: ${{ steps.city.outputs.svg-path }}
+          retention-days: 14

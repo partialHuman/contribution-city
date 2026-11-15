@@ -1,0 +1,35 @@
+# HEIGHTS AND ANGLES: build every combination of height preset and camera angle in one run, to
+# decide which look you like. Each combination is uploaded as its own artifact.
+name: Contribution City (heights and angles)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [standard, tall]                       # normal height and the tall look
+        angle: [isometric, low, high, top-down]        # the four camera presets
+    steps:
+      - name: Generate ${{ matrix.preset }} / ${{ matrix.angle }}
+        id: city
+        uses: partialHuman/contribution-city@v1
+        with:
+          username: ${{ github.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          layout: dense-grid
+          height-preset: ${{ matrix.preset }}
+          view-angle: ${{ matrix.angle }}
+          output: dist/city-${{ matrix.preset }}-${{ matrix.angle }}.svg
+
+      - name: Upload
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: city-${{ matrix.preset }}-${{ matrix.angle }}
+          path: ${{ steps.city.outputs.svg-path }}
