@@ -1,0 +1,77 @@
+name: Publish to PyPI
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish (must be v1.3.0)'
+        required: true
+        default: 'v1.3.0'
+
+jobs:
+  publish:
+    name: Publish to PyPI (Trusted Publishing)
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/contribution-city
+    permissions:
+      id-token: write  # Mandatory for PyPI Trusted Publishing OIDC token minting
+      contents: read   # Required to access and download GitHub Release assets
+
+    steps:
+      - name: Validate release tag input
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          if [ "$INPUT_TAG" != "v1.3.0" ]; then
+            echo "Error: This workflow is pinned to release v1.3.0 assets. Received tag: '$INPUT_TAG'" >&2
+            exit 1
+          fi
+
+      - name: Download GitHub Release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          mkdir -p dist
+          gh release download "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --dir dist \
+            --pattern "contribution_city-1.3.0-py3-none-any.whl" \
+            --pattern "contribution_city-1.3.0.tar.gz"
+
+      - name: Verify downloaded distribution files exist
+        run: |
+          if [ ! -f "dist/contribution_city-1.3.0-py3-none-any.whl" ] || [ ! -f "dist/contribution_city-1.3.0.tar.gz" ]; then
+            echo "Error: Expected release distribution files are missing from dist/." >&2
+            ls -la dist/
+            exit 1
+          fi
+
+      - name: Verify asset SHA-256 checksums
+        run: |
+          echo "Verifying asset cryptographic checksums..."
+          cat << 'EOF' > "$RUNNER_TEMP/checksums.sha256"
+          600e689fc384ffeac83087e14c6142067c88c4a699294521400dd78453472e4a  dist/contribution_city-1.3.0-py3-none-any.whl
+          03f468af269bc8b975b257a7d5b447575a4a068dd8f5eb8c1882698e3422de42  dist/contribution_city-1.3.0.tar.gz
+          EOF
+          sha256sum --check --strict "$RUNNER_TEMP/checksums.sha256"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check package distributions with Twine
+        run: |
+          python -m pip install --upgrade pip twine
+          twine check --strict \
+            dist/contribution_city-1.3.0-py3-none-any.whl \
+            dist/contribution_city-1.3.0.tar.gz
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
+          verify-metadata: true
